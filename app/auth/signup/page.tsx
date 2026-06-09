@@ -52,21 +52,8 @@ function SignupForm() {
       return;
     }
 
-    if (data.user) {
-      const { error: profileError } = await supabase.from("profiles").insert({
-        user_id: data.user.id,
-        role,
-        full_name: fullName,
-      });
-
-      if (profileError) {
-        setError(profileError.message);
-        setLoading(false);
-        return;
-      }
-    }
-
-    router.push("/profile/edit");
+    // Profile is created automatically via database trigger on_auth_user_created
+    router.push("/auth/check-email");
     router.refresh();
   }
 
