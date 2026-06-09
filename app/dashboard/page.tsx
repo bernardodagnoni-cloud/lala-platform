@@ -4,6 +4,36 @@ import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+
+type LaliderMatch = {
+  score: number;
+  match_reason: string;
+  gaps: string | null;
+  created_at: string;
+  positions: {
+    id: string;
+    title: string;
+    opportunity_type: string;
+    location: string | null;
+    profiles: {
+      company_name: string | null;
+      website: string | null;
+    } | null;
+  } | null;
+};
+
+function ScoreBadge({ score }: { score: number }) {
+  const color =
+    score >= 8 ? "bg-green-100 text-green-800" :
+    score >= 6 ? "bg-yellow-100 text-yellow-800" :
+    "bg-orange-100 text-orange-800";
+  return (
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${color}`}>
+      {score}/10
+    </span>
+  );
+}
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -20,20 +50,45 @@ export default async function DashboardPage() {
 
   const isCompany = profile.role === "company";
 
-  let positions = null;
+  let positions: import("@/types/database").PositionRow[] | null = null;
+  let laliderMatches: LaliderMatch[] | null = null;
+
   if (isCompany) {
     const { data } = await supabase
       .from("positions")
       .select("*")
       .eq("company_profile_id", profile.id)
       .order("created_at", { ascending: false });
-    positions = data;
+    positions = data as import("@/types/database").PositionRow[] | null;
+  } else {
+    // Fetch matches for this LaLider, including position and company info
+    const { data } = await supabase
+      .from("matches")
+      .select(`
+        score,
+        match_reason,
+        gaps,
+        created_at,
+        positions (
+          id,
+          title,
+          opportunity_type,
+          location,
+          profiles!company_profile_id (
+            company_name,
+            website
+          )
+        )
+      `)
+      .eq("lalider_profile_id", profile.id)
+      .order("score", { ascending: false });
+    laliderMatches = data as unknown as LaliderMatch[] | null;
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <span className="font-bold text-xl text-blue-700">LALA Platform</span>
+        <Link href="/" className="font-bold text-xl text-blue-700">LALA Platform</Link>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-500">{profile.full_name}</span>
           <Link href="/profile/edit">
@@ -53,10 +108,11 @@ export default async function DashboardPage() {
           <p className="text-gray-500 mt-1">
             {isCompany
               ? "Manage your positions and find the best LaLideres for your team."
-              : "Your profile is visible to companies looking for talent like you."}
+              : "See which companies have matched you and keep your profile up to date."}
           </p>
         </div>
 
+        {/* Company view */}
         {isCompany && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -74,7 +130,9 @@ export default async function DashboardPage() {
                       <div className="flex items-start justify-between">
                         <div>
                           <CardTitle className="text-base">{pos.title}</CardTitle>
-                          <CardDescription>{pos.opportunity_type} {pos.location ? `· ${pos.location}` : ""}</CardDescription>
+                          <CardDescription>
+                            {pos.opportunity_type}{pos.location ? ` · ${pos.location}` : ""}
+                          </CardDescription>
                         </div>
                         <Badge variant={pos.is_active ? "default" : "secondary"}>
                           {pos.is_active ? "Active" : "Closed"}
@@ -96,33 +154,111 @@ export default async function DashboardPage() {
               <Card>
                 <CardContent className="py-10 text-center text-gray-400">
                   No positions yet.{" "}
-                  <Link href="/positions/new" className="text-blue-600 hover:underline">Post your first one.</Link>
+                  <Link href="/positions/new" className="text-blue-600 hover:underline">
+                    Post your first one.
+                  </Link>
                 </CardContent>
               </Card>
             )}
           </div>
         )}
 
+        {/* LaLider view */}
         {!isCompany && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Your profile</CardTitle>
-              <CardDescription>This is what companies see when they search for candidates.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              {profile.location && <div><span className="font-medium">Location:</span> {profile.location}</div>}
-              {profile.education && <div><span className="font-medium">Education:</span> {profile.education}</div>}
-              {profile.experience && <div><span className="font-medium">Experience:</span> {profile.experience}</div>}
-              {profile.skills && <div><span className="font-medium">Skills:</span> {profile.skills}</div>}
-              {profile.opportunity_type && <div><span className="font-medium">Looking for:</span> {profile.opportunity_type}</div>}
-              {profile.bio && <div><span className="font-medium">About:</span> {profile.bio}</div>}
-            </CardContent>
-            <CardFooter>
-              <Link href="/profile/edit">
-                <Button variant="outline" size="sm">Update profile</Button>
-              </Link>
-            </CardFooter>
-          </Card>
+          <div className="space-y-6">
+            {/* Profile summary */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Your profile</CardTitle>
+                <CardDescription>This is what companies see when matching candidates.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm">
+                {profile.location && <div><span className="font-medium">Location:</span> {profile.location}</div>}
+                {profile.education && <div><span className="font-medium">Education:</span> {profile.education}</div>}
+                {profile.skills && <div><span className="font-medium">Skills:</span> {profile.skills}</div>}
+                {profile.opportunity_type && <div><span className="font-medium">Looking for:</span> {profile.opportunity_type}</div>}
+              </CardContent>
+              <CardFooter>
+                <Link href="/profile/edit">
+                  <Button variant="outline" size="sm">Update profile</Button>
+                </Link>
+              </CardFooter>
+            </Card>
+
+            {/* Matches section */}
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold">
+                Companies that matched you
+                {laliderMatches && laliderMatches.length > 0 && (
+                  <span className="ml-2 text-sm font-normal text-gray-500">
+                    ({laliderMatches.length} match{laliderMatches.length > 1 ? "es" : ""})
+                  </span>
+                )}
+              </h2>
+
+              {!laliderMatches || laliderMatches.length === 0 ? (
+                <Card>
+                  <CardContent className="py-10 text-center text-gray-400">
+                    No matches yet — make sure your profile is complete so companies can find you.
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid gap-4">
+                  {laliderMatches.map((m, i) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const pos = m.positions as any;
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const company = pos?.profiles as any;
+                    return (
+                      <Card key={i}>
+                        <CardHeader>
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <CardTitle className="text-base">{pos?.title}</CardTitle>
+                              <CardDescription>
+                                {company?.company_name}
+                                {pos?.opportunity_type ? ` · ${pos.opportunity_type}` : ""}
+                                {pos?.location ? ` · ${pos.location}` : ""}
+                              </CardDescription>
+                            </div>
+                            <ScoreBadge score={m.score} />
+                          </div>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          <div>
+                            <p className="text-sm font-medium text-gray-700 mb-1">Why you&apos;re a good fit</p>
+                            <p className="text-sm text-gray-600">{m.match_reason}</p>
+                          </div>
+                          {m.gaps && (
+                            <>
+                              <Separator />
+                              <div>
+                                <p className="text-sm font-medium text-gray-700 mb-1">Areas to develop</p>
+                                <p className="text-sm text-gray-500">{m.gaps}</p>
+                              </div>
+                            </>
+                          )}
+                          {company?.website && (
+                            <>
+                              <Separator />
+                              <a
+                                href={company.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-blue-600 hover:underline"
+                              >
+                                Visit {company.company_name} →
+                              </a>
+                            </>
+                          )}
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
         )}
       </main>
     </div>

@@ -36,10 +36,10 @@ export async function POST(request: NextRequest) {
 
   const { data: lalideres } = await supabase
     .from("profiles")
-    .select("id, full_name, location, bio, education, experience, skills, opportunity_type")
+    .select("id, full_name, location, bio, education, experience, skills, opportunity_type, linkedin_url")
     .eq("role", "laLider");
 
-  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type">[] | null;
+  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type" | "linkedin_url">[] | null;
 
   if (!candidates || candidates.length === 0) {
     return NextResponse.json({ matches: [] });
@@ -95,7 +95,7 @@ Only include candidates with a score of 4 or above. Candidates:\n\n${candidatesL
 
   const text = response.content[0].type === "text" ? response.content[0].text : "[]";
 
-  let matches: unknown[];
+  let matches: { candidateId: string; name: string; score: number; matchReason: string; gaps: string }[];
   try {
     const jsonMatch = text.match(/\[[\s\S]*\]/);
     matches = jsonMatch ? JSON.parse(jsonMatch[0]) : [];
@@ -103,5 +103,27 @@ Only include candidates with a score of 4 or above. Candidates:\n\n${candidatesL
     matches = [];
   }
 
-  return NextResponse.json({ matches });
+  // Save match results to database (upsert so re-runs overwrite)
+  if (matches.length > 0) {
+    const upsertRows = matches.map((m) => ({
+      position_id: positionId,
+      lalider_profile_id: m.candidateId,
+      score: m.score,
+      match_reason: m.matchReason,
+      gaps: m.gaps ?? null,
+    }));
+
+    await supabase
+      .from("matches")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .upsert(upsertRows as any, { onConflict: "position_id,lalider_profile_id" });
+  }
+
+  // Attach linkedin_url to each match for display
+  const enriched = matches.map((m) => ({
+    ...m,
+    linkedin_url: candidates.find((c) => c.id === m.candidateId)?.linkedin_url ?? null,
+  }));
+
+  return NextResponse.json({ matches: enriched });
 }

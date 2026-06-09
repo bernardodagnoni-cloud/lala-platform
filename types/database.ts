@@ -14,6 +14,7 @@ export type ProfileRow = {
   company_name: string | null;
   company_description: string | null;
   website: string | null;
+  linkedin_url: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -31,6 +32,7 @@ export type ProfileInsert = {
   company_name?: string | null;
   company_description?: string | null;
   website?: string | null;
+  linkedin_url?: string | null;
 };
 
 export type ProfileUpdate = Partial<ProfileInsert>;
@@ -57,6 +59,24 @@ export type PositionInsert = {
   is_active?: boolean;
 };
 
+export type MatchRow = {
+  id: string;
+  position_id: string;
+  lalider_profile_id: string;
+  score: number;
+  match_reason: string;
+  gaps: string | null;
+  created_at: string;
+};
+
+export type MatchInsert = {
+  position_id: string;
+  lalider_profile_id: string;
+  score: number;
+  match_reason: string;
+  gaps?: string | null;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -70,6 +90,12 @@ export type Database = {
         Row: PositionRow;
         Insert: PositionInsert;
         Update: Partial<PositionInsert>;
+        Relationships: [];
+      };
+      matches: {
+        Row: MatchRow;
+        Insert: MatchInsert;
+        Update: Partial<MatchInsert>;
         Relationships: [];
       };
     };

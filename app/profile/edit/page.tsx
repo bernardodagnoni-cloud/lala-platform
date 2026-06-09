@@ -56,6 +56,19 @@ export default function EditProfilePage() {
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
+    if (!profile.full_name?.trim()) { setError("Full name is required."); return; }
+    if (role === "laLider") {
+      if (!profile.education?.trim() && !profile.experience?.trim()) {
+        setError("Please fill in at least your education or work experience."); return;
+      }
+      if (!profile.opportunity_type) { setError("Please select the type of opportunity you are looking for."); return; }
+    }
+    if (role === "company" && !profile.company_name?.trim()) {
+      setError("Company name is required."); return;
+    }
+    if (profile.linkedin_url && !profile.linkedin_url.startsWith("http")) {
+      setError("LinkedIn URL must start with https://"); return;
+    }
     setSaving(true);
     setError(null);
 
@@ -172,6 +185,16 @@ export default function EditProfilePage() {
                       value={profile.bio ?? ""}
                       onChange={(e) => update("bio", e.target.value)}
                       rows={4}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="linkedin_url">LinkedIn profile URL</Label>
+                    <Input
+                      id="linkedin_url"
+                      type="url"
+                      placeholder="https://linkedin.com/in/yourname"
+                      value={profile.linkedin_url ?? ""}
+                      onChange={(e) => update("linkedin_url", e.target.value)}
                     />
                   </div>
                 </>

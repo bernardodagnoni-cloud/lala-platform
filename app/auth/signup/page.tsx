@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -12,17 +12,29 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import type { UserRole } from "@/types/database";
 
 export default function SignupPage() {
+  return (
+    <Suspense>
+      <SignupForm />
+    </Suspense>
+  );
+}
+
+function SignupForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialRole = (searchParams.get("role") as UserRole) || "";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState<UserRole | "">("");
+  const [role, setRole] = useState<UserRole | "">(initialRole);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
-    if (!role) return;
+    if (!role) { setError("Please select your role."); return; }
+    if (fullName.trim().length < 2) { setError("Please enter your full name."); return; }
+    if (password.length < 8) { setError("Password must be at least 8 characters."); return; }
     setLoading(true);
     setError(null);
 
@@ -106,7 +118,7 @@ export default function SignupPage() {
             </div>
             <div className="space-y-1">
               <Label>I am a…</Label>
-              <Select onValueChange={(v: string | null) => setRole((v ?? "") as UserRole)} required>
+              <Select value={role} onValueChange={(v: string | null) => setRole((v ?? "") as UserRole)} required>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
