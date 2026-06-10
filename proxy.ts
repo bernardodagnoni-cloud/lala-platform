@@ -27,17 +27,20 @@ export async function proxy(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  const isAuthPage = request.nextUrl.pathname.startsWith("/auth");
+  const pathname = request.nextUrl.pathname;
   const isProtected =
-    request.nextUrl.pathname.startsWith("/dashboard") ||
-    request.nextUrl.pathname.startsWith("/profile") ||
-    request.nextUrl.pathname.startsWith("/positions");
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/profile") ||
+    pathname.startsWith("/positions");
+
+  // Only redirect away from login — not signup, since users without a profile need it
+  const isLoginPage = pathname === "/auth/login";
 
   if (!user && isProtected) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
-  if (user && isAuthPage) {
+  if (user && isLoginPage) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
