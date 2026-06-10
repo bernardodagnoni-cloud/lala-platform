@@ -78,8 +78,19 @@ export default function EditProfilePage() {
 
     const { error } = await supabase
       .from("profiles")
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .update(profile as any)
+      .update({
+        full_name: profile.full_name,
+        location: profile.location,
+        bio: profile.bio,
+        education: profile.education,
+        experience: profile.experience,
+        opportunity_type: profile.opportunity_type,
+        skills: profile.skills,
+        company_name: profile.company_name,
+        company_description: profile.company_description,
+        website: profile.website,
+        linkedin_url: profile.linkedin_url,
+      })
       .eq("user_id", user.id);
 
     if (error) {

@@ -47,21 +47,51 @@ export default function MatchesPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadPosition() {
+    async function loadPageData() {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push("/auth/login"); return; }
 
-      const { data } = await supabase
+      const { data: posData } = await supabase
         .from("positions")
         .select("id, title, opportunity_type, location")
         .eq("id", id)
         .single();
 
-      if (data) setPosition(data as Position);
+      if (posData) setPosition(posData as Position);
+
+      // Load existing matches from the database
+      const { data: existingMatches } = await supabase
+        .from("matches")
+        .select(`
+          score,
+          match_reason,
+          gaps,
+          lalider_profile_id,
+          profiles!lalider_profile_id (
+            full_name,
+            linkedin_url
+          )
+        `)
+        .eq("position_id", id)
+        .order("score", { ascending: false });
+
+      if (existingMatches && existingMatches.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const mapped = existingMatches.map((m: any) => ({
+          candidateId: m.lalider_profile_id,
+          name: m.profiles?.full_name ?? "Unknown",
+          score: m.score,
+          matchReason: m.match_reason,
+          gaps: m.gaps ?? "",
+          linkedin_url: m.profiles?.linkedin_url ?? null,
+        }));
+        setMatches(mapped);
+        setFetched(true);
+      }
     }
-    loadPosition();
-  }, [id]);
+    loadPageData();
+  }, [id, router]);
 
   async function runMatching() {
     setLoading(true);

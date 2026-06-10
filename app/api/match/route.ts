@@ -68,7 +68,9 @@ About: ${l.bio ?? "Not specified"}
 `.trim())
     .join("\n\n---\n\n");
 
-  const response = await anthropic.messages.create({
+  let response;
+  try {
+    response = await anthropic.messages.create({
     model: "claude-sonnet-4-6",
     max_tokens: 2048,
     system: `You are a talent matching assistant for LALA, an NGO that empowers Latin American leaders (LaLideres).
@@ -91,7 +93,11 @@ Always return a valid JSON array — no prose before or after it.`,
 Only include candidates with a score of 4 or above. Candidates:\n\n${candidatesList}`,
       },
     ],
-  });
+    });
+  } catch (aiError) {
+    console.error("Anthropic API error:", aiError);
+    return NextResponse.json({ error: "AI matching failed. Please try again." }, { status: 502 });
+  }
 
   const text = response.content[0].type === "text" ? response.content[0].text : "[]";
 
