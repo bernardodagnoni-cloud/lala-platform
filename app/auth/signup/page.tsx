@@ -52,8 +52,12 @@ function SignupForm() {
       return;
     }
 
-    // Profile is created automatically via database trigger on_auth_user_created
-    router.push("/auth/check-email");
+    // If email confirmation is disabled, Supabase returns a session immediately
+    if (data.session) {
+      router.push("/dashboard");
+    } else {
+      router.push("/auth/check-email");
+    }
     router.refresh();
   }
 
