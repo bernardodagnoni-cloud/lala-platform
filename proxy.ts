@@ -31,7 +31,8 @@ export async function proxy(request: NextRequest) {
   const isProtected =
     pathname.startsWith("/dashboard") ||
     pathname.startsWith("/profile") ||
-    pathname.startsWith("/positions");
+    pathname.startsWith("/positions") ||
+    pathname.startsWith("/admin");
 
   // Only redirect away from login — not signup, since users without a profile need it
   const isLoginPage = pathname === "/auth/login";
