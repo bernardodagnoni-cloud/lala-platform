@@ -182,7 +182,7 @@ export default function LandingPage() {
             Ready to make the connection?
           </h2>
           <p className="text-blue-900/70 mb-8 text-sm">
-            Join LaLideres and companies already using LALA Platform to build the future of Latin America.
+            Join LaLideres and companies already using LALA Match to build the future of Latin America.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -204,7 +204,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-blue-950 text-blue-300 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-          <span className="font-bold text-white text-base tracking-tight">LALA Platform</span>
+          <span className="font-bold text-white text-base tracking-tight">LALA Match</span>
           <p className="text-blue-400 text-xs">
             Built for LALA, empowering Latin American leaders since 2017.
           </p>
