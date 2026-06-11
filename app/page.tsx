@@ -147,7 +147,7 @@ export default function LandingPage() {
           {/* Companies */}
           <div className="bg-gray-50 rounded-3xl p-10 border border-gray-100">
             <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">For Companies</p>
-            <h3 className="text-2xl font-bold mb-4">Find exceptional Latin American talent.</h3>
+            <h3 className="text-2xl font-bold mb-4">Find exceptional talent.</h3>
             <p className="text-gray-500 text-sm leading-relaxed mb-8">
               Post your open positions and let AI surface the most relevant LaLideres,
               ranked by fit with clear explanations, not just keyword matches.
@@ -182,7 +182,7 @@ export default function LandingPage() {
             Ready to make the connection?
           </h2>
           <p className="text-blue-900/70 mb-8 text-sm">
-            Join LaLideres and companies already using LALA Match to build the future of Latin America.
+            Join LaLideres and companies already using LALA Match to build the future.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
