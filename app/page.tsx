@@ -206,7 +206,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
           <span className="font-bold text-white text-base tracking-tight">LALA Platform</span>
           <p className="text-blue-400 text-xs">
-            Built for LALA, empowering Latin American leaders since 2013.
+            Built for LALA, empowering Latin American leaders since 2017.
           </p>
           <div className="flex gap-6 text-xs">
             <Link href="/auth/login" className="hover:text-white transition-colors">Sign in</Link>
