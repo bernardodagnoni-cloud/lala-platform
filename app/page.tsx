@@ -7,7 +7,7 @@ export default function LandingPage() {
       {/* Nav */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-bold text-xl tracking-tight text-blue-900">LALA Platform</span>
+          <span className="font-bold text-xl tracking-tight text-blue-900">LALA Match</span>
           <div className="flex items-center gap-3">
             <Link
               href="/auth/login"
@@ -39,7 +39,7 @@ export default function LandingPage() {
             <span className="text-amber-400"> matched</span> with the right companies.
           </h1>
           <p className="text-lg text-blue-200 max-w-2xl mb-10 leading-relaxed">
-            LALA Platform connects LaLideres, the region&apos;s most promising young leaders,
+            LALA Match connects LaLideres, the region&apos;s most promising young leaders,
             with companies looking to build exceptional teams. Powered by AI, designed for impact.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
