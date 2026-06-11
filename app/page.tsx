@@ -64,8 +64,8 @@ export default function LandingPage() {
       <section className="bg-blue-950 text-white py-8 px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-3 divide-x divide-white/10 text-center">
           {[
-            { value: "10,000+", label: "LaLideres across Latin America" },
-            { value: "15+", label: "Countries represented" },
+            { value: "3,000+", label: "LaLideres across Latin America" },
+            { value: "17", label: "Countries represented" },
             { value: "AI-powered", label: "Matching technology" },
           ].map((stat) => (
             <div key={stat.label} className="px-6 py-2">
