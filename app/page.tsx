@@ -39,7 +39,7 @@ export default function LandingPage() {
             <span className="text-amber-400"> matched</span> with the right companies.
           </h1>
           <p className="text-lg text-blue-200 max-w-2xl mb-10 leading-relaxed">
-            LALA Platform connects LaLideres — the region&apos;s most promising young leaders —
+            LALA Platform connects LaLideres, the region&apos;s most promising young leaders,
             with companies looking to build exceptional teams. Powered by AI, designed for impact.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
@@ -125,7 +125,7 @@ export default function LandingPage() {
             </p>
             <ul className="space-y-3 mb-10">
               {[
-                "Free profile — visible to all partner companies",
+                "Free profile, visible to all partner companies",
                 "AI matches you to relevant positions",
                 "See which companies are interested in you",
                 "Connect directly via LinkedIn",
@@ -149,7 +149,7 @@ export default function LandingPage() {
             <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">For Companies</p>
             <h3 className="text-2xl font-bold mb-4">Find exceptional Latin American talent.</h3>
             <p className="text-gray-500 text-sm leading-relaxed mb-8">
-              Post your open positions and let AI surface the most relevant LaLideres —
+              Post your open positions and let AI surface the most relevant LaLideres,
               ranked by fit with clear explanations, not just keyword matches.
             </p>
             <ul className="space-y-3 mb-10">
@@ -206,7 +206,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
           <span className="font-bold text-white text-base tracking-tight">LALA Platform</span>
           <p className="text-blue-400 text-xs">
-            Built for LALA — empowering Latin American leaders since 2013.
+            Built for LALA, empowering Latin American leaders since 2013.
           </p>
           <div className="flex gap-6 text-xs">
             <Link href="/auth/login" className="hover:text-white transition-colors">Sign in</Link>
