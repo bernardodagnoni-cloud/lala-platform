@@ -46,7 +46,7 @@ export default async function DashboardPage() {
     .eq("user_id", user.id)
     .single();
 
-  if (!profile) redirect("/auth/signup");
+  if (!profile) redirect("/profile/edit");
 
   const isCompany = profile.role === "company";
 

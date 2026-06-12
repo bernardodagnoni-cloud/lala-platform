@@ -66,7 +66,7 @@ export default function EditProfilePage() {
     if (role === "company" && !profile.company_name?.trim()) {
       setError("Company name is required."); return;
     }
-    if (profile.linkedin_url && !profile.linkedin_url.startsWith("http")) {
+    if (profile.linkedin_url && !profile.linkedin_url.startsWith("https://")) {
       setError("LinkedIn URL must start with https://"); return;
     }
     setSaving(true);

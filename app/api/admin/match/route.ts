@@ -91,7 +91,7 @@ Only include candidates with a score of 4 or above. Candidates:\n\n${candidatesL
     return NextResponse.json({ error: "AI matching failed. Please try again." }, { status: 502 });
   }
 
-  const text = response.content[0].type === "text" ? response.content[0].text : "[]";
+  const text = response.content[0]?.type === "text" ? response.content[0].text : "[]";
 
   let matches: { candidateId: string; name: string; score: number; matchReason: string; gaps: string }[];
   try {
