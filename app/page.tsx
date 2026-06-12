@@ -35,7 +35,7 @@ export default function LandingPage() {
             AI-powered talent matching
           </div>
           <h1 className="text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-6 max-w-3xl">
-            Latin America&apos;s brightest leaders,
+            The next generation of leaders,
             <span className="text-amber-400"> matched</span> with the right companies.
           </h1>
           <p className="text-lg text-blue-200 max-w-2xl mb-10 leading-relaxed">
