@@ -54,7 +54,7 @@ function SignupForm() {
 
     // If email confirmation is disabled, Supabase returns a session immediately
     if (data.session) {
-      router.push("/dashboard");
+      router.push(role === "laLider" ? "/profile/edit" : "/dashboard");
     } else {
       router.push("/auth/check-email");
     }
