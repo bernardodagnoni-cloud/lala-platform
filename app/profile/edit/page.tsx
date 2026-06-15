@@ -109,11 +109,11 @@ export default function EditProfilePage() {
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle>Complete your profile</CardTitle>
+            <CardTitle>{role === "company" ? "Create your company profile" : "Complete your profile"}</CardTitle>
             <CardDescription>
               {role === "laLider"
                 ? "Tell us about yourself so companies can find you."
-                : "Tell us about your company and the talent you're looking for."}
+                : "LaLideres will see this profile when they're matched with your positions."}
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSave}>
@@ -132,17 +132,16 @@ export default function EditProfilePage() {
                 />
               </div>
 
-              <div className="space-y-1">
-                <Label htmlFor="location">Location (city, country)</Label>
-                <Input
-                  id="location"
-                  value={profile.location ?? ""}
-                  onChange={(e) => update("location", e.target.value)}
-                />
-              </div>
-
               {role === "laLider" && (
                 <>
+                  <div className="space-y-1">
+                    <Label htmlFor="location">Location (city, country)</Label>
+                    <Input
+                      id="location"
+                      value={profile.location ?? ""}
+                      onChange={(e) => update("location", e.target.value)}
+                    />
+                  </div>
                   <div className="space-y-1">
                     <Label htmlFor="education">Education</Label>
                     <Textarea
@@ -223,6 +222,15 @@ export default function EditProfilePage() {
                     />
                   </div>
                   <div className="space-y-1">
+                    <Label htmlFor="location">Headquarters (city, country)</Label>
+                    <Input
+                      id="location"
+                      placeholder="e.g. Mexico City, Mexico"
+                      value={profile.location ?? ""}
+                      onChange={(e) => update("location", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-1">
                     <Label htmlFor="website">Website</Label>
                     <Input
                       id="website"
@@ -233,13 +241,33 @@ export default function EditProfilePage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="company_description">About your company</Label>
+                    <Label htmlFor="linkedin_url">LinkedIn company page</Label>
+                    <Input
+                      id="linkedin_url"
+                      type="url"
+                      placeholder="https://linkedin.com/company/yourcompany"
+                      value={profile.linkedin_url ?? ""}
+                      onChange={(e) => update("linkedin_url", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="company_description">What does your company do?</Label>
                     <Textarea
                       id="company_description"
-                      placeholder="What does your company do? What's your mission?"
+                      placeholder="Describe your mission, industry, and what you build or offer…"
                       value={profile.company_description ?? ""}
                       onChange={(e) => update("company_description", e.target.value)}
-                      rows={4}
+                      rows={3}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="bio">Why join your team?</Label>
+                    <Textarea
+                      id="bio"
+                      placeholder="Share your culture, values, growth opportunities, or what makes your team unique…"
+                      value={profile.bio ?? ""}
+                      onChange={(e) => update("bio", e.target.value)}
+                      rows={3}
                     />
                   </div>
                 </>

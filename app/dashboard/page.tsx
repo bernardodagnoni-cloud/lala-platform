@@ -20,6 +20,10 @@ type LaliderMatch = {
     profiles: {
       company_name: string | null;
       website: string | null;
+      linkedin_url: string | null;
+      location: string | null;
+      company_description: string | null;
+      bio: string | null;
     } | null;
   } | null;
 };
@@ -77,7 +81,11 @@ export default async function DashboardPage() {
           location,
           profiles!company_profile_id (
             company_name,
-            website
+            website,
+            linkedin_url,
+            location,
+            company_description,
+            bio
           )
         )
       `)
@@ -221,6 +229,7 @@ export default async function DashboardPage() {
                               <CardTitle className="text-base">{pos?.title}</CardTitle>
                               <CardDescription>
                                 {company?.company_name}
+                                {company?.location ? ` · ${company.location}` : ""}
                                 {pos?.opportunity_type ? ` · ${pos.opportunity_type}` : ""}
                                 {pos?.location ? ` · ${pos.location}` : ""}
                               </CardDescription>
@@ -229,6 +238,22 @@ export default async function DashboardPage() {
                           </div>
                         </CardHeader>
                         <CardContent className="space-y-3">
+                          {company?.company_description && (
+                            <div>
+                              <p className="text-sm font-medium text-gray-700 mb-1">About the company</p>
+                              <p className="text-sm text-gray-600">{company.company_description}</p>
+                            </div>
+                          )}
+                          {company?.bio && (
+                            <>
+                              <Separator />
+                              <div>
+                                <p className="text-sm font-medium text-gray-700 mb-1">Why join their team</p>
+                                <p className="text-sm text-gray-600">{company.bio}</p>
+                              </div>
+                            </>
+                          )}
+                          <Separator />
                           <div>
                             <p className="text-sm font-medium text-gray-700 mb-1">Why you&apos;re a good fit</p>
                             <p className="text-sm text-gray-600">{m.match_reason}</p>
@@ -242,17 +267,31 @@ export default async function DashboardPage() {
                               </div>
                             </>
                           )}
-                          {company?.website && (
+                          {(company?.website || company?.linkedin_url) && (
                             <>
                               <Separator />
-                              <a
-                                href={company.website}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm text-blue-600 hover:underline"
-                              >
-                                Visit {company.company_name} →
-                              </a>
+                              <div className="flex gap-4">
+                                {company?.website && (
+                                  <a
+                                    href={company.website}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm text-blue-600 hover:underline"
+                                  >
+                                    Visit website →
+                                  </a>
+                                )}
+                                {company?.linkedin_url && (
+                                  <a
+                                    href={company.linkedin_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm text-blue-600 hover:underline"
+                                  >
+                                    LinkedIn →
+                                  </a>
+                                )}
+                              </div>
                             </>
                           )}
                         </CardContent>
