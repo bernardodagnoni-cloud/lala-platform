@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LandingPage() {
   return (
@@ -7,7 +8,10 @@ export default function LandingPage() {
       {/* Nav */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-bold text-xl tracking-tight text-blue-900">LALA Match</span>
+          <div className="flex items-center gap-2">
+              <Image src="/lala-logo.png" alt="LALA" width={32} height={32} className="rounded-sm" />
+              <span className="font-bold text-xl tracking-tight text-blue-900">LALA Match</span>
+            </div>
           <div className="flex items-center gap-3">
             <Link
               href="/auth/login"
@@ -178,6 +182,9 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="py-24 px-6 bg-amber-400">
         <div className="max-w-3xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <Image src="/lala-logo.png" alt="LALA" width={72} height={72} className="rounded-xl" />
+          </div>
           <h2 className="text-3xl font-bold text-blue-950 mb-4">
             Ready to make the connection?
           </h2>

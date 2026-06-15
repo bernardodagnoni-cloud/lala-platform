@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -88,7 +89,10 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="font-bold text-xl text-blue-700">LALA Platform</Link>
+        <Link href="/" className="flex items-center gap-2 font-bold text-xl text-blue-700">
+            <Image src="/lala-logo.png" alt="LALA" width={32} height={32} className="rounded-sm" />
+            LALA Platform
+          </Link>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-500">{profile.full_name}</span>
           <Link href="/profile/edit">
