@@ -103,9 +103,6 @@ export default async function DashboardPage() {
           </Link>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-500">{profile.full_name}</span>
-          <Link href="/profile/edit">
-            <Button variant="outline" size="sm">Edit profile</Button>
-          </Link>
           <form action="/api/auth/logout" method="POST">
             <Button variant="ghost" size="sm" type="submit">Sign out</Button>
           </form>
@@ -113,15 +110,20 @@ export default async function DashboardPage() {
       </nav>
 
       <main className="max-w-4xl mx-auto p-6 space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold">
-            Welcome, {isCompany ? profile.company_name || profile.full_name : profile.full_name}
-          </h1>
-          <p className="text-gray-500 mt-1">
-            {isCompany
-              ? "Manage your positions and find the best LaLideres for your team."
-              : "See which companies have matched you and keep your profile up to date."}
-          </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">
+              Welcome, {isCompany ? profile.company_name || profile.full_name : profile.full_name}
+            </h1>
+            <p className="text-gray-500 mt-1">
+              {isCompany
+                ? "Manage your positions and find the best LaLideres for your team."
+                : "See which companies have matched you and keep your profile up to date."}
+            </p>
+          </div>
+          <Link href="/profile/edit">
+            <Button variant="outline" size="sm">Edit profile</Button>
+          </Link>
         </div>
 
         {/* Company view */}
