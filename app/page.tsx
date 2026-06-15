@@ -204,6 +204,14 @@ export default function LandingPage() {
             >
               I represent a company
             </Link>
+            <a
+              href="https://latinamericanleadershipacademy.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center border-2 border-blue-950 text-blue-950 font-semibold px-6 py-3 rounded-full hover:bg-blue-950/5 transition-colors text-sm"
+            >
+              About us
+            </a>
           </div>
         </div>
       </section>
