@@ -4,8 +4,8 @@ const en = {
     signOut: "Sign out",
     signUp: "Sign up",
     editProfile: "Edit profile",
-    lalaMatch: "LALA Match",
-    lalaPlatform: "LALA Match",
+    lalaMatch: "LaLa Match",
+    lalaPlatform: "LaLa Match",
     iAmLalider: "I'm a LaLider",
     iRepresentCompany: "I represent a company",
     aboutUs: "About us",
@@ -21,7 +21,7 @@ const en = {
       titleHighlight: "matched",
       titleEnd: "with the right companies.",
       description:
-        "LALA Match connects LaLideres, the region's most promising young leaders, with companies looking to build exceptional teams. Powered by AI, designed for impact.",
+        "LaLa Match connects LaLideres, the region's most promising young leaders, with companies looking to build exceptional teams. Powered by AI, designed for impact.",
     },
     stats: [
       { value: "3,000+", label: "LaLideres across Latin America" },
@@ -77,7 +77,7 @@ const en = {
     },
     cta: {
       title: "Ready to make the connection?",
-      description: "Join LaLideres and companies already using LALA Match to build the future.",
+      description: "Join LaLideres and companies already using LaLa Match to build the future.",
     },
     footer: {
       tagline: "Built for LALA, empowering Latin American leaders since 2017.",
@@ -257,8 +257,8 @@ const pt = {
     signOut: "Sair",
     signUp: "Cadastrar-se",
     editProfile: "Editar perfil",
-    lalaMatch: "LALA Match",
-    lalaPlatform: "LALA Match",
+    lalaMatch: "LaLa Match",
+    lalaPlatform: "LaLa Match",
     iAmLalider: "Sou um LaLíder",
     iRepresentCompany: "Represento uma empresa",
     aboutUs: "Sobre nós",
@@ -274,7 +274,7 @@ const pt = {
       titleHighlight: "conectada",
       titleEnd: "com as empresas certas.",
       description:
-        "LALA Match conecta LaLíderes, os jovens líderes mais promissores da região, com empresas que buscam construir equipes excepcionais. Movido por IA, projetado para gerar impacto.",
+        "LaLa Match conecta LaLíderes, os jovens líderes mais promissores da região, com empresas que buscam construir equipes excepcionais. Movido por IA, projetado para gerar impacto.",
     },
     stats: [
       { value: "3.000+", label: "LaLíderes em toda a América Latina" },
@@ -331,7 +331,7 @@ const pt = {
     cta: {
       title: "Pronto para fazer a conexão?",
       description:
-        "Junte-se aos LaLíderes e empresas que já usam o LALA Match para construir o futuro.",
+        "Junte-se aos LaLíderes e empresas que já usam o LaLa Match para construir o futuro.",
     },
     footer: {
       tagline: "Criado para a LALA, empoderando líderes latino-americanos desde 2017.",
@@ -515,8 +515,8 @@ const es = {
     signOut: "Cerrar sesión",
     signUp: "Registrarse",
     editProfile: "Editar perfil",
-    lalaMatch: "LALA Match",
-    lalaPlatform: "LALA Match",
+    lalaMatch: "LaLa Match",
+    lalaPlatform: "LaLa Match",
     iAmLalider: "Soy un LaLíder",
     iRepresentCompany: "Represento a una empresa",
     aboutUs: "Sobre nosotros",
@@ -532,7 +532,7 @@ const es = {
       titleHighlight: "conectada",
       titleEnd: "con las empresas correctas.",
       description:
-        "LALA Match conecta a los LaLíderes, los jóvenes líderes más prometedores de la región, con empresas que buscan construir equipos excepcionales. Impulsado por IA, diseñado para generar impacto.",
+        "LaLa Match conecta a los LaLíderes, los jóvenes líderes más prometedores de la región, con empresas que buscan construir equipos excepcionales. Impulsado por IA, diseñado para generar impacto.",
     },
     stats: [
       { value: "3,000+", label: "LaLíderes en toda América Latina" },
@@ -589,7 +589,7 @@ const es = {
     cta: {
       title: "¿Listo para hacer la conexión?",
       description:
-        "Únete a los LaLíderes y empresas que ya usan LALA Match para construir el futuro.",
+        "Únete a los LaLíderes y empresas que ya usan LaLa Match para construir el futuro.",
     },
     footer: {
       tagline: "Creado para LALA, empoderando a líderes latinoamericanos desde 2017.",

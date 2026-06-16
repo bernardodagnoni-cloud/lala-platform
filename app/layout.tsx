@@ -22,7 +22,7 @@ const vilane = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "LALA Match",
+  title: "LaLa Match",
   description: "AI-powered talent matching for Latin American leaders",
 };
 
