@@ -176,7 +176,7 @@ export default function MatchesPage() {
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div>
-                      <CardTitle className="text-base">#{i + 1} — {match.name}</CardTitle>
+                      <CardTitle className="text-base">#{i + 1}: {match.name}</CardTitle>
                       <CardDescription>{t.positionsMatches.matchScore}</CardDescription>
                     </div>
                     <ScoreBadge score={match.score} />

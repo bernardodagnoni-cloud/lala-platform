@@ -60,7 +60,7 @@ export default function DemoMatchesPage() {
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-base">#{i + 1} — {match.name}</CardTitle>
+                    <CardTitle className="text-base">#{i + 1}: {match.name}</CardTitle>
                     <CardDescription>Match score</CardDescription>
                   </div>
                   <ScoreBadge score={match.score} />
