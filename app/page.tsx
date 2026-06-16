@@ -3,6 +3,29 @@ import Image from "next/image";
 import { getServerT } from "@/lib/i18n/server";
 import { LanguageSwitcher } from "@/components/language-switcher";
 
+function GoldStar({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 120" className={className} xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M60,12 L66.2,41 L88.2,21.2 L76.2,48.2 L105.6,45.2 L80,60 L105.6,74.8 L76.2,71.8 L88.2,98.8 L66.2,79 L60,108 L53.8,79 L31.8,98.8 L43.8,71.8 L14.4,74.8 L40,60 L14.4,45.2 L43.8,48.2 L31.8,21.2 L53.8,41 Z" fill="#FFC200"/>
+      <circle cx="60" cy="60" r="11" fill="white"/>
+      <circle cx="60" cy="60" r="7" fill="#FFC200"/>
+      <circle cx="88" cy="38" r="3" fill="#FFC200"/>
+      <circle cx="38" cy="82" r="4" fill="#FFC200"/>
+      <circle cx="78" cy="22" r="2" fill="#FFC200"/>
+    </svg>
+  );
+}
+
+function BlueSparkle({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 120" className={className} xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M60,4 C59,32 42,52 4,60 C42,68 59,88 60,116 C61,88 78,68 116,60 C78,52 61,32 60,4 Z" fill="#3C35DE"/>
+      <path d="M88,16 C87.5,26 81,32 71,36 C81,40 87.5,46 88,56 C88.5,46 95,40 105,36 C95,32 88.5,26 88,16 Z" fill="#3C35DE"/>
+      <path d="M100,6 C99.8,10 97,12.5 93,14 C97,15.5 99.8,18 100,22 C100.2,18 103,15.5 107,14 C103,12.5 100.2,10 100,6 Z" fill="#3C35DE"/>
+    </svg>
+  );
+}
+
 export default async function LandingPage() {
   const { t } = await getServerT();
 
@@ -38,6 +61,8 @@ export default async function LandingPage() {
       <section className="pt-32 pb-24 px-6 bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
         {/* Subtle grid overlay */}
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+        <GoldStar className="absolute -top-8 -right-16 w-80 h-80 opacity-10 rotate-12 pointer-events-none select-none" />
+        <BlueSparkle className="absolute -bottom-16 -left-6 w-56 h-56 opacity-[0.12] pointer-events-none select-none" />
         <div className="max-w-5xl mx-auto relative">
           <div className="inline-flex items-center gap-2 bg-white/10 text-blue-200 text-xs font-medium px-3 py-1.5 rounded-full mb-8 border border-white/10">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -81,7 +106,9 @@ export default async function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section className="py-24 px-6 bg-gray-50">
+      <section className="py-24 px-6 bg-gray-50 relative overflow-hidden">
+        <BlueSparkle className="absolute top-8 right-8 w-24 h-24 opacity-[0.10] pointer-events-none select-none" />
+        <GoldStar className="absolute -bottom-4 -left-6 w-28 h-28 opacity-[0.08] -rotate-12 pointer-events-none select-none" />
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">{t.landing.howItWorks.eyebrow}</p>
@@ -104,7 +131,8 @@ export default async function LandingPage() {
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
 
           {/* LaLideres */}
-          <div className="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-3xl p-10 text-white">
+          <div className="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-3xl p-10 text-white relative overflow-hidden">
+            <GoldStar className="absolute -top-6 -right-6 w-36 h-36 opacity-[0.15] rotate-[20deg] pointer-events-none select-none" />
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-300 mb-4">{t.landing.forLalideres.eyebrow}</p>
             <h3 className="text-2xl font-bold mb-4">{t.landing.forLalideres.title}</h3>
             <p className="text-blue-200 text-sm leading-relaxed mb-8">
@@ -152,7 +180,9 @@ export default async function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-amber-400">
+      <section className="py-24 px-6 bg-amber-400 relative overflow-hidden">
+        <BlueSparkle className="absolute top-6 left-8 w-28 h-28 opacity-[0.18] pointer-events-none select-none" />
+        <GoldStar className="absolute -bottom-2 right-12 w-24 h-24 opacity-[0.22] pointer-events-none select-none" />
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <Image src="/lala-logo.png" alt="LALA" width={72} height={72} className="rounded-xl" />
@@ -189,7 +219,8 @@ export default async function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-blue-950 text-blue-300 py-10 px-6">
+      <footer className="bg-blue-950 text-blue-300 py-10 px-6 relative overflow-hidden">
+        <GoldStar className="absolute -top-4 -right-4 w-20 h-20 opacity-[0.07] rotate-[30deg] pointer-events-none select-none" />
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
           <span className="font-bold text-white text-base tracking-tight">{t.common.lalaMatch}</span>
           <p className="text-blue-400 text-xs">
