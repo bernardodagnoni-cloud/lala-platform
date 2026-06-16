@@ -279,11 +279,11 @@ const pt = {
     stats: [
       { value: "3.000+", label: "LaLíderes em toda a América Latina" },
       { value: "17", label: "Países representados" },
-      { value: "Com IA", label: "Tecnologia de correspondência" },
+      { value: "Movido a IA", label: "Tecnologia de Matchmaking" },
     ],
     howItWorks: {
       eyebrow: "Como funciona",
-      title: "Do perfil à colocação em três etapas",
+      title: "Do perfil à conexão em três etapas",
       steps: [
         {
           step: "01",
@@ -293,12 +293,12 @@ const pt = {
         {
           step: "02",
           title: "A IA encontra a combinação",
-          body: "Claude analisa cada perfil em relação a cada vaga, avaliando a compatibilidade e explicando o raciocínio em linguagem simples.",
+          body: "O Claude analisa cada perfil em relação a cada vaga, avaliando a compatibilidade e explicando seu raciocínio.",
         },
         {
           step: "03",
           title: "Conecte-se e cresça",
-          body: "Empresas entram em contato com suas melhores correspondências. LaLíderes veem para quais oportunidades foram selecionados.",
+          body: "Empresas entram em contato com os candidatos ideais. LaLíderes veem para quais oportunidades foram selecionados.",
         },
       ],
     },
@@ -306,7 +306,7 @@ const pt = {
       eyebrow: "Para LaLíderes",
       title: "Seu talento merece ser visto.",
       description:
-        "Crie um perfil completo mostrando sua educação, experiência e objetivos. Seja notificado quando empresas combinarem com você para vagas que se encaixam nas suas ambições.",
+        "Crie um perfil completo mostrando sua educação, experiência e objetivos. Seja notificado quando empresas se interessarem no seu perfil para vagas que se encaixam com as suas ambições.",
       features: [
         "Perfil gratuito, visível para todas as empresas parceiras",
         "A IA combina você com vagas relevantes",
@@ -319,19 +319,19 @@ const pt = {
       eyebrow: "Para Empresas",
       title: "Encontre talentos excepcionais.",
       description:
-        "Publique suas vagas abertas e deixe a IA encontrar as LaLíderes mais relevantes, classificadas por compatibilidade com explicações claras, não apenas correspondências de palavras-chave.",
+        "Publique suas vagas abertas e deixe a IA encontrar os LaLíderes mais relevantes, classificadas por compatibilidade com explicações claras, não apenas correspondências de palavras-chave.",
       features: [
         "Publique vagas ilimitadas",
         "A IA classifica candidatos com explicações",
         "Acesse perfis de mais de 15 países",
-        "Execute a correspondência novamente conforme suas necessidades evoluem",
+        "Encontre novos candidatos conforme suas necessidades evoluem",
       ],
       cta: "Comece a contratar →",
     },
     cta: {
       title: "Pronto para fazer a conexão?",
       description:
-        "Junte-se às LaLíderes e empresas que já usam o LALA Match para construir o futuro.",
+        "Junte-se aos LaLíderes e empresas que já usam o LALA Match para construir o futuro.",
     },
     footer: {
       tagline: "Criado para a LALA, empoderando líderes latino-americanos desde 2017.",
