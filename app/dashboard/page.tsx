@@ -110,25 +110,67 @@ export default async function DashboardPage() {
       </nav>
 
       <main className="max-w-4xl mx-auto p-6 space-y-6">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">
-              Welcome, {isCompany ? profile.company_name || profile.full_name : profile.full_name}
-            </h1>
-            <p className="text-gray-500 mt-1">
-              {isCompany
-                ? "Manage your positions and find the best LaLideres for your team."
-                : "See which companies have matched you and keep your profile up to date."}
-            </p>
-          </div>
-          <Link href="/profile/edit">
-            <Button variant="outline" size="sm">Edit profile</Button>
-          </Link>
+        <div>
+          <h1 className="text-2xl font-bold">
+            Welcome, {isCompany ? profile.company_name || profile.full_name : profile.full_name}
+          </h1>
+          <p className="text-gray-500 mt-1">
+            {isCompany
+              ? "Manage your positions and find the best LaLideres for your team."
+              : "See which companies have matched you and keep your profile up to date."}
+          </p>
         </div>
 
         {/* Company view */}
         {isCompany && (
-          <div className="space-y-4">
+          <div className="space-y-8">
+
+            {/* Company profile section */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold">Your company profile</h2>
+                <Link href="/profile/edit">
+                  <Button variant="outline" size="sm">Edit profile</Button>
+                </Link>
+              </div>
+              <Card>
+                <CardContent className="pt-6 space-y-3 text-sm">
+                  {profile.company_name && (
+                    <div><span className="font-medium">Company:</span> {profile.company_name}</div>
+                  )}
+                  {profile.location && (
+                    <div><span className="font-medium">Headquarters:</span> {profile.location}</div>
+                  )}
+                  {profile.website && (
+                    <div>
+                      <span className="font-medium">Website:</span>{" "}
+                      <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.website}</a>
+                    </div>
+                  )}
+                  {profile.linkedin_url && (
+                    <div>
+                      <span className="font-medium">LinkedIn:</span>{" "}
+                      <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.linkedin_url}</a>
+                    </div>
+                  )}
+                  {profile.company_description && (
+                    <div><span className="font-medium">What we do:</span> {profile.company_description}</div>
+                  )}
+                  {profile.bio && (
+                    <div><span className="font-medium">Why join us:</span> {profile.bio}</div>
+                  )}
+                  {!profile.company_name && !profile.company_description && (
+                    <p className="text-gray-400 py-4 text-center">
+                      No profile yet.{" "}
+                      <Link href="/profile/edit" className="text-blue-600 hover:underline">Complete your company profile.</Link>
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Positions section */}
+            <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Your positions</h2>
               <Link href="/positions/new">
@@ -174,30 +216,43 @@ export default async function DashboardPage() {
                 </CardContent>
               </Card>
             )}
+            </div>
           </div>
         )}
 
         {/* LaLider view */}
         {!isCompany && (
           <div className="space-y-6">
-            {/* Profile summary */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Your profile</CardTitle>
-                <CardDescription>This is what companies see when matching candidates.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2 text-sm">
-                {profile.location && <div><span className="font-medium">Location:</span> {profile.location}</div>}
-                {profile.education && <div><span className="font-medium">Education:</span> {profile.education}</div>}
-                {profile.skills && <div><span className="font-medium">Skills:</span> {profile.skills}</div>}
-                {profile.opportunity_type && <div><span className="font-medium">Looking for:</span> {profile.opportunity_type}</div>}
-              </CardContent>
-              <CardFooter>
+            {/* Profile section */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold">Your profile</h2>
                 <Link href="/profile/edit">
-                  <Button variant="outline" size="sm">Update profile</Button>
+                  <Button variant="outline" size="sm">Edit profile</Button>
                 </Link>
-              </CardFooter>
-            </Card>
+              </div>
+              <Card>
+                <CardContent className="pt-6 space-y-2 text-sm">
+                  {profile.location && <div><span className="font-medium">Location:</span> {profile.location}</div>}
+                  {profile.education && <div><span className="font-medium">Education:</span> {profile.education}</div>}
+                  {profile.experience && <div><span className="font-medium">Experience:</span> {profile.experience}</div>}
+                  {profile.skills && <div><span className="font-medium">Skills:</span> {profile.skills}</div>}
+                  {profile.opportunity_type && <div><span className="font-medium">Looking for:</span> {profile.opportunity_type}</div>}
+                  {profile.bio && <div><span className="font-medium">About:</span> {profile.bio}</div>}
+                  {profile.linkedin_url && (
+                    <div>
+                      <span className="font-medium">LinkedIn:</span>{" "}
+                      <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.linkedin_url}</a>
+                    </div>
+                  )}
+                  {!profile.education && !profile.experience && !profile.skills && (
+                    <p className="text-gray-400 py-4 text-center">
+                      Your profile is incomplete — <Link href="/profile/edit" className="text-blue-600 hover:underline">fill it in</Link> so companies can find you.
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Matches section */}
             <div className="space-y-4">
