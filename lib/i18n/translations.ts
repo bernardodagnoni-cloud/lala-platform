@@ -259,7 +259,7 @@ const pt = {
     editProfile: "Editar perfil",
     lalaMatch: "LALA Match",
     lalaPlatform: "Plataforma LALA",
-    iAmLalider: "Sou uma LaLíder",
+    iAmLalider: "Sou um LaLíder",
     iRepresentCompany: "Represento uma empresa",
     aboutUs: "Sobre nós",
   },
@@ -274,7 +274,7 @@ const pt = {
       titleHighlight: "conectada",
       titleEnd: "com as empresas certas.",
       description:
-        "LALA Match conecta LaLíderes, as líderes jovens mais promissoras da região, com empresas que buscam construir equipes excepcionais. Movido por IA, projetado para gerar impacto.",
+        "LALA Match conecta LaLíderes, os líderes jovens mais promissores da região, com empresas que buscam construir equipes excepcionais. Movido por IA, projetado para gerar impacto.",
     },
     stats: [
       { value: "3.000+", label: "LaLíderes em toda a América Latina" },
@@ -288,7 +288,7 @@ const pt = {
         {
           step: "01",
           title: "Crie seu perfil",
-          body: "LaLíderes detalham sua educação, experiência e ambições. Empresas descrevem suas vagas abertas e candidatas ideais.",
+          body: "LaLíderes detalham sua educação, experiência e ambições. Empresas descrevem suas vagas abertas e candidatos ideais.",
         },
         {
           step: "02",
@@ -298,7 +298,7 @@ const pt = {
         {
           step: "03",
           title: "Conecte-se e cresça",
-          body: "Empresas entram em contato com suas melhores correspondências. LaLíderes veem para quais oportunidades foram selecionadas.",
+          body: "Empresas entram em contato com suas melhores correspondências. LaLíderes veem para quais oportunidades foram selecionados.",
         },
       ],
     },
@@ -306,7 +306,7 @@ const pt = {
       eyebrow: "Para LaLíderes",
       title: "Seu talento merece ser visto.",
       description:
-        "Crie um perfil completo mostrando sua educação, experiência e objetivos. Seja notificada quando empresas combinarem com você para vagas que se encaixam nas suas ambições.",
+        "Crie um perfil completo mostrando sua educação, experiência e objetivos. Seja notificado quando empresas combinarem com você para vagas que se encaixam nas suas ambições.",
       features: [
         "Perfil gratuito, visível para todas as empresas parceiras",
         "A IA combina você com vagas relevantes",
@@ -322,19 +322,19 @@ const pt = {
         "Publique suas vagas abertas e deixe a IA encontrar as LaLíderes mais relevantes, classificadas por compatibilidade com explicações claras, não apenas correspondências de palavras-chave.",
       features: [
         "Publique vagas ilimitadas",
-        "A IA classifica candidatas com explicações",
+        "A IA classifica candidatos com explicações",
         "Acesse perfis de mais de 15 países",
         "Execute a correspondência novamente conforme suas necessidades evoluem",
       ],
       cta: "Comece a contratar →",
     },
     cta: {
-      title: "Pronta para fazer a conexão?",
+      title: "Pronto para fazer a conexão?",
       description:
         "Junte-se às LaLíderes e empresas que já usam o LALA Match para construir o futuro.",
     },
     footer: {
-      tagline: "Criado para a LALA, empoderando líderes latino-americanas desde 2017.",
+      tagline: "Criado para a LALA, empoderando líderes latino-americanos desde 2017.",
     },
   },
   auth: {
@@ -412,10 +412,10 @@ const pt = {
     matches: {
       sectionTitle: "Empresas que combinaram com você",
       noMatches:
-        "Nenhuma correspondência ainda — certifique-se de que seu perfil está completo para que as empresas possam encontrá-la.",
+        "Nenhuma correspondência ainda — certifique-se de que seu perfil está completo para que as empresas possam encontrá-lo.",
       aboutCompany: "Sobre a empresa",
       whyJoin: "Por que entrar para a equipe",
-      goodFit: "Por que você é uma boa escolha",
+      goodFit: "Por que você é um bom candidato",
       areasToDevelop: "Áreas para desenvolver",
       visitWebsite: "Visitar website →",
       linkedinLink: "LinkedIn →",
@@ -426,7 +426,7 @@ const pt = {
     titleLalider: "Complete seu perfil",
     descriptionCompany:
       "LaLíderes verão este perfil quando forem combinadas com suas vagas.",
-    descriptionLalider: "Conte-nos sobre você para que as empresas possam encontrá-la.",
+    descriptionLalider: "Conte-nos sobre você para que as empresas possam encontrá-lo.",
     fullName: "Nome completo",
     location: "Localização (cidade, país)",
     education: "Educação",
@@ -439,7 +439,7 @@ const pt = {
     opportunityTypePlaceholder: "Selecione o tipo de oportunidade",
     bio: "Sobre você",
     bioPlaceholder:
-      "Conte às empresas um pouco sobre você, seus objetivos e o que te torna única…",
+      "Conte às empresas um pouco sobre você, seus objetivos e o que te torna único…",
     linkedinProfile: "URL do perfil do LinkedIn",
     linkedinProfilePlaceholder: "https://linkedin.com/in/seunome",
     companyName: "Nome da empresa",
@@ -478,7 +478,7 @@ const pt = {
     locationPlaceholder: "Cidade, país ou Remoto",
     description: "Descrição da vaga",
     descriptionPlaceholder: "O que esta pessoa fará? Como é a equipe?",
-    requirements: "Requisitos e candidata ideal",
+    requirements: "Requisitos e candidato ideal",
     requirementsPlaceholder: "Habilidades, experiência, educação e outras expectativas…",
     submit: "Publicar vaga",
     submitting: "Publicando…",
@@ -494,18 +494,18 @@ const pt = {
     analyzeDescription:
       "Clique abaixo para que Claude analise todos os perfis de LaLíderes e encontre as melhores correspondências para esta vaga.",
     findMatches: "Encontrar correspondências com IA",
-    analyzing: "Analisando candidatas…",
+    analyzing: "Analisando candidatos…",
     noStrongMatches: "Nenhuma correspondência forte encontrada",
     reRun: "Executar correspondência novamente",
     reRunning: "Executando novamente…",
     noLalideres:
       "Nenhuma LaLíder com forte compatibilidade foi encontrada. Tente ampliar os requisitos da vaga.",
     matchScore: "Pontuação de correspondência",
-    whyTheyFit: "Por que ela é adequada",
+    whyTheyFit: "Por que ele é adequado",
     potentialGaps: "Lacunas potenciais",
     viewLinkedin: "Ver perfil do LinkedIn",
-    matchedCandidate: "candidata correspondente",
-    matchedCandidates: "candidatas correspondentes",
+    matchedCandidate: "candidato correspondente",
+    matchedCandidates: "candidatos correspondentes",
   },
 };
 
@@ -517,7 +517,7 @@ const es = {
     editProfile: "Editar perfil",
     lalaMatch: "LALA Match",
     lalaPlatform: "Plataforma LALA",
-    iAmLalider: "Soy una LaLíder",
+    iAmLalider: "Soy un LaLíder",
     iRepresentCompany: "Represento a una empresa",
     aboutUs: "Sobre nosotros",
   },
@@ -532,7 +532,7 @@ const es = {
       titleHighlight: "conectada",
       titleEnd: "con las empresas correctas.",
       description:
-        "LALA Match conecta a las LaLíderes, las jóvenes líderes más prometedoras de la región, con empresas que buscan construir equipos excepcionales. Impulsado por IA, diseñado para generar impacto.",
+        "LALA Match conecta a los LaLíderes, los jóvenes líderes más prometedores de la región, con empresas que buscan construir equipos excepcionales. Impulsado por IA, diseñado para generar impacto.",
     },
     stats: [
       { value: "3,000+", label: "LaLíderes en toda América Latina" },
@@ -546,7 +546,7 @@ const es = {
         {
           step: "01",
           title: "Crea tu perfil",
-          body: "Las LaLíderes detallan su educación, experiencia y ambiciones. Las empresas describen sus posiciones abiertas y candidatas ideales.",
+          body: "Las LaLíderes detallan su educación, experiencia y ambiciones. Las empresas describen sus posiciones abiertas y candidatos ideales.",
         },
         {
           step: "02",
@@ -556,7 +556,7 @@ const es = {
         {
           step: "03",
           title: "Conéctate y crece",
-          body: "Las empresas contactan a sus mejores coincidencias. Las LaLíderes ven para qué oportunidades han sido seleccionadas.",
+          body: "Las empresas contactan a sus mejores coincidencias. Las LaLíderes ven para qué oportunidades han sido seleccionados.",
         },
       ],
     },
@@ -580,19 +580,19 @@ const es = {
         "Publica tus posiciones abiertas y deja que la IA encuentre las LaLíderes más relevantes, clasificadas por compatibilidad con explicaciones claras, no solo coincidencias de palabras clave.",
       features: [
         "Publica posiciones ilimitadas",
-        "La IA clasifica candidatas con explicaciones",
+        "La IA clasifica candidatos con explicaciones",
         "Accede a perfiles de más de 15 países",
         "Vuelve a ejecutar el emparejamiento según evolucionen tus necesidades",
       ],
       cta: "Empieza a contratar →",
     },
     cta: {
-      title: "¿Lista para hacer la conexión?",
+      title: "¿Listo para hacer la conexión?",
       description:
         "Únete a las LaLíderes y empresas que ya usan LALA Match para construir el futuro.",
     },
     footer: {
-      tagline: "Creado para LALA, empoderando a líderes latinoamericanas desde 2017.",
+      tagline: "Creado para LALA, empoderando a líderes latinoamericanos desde 2017.",
     },
   },
   auth: {
@@ -673,7 +673,7 @@ const es = {
         "Aún no hay coincidencias — asegúrate de que tu perfil esté completo para que las empresas puedan encontrarte.",
       aboutCompany: "Sobre la empresa",
       whyJoin: "Por qué unirse a su equipo",
-      goodFit: "Por qué eres una buena candidata",
+      goodFit: "Por qué eres un buen candidato",
       areasToDevelop: "Áreas a desarrollar",
       visitWebsite: "Visitar sitio web →",
       linkedinLink: "LinkedIn →",
@@ -697,7 +697,7 @@ const es = {
     opportunityTypePlaceholder: "Selecciona el tipo de oportunidad",
     bio: "Sobre ti",
     bioPlaceholder:
-      "Cuéntales a las empresas un poco sobre ti, tus objetivos y lo que te hace única…",
+      "Cuéntales a las empresas un poco sobre ti, tus objetivos y lo que te hace único…",
     linkedinProfile: "URL del perfil de LinkedIn",
     linkedinProfilePlaceholder: "https://linkedin.com/in/tunombre",
     companyName: "Nombre de la empresa",
@@ -736,7 +736,7 @@ const es = {
     locationPlaceholder: "Ciudad, país o Remoto",
     description: "Descripción del puesto",
     descriptionPlaceholder: "¿Qué hará esta persona? ¿Cómo es el equipo?",
-    requirements: "Requisitos y candidata ideal",
+    requirements: "Requisitos y candidato ideal",
     requirementsPlaceholder: "Habilidades, experiencia, educación y otras expectativas…",
     submit: "Publicar puesto",
     submitting: "Publicando…",
@@ -752,7 +752,7 @@ const es = {
     analyzeDescription:
       "Haz clic abajo para que Claude analice todos los perfiles de LaLíderes y encuentre las mejores coincidencias para este puesto.",
     findMatches: "Encontrar coincidencias con IA",
-    analyzing: "Analizando candidatas…",
+    analyzing: "Analizando candidatos…",
     noStrongMatches: "No se encontraron coincidencias sólidas",
     reRun: "Volver a ejecutar el emparejamiento",
     reRunning: "Ejecutando de nuevo…",
@@ -762,8 +762,8 @@ const es = {
     whyTheyFit: "Por qué encaja",
     potentialGaps: "Brechas potenciales",
     viewLinkedin: "Ver perfil de LinkedIn",
-    matchedCandidate: "candidata coincidente",
-    matchedCandidates: "candidatas coincidentes",
+    matchedCandidate: "candidato coincidente",
+    matchedCandidates: "candidatos coincidentes",
   },
 };
 
