@@ -13,7 +13,7 @@ export default function DemoDashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <span className="font-brand font-bold text-xl text-blue-700">LALA Match</span>
+        <span className="font-brand text-xl text-blue-700">LALA Match</span>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-500">Grupo Financiero Demo</span>
           <Button variant="outline" size="sm">Edit profile</Button>

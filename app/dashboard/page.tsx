@@ -101,7 +101,7 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-brand font-bold text-xl text-blue-700">
+        <Link href="/" className="flex items-center gap-2 font-brand text-xl text-blue-700">
             <Image src="/lala-logo.png" alt="LALA" width={32} height={32} className="rounded-sm" />
             {t.common.lalaPlatform}
           </Link>

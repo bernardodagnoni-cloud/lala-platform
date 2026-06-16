@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Nunito } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import { LanguageProvider } from "@/components/language-provider";
 import "./globals.css";
@@ -14,10 +15,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const nunito = Nunito({
-  variable: "--font-nunito",
-  subsets: ["latin"],
-  weight: "800",
+const vilane = localFont({
+  src: "./fonts/Vilane-ExtraLight.ttf",
+  variable: "--font-vilane",
+  weight: "200",
 });
 
 export const metadata: Metadata = {
@@ -36,7 +37,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${vilane.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider initialLocale={locale}>{children}</LanguageProvider>

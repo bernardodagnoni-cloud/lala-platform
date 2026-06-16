@@ -119,7 +119,7 @@ export default function MatchesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <span className="font-brand font-bold text-xl text-blue-700">{t.common.lalaPlatform}</span>
+        <span className="font-brand text-xl text-blue-700">{t.common.lalaPlatform}</span>
         <Link href="/dashboard">
           <Button variant="ghost" size="sm">← Dashboard</Button>
         </Link>
