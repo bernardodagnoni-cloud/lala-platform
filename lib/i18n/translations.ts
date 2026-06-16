@@ -537,26 +537,26 @@ const es = {
     stats: [
       { value: "3,000+", label: "LaLíderes en toda América Latina" },
       { value: "17", label: "Países representados" },
-      { value: "Con IA", label: "Tecnología de emparejamiento" },
+      { value: "Con IA", label: "Tecnología de Matchmaking" },
     ],
     howItWorks: {
       eyebrow: "Cómo funciona",
-      title: "Del perfil a la colocación en tres pasos",
+      title: "Del perfil a la conexión en tres pasos",
       steps: [
         {
           step: "01",
           title: "Crea tu perfil",
-          body: "Las LaLíderes detallan su educación, experiencia y ambiciones. Las empresas describen sus posiciones abiertas y candidatos ideales.",
+          body: "Los LaLíderes detallan su educación, experiencia y ambiciones. Las empresas describen sus puestos disponibles y el candidato ideal.",
         },
         {
           step: "02",
           title: "La IA encuentra la compatibilidad",
-          body: "Claude analiza cada perfil frente a cada posición, evaluando la compatibilidad y explicando el razonamiento en lenguaje simple.",
+          body: "Claude analiza cada perfil frente a cada puesto, evaluando la compatibilidad y explicando su razonamiento.",
         },
         {
           step: "03",
           title: "Conéctate y crece",
-          body: "Las empresas contactan a sus mejores coincidencias. Las LaLíderes ven para qué oportunidades han sido seleccionados.",
+          body: "Las empresas contactan a los candidatos ideales. Los LaLíderes ven los puestos para los que han sido seleccionados.",
         },
       ],
     },
@@ -564,10 +564,10 @@ const es = {
       eyebrow: "Para LaLíderes",
       title: "Tu talento merece ser visto.",
       description:
-        "Crea un perfil completo que muestre tu educación, experiencia y objetivos. Recibe notificaciones cuando las empresas te emparejen con posiciones que se ajusten a tus ambiciones.",
+        "Crea un perfil completo que muestre tu educación, experiencia y objetivos. Recibe notificaciones cuando las empresas se interesen en tu perfil para puestos que se ajusten a tus ambiciones.",
       features: [
         "Perfil gratuito, visible para todas las empresas asociadas",
-        "La IA te empareja con posiciones relevantes",
+        "La IA te empareja con puestos relevantes",
         "Ve qué empresas están interesadas en ti",
         "Conéctate directamente a través de LinkedIn",
       ],
@@ -577,19 +577,19 @@ const es = {
       eyebrow: "Para Empresas",
       title: "Encuentra talento excepcional.",
       description:
-        "Publica tus posiciones abiertas y deja que la IA encuentre las LaLíderes más relevantes, clasificadas por compatibilidad con explicaciones claras, no solo coincidencias de palabras clave.",
+        "Publica tus puestos disponibles y deja que la IA encuentre los LaLíderes más relevantes, clasificados por compatibilidad con explicaciones claras, no solo coincidencias de palabras clave.",
       features: [
-        "Publica posiciones ilimitadas",
+        "Publica puestos ilimitados",
         "La IA clasifica candidatos con explicaciones",
         "Accede a perfiles de más de 15 países",
-        "Vuelve a ejecutar el emparejamiento según evolucionen tus necesidades",
+        "Encuentra nuevos candidatos según evolucionen tus necesidades",
       ],
       cta: "Empieza a contratar →",
     },
     cta: {
       title: "¿Listo para hacer la conexión?",
       description:
-        "Únete a las LaLíderes y empresas que ya usan LALA Match para construir el futuro.",
+        "Únete a los LaLíderes y empresas que ya usan LALA Match para construir el futuro.",
     },
     footer: {
       tagline: "Creado para LALA, empoderando a líderes latinoamericanos desde 2017.",
@@ -631,7 +631,7 @@ const es = {
     },
   },
   dashboard: {
-    welcomeSubtitleCompany: "Gestiona tus posiciones y encuentra a las mejores LaLíderes para tu equipo.",
+    welcomeSubtitleCompany: "Gestiona tus puestos y encuentra a los mejores LaLíderes para tu equipo.",
     welcomeSubtitleLalider:
       "Ve qué empresas te han emparejado y mantén tu perfil actualizado.",
     companyProfile: {
@@ -672,7 +672,7 @@ const es = {
       noMatches:
         "Aún no hay coincidencias — asegúrate de que tu perfil esté completo para que las empresas puedan encontrarte.",
       aboutCompany: "Sobre la empresa",
-      whyJoin: "Por qué unirse a su equipo",
+      whyJoin: "Por qué unirte a su equipo",
       goodFit: "Por qué eres un buen candidato",
       areasToDevelop: "Áreas a desarrollar",
       visitWebsite: "Visitar sitio web →",
@@ -683,7 +683,7 @@ const es = {
     titleCompany: "Crea el perfil de tu empresa",
     titleLalider: "Completa tu perfil",
     descriptionCompany:
-      "Las LaLíderes verán este perfil cuando sean emparejadas con tus posiciones.",
+      "Los LaLíderes verán este perfil cuando sean emparejados con tus puestos.",
     descriptionLalider: "Cuéntanos sobre ti para que las empresas puedan encontrarte.",
     fullName: "Nombre completo",
     location: "Ubicación (ciudad, país)",
@@ -733,7 +733,7 @@ const es = {
     opportunityType: "Tipo de oportunidad",
     opportunityTypePlaceholder: "Selecciona el tipo",
     location: "Ubicación (opcional)",
-    locationPlaceholder: "Ciudad, país o Remoto",
+    locationPlaceholder: "Ciudad, país o remoto",
     description: "Descripción del puesto",
     descriptionPlaceholder: "¿Qué hará esta persona? ¿Cómo es el equipo?",
     requirements: "Requisitos y candidato ideal",
@@ -754,7 +754,7 @@ const es = {
     findMatches: "Encontrar coincidencias con IA",
     analyzing: "Analizando candidatos…",
     noStrongMatches: "No se encontraron coincidencias sólidas",
-    reRun: "Volver a ejecutar el emparejamiento",
+    reRun: "Buscar nuevas coincidencias",
     reRunning: "Ejecutando de nuevo…",
     noLalideres:
       "No se encontraron LaLíderes con una compatibilidad sólida. Intenta ampliar los requisitos del puesto.",
