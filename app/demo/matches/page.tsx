@@ -40,7 +40,7 @@ export default function DemoMatchesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <span className="font-bold text-xl text-blue-700">LALA Platform</span>
+        <span className="font-brand font-bold text-xl text-blue-700">LALA Match</span>
         <Link href="/demo">
           <Button variant="ghost" size="sm">← Dashboard</Button>
         </Link>

@@ -37,7 +37,7 @@ export default async function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
               <Image src="/lala-logo.png" alt="LALA" width={32} height={32} className="rounded-sm" />
-              <span className="font-bold text-xl tracking-tight text-blue-900">{t.common.lalaMatch}</span>
+              <span className="font-brand font-bold text-xl tracking-tight text-blue-900">{t.common.lalaMatch}</span>
             </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher className="text-blue-900" />
@@ -222,7 +222,7 @@ export default async function LandingPage() {
       <footer className="bg-blue-950 text-blue-300 py-10 px-6 relative overflow-hidden">
         <GoldStar className="absolute -top-4 -right-4 w-20 h-20 opacity-[0.07] rotate-[30deg] pointer-events-none select-none" />
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-          <span className="font-bold text-white text-base tracking-tight">{t.common.lalaMatch}</span>
+          <span className="font-brand font-bold text-white text-base tracking-tight">{t.common.lalaMatch}</span>
           <p className="text-blue-400 text-xs">
             {t.landing.footer.tagline}
           </p>
