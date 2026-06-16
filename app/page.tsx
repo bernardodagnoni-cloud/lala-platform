@@ -62,7 +62,7 @@ export default async function LandingPage() {
         {/* Subtle grid overlay */}
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
         <GoldStar className="absolute -top-8 -right-16 w-80 h-80 opacity-10 rotate-12 pointer-events-none select-none" />
-        <BlueSparkle className="absolute -bottom-16 -left-6 w-56 h-56 opacity-[0.12] pointer-events-none select-none" />
+        <BlueSparkle className="absolute -bottom-16 -left-6 w-56 h-56 opacity-[0.28] pointer-events-none select-none" />
         <div className="max-w-5xl mx-auto relative">
           <div className="inline-flex items-center gap-2 bg-white/10 text-blue-200 text-xs font-medium px-3 py-1.5 rounded-full mb-8 border border-white/10">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -107,7 +107,7 @@ export default async function LandingPage() {
 
       {/* How it works */}
       <section className="py-24 px-6 bg-gray-50 relative overflow-hidden">
-        <BlueSparkle className="absolute top-8 right-8 w-24 h-24 opacity-[0.10] pointer-events-none select-none" />
+        <BlueSparkle className="absolute top-8 right-8 w-24 h-24 opacity-[0.22] pointer-events-none select-none" />
         <GoldStar className="absolute -bottom-4 -left-6 w-28 h-28 opacity-[0.08] -rotate-12 pointer-events-none select-none" />
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
@@ -181,7 +181,7 @@ export default async function LandingPage() {
 
       {/* CTA */}
       <section className="py-24 px-6 bg-amber-400 relative overflow-hidden">
-        <BlueSparkle className="absolute top-6 left-8 w-28 h-28 opacity-[0.18] pointer-events-none select-none" />
+        <BlueSparkle className="absolute top-6 left-8 w-28 h-28 opacity-[0.35] pointer-events-none select-none" />
         <GoldStar className="absolute -bottom-2 right-12 w-24 h-24 opacity-[0.22] pointer-events-none select-none" />
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-6">
