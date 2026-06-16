@@ -33,8 +33,8 @@ type LaliderMatch = {
 function ScoreBadge({ score }: { score: number }) {
   const color =
     score >= 8 ? "bg-green-100 text-green-800" :
-    score >= 6 ? "bg-lala-gold/25 text-lala-dark" :
-    "bg-lala-cream-dark/60 text-lala-muted";
+    score >= 6 ? "bg-yellow-100 text-yellow-800" :
+    "bg-orange-100 text-orange-800";
   return (
     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${color}`}>
       {score}/10
@@ -99,15 +99,15 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-lala-cream">
-      <nav className="bg-white border-b border-lala-cream-dark px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl text-lala-dark">
+    <div className="min-h-screen bg-gray-50">
+      <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2 font-bold text-xl text-blue-700">
             <Image src="/lala-logo.png" alt="LALA" width={32} height={32} className="rounded-sm" />
             {t.common.lalaPlatform}
           </Link>
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
-          <span className="text-sm text-lala-muted">{profile.full_name}</span>
+          <span className="text-sm text-gray-500">{profile.full_name}</span>
           <form action="/api/auth/logout" method="POST">
             <Button variant="ghost" size="sm" type="submit">{t.common.signOut}</Button>
           </form>
@@ -119,7 +119,7 @@ export default async function DashboardPage() {
           <h1 className="text-2xl font-bold">
             Welcome, {isCompany ? profile.company_name || profile.full_name : profile.full_name}
           </h1>
-          <p className="text-lala-muted mt-1">
+          <p className="text-gray-500 mt-1">
             {isCompany
               ? t.dashboard.welcomeSubtitleCompany
               : t.dashboard.welcomeSubtitleLalider}
@@ -149,13 +149,13 @@ export default async function DashboardPage() {
                   {profile.website && (
                     <div>
                       <span className="font-medium">{t.dashboard.companyProfile.website}:</span>{" "}
-                      <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-lala-indigo hover:underline">{profile.website}</a>
+                      <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.website}</a>
                     </div>
                   )}
                   {profile.linkedin_url && (
                     <div>
                       <span className="font-medium">{t.dashboard.companyProfile.linkedin}:</span>{" "}
-                      <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-lala-indigo hover:underline">{profile.linkedin_url}</a>
+                      <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.linkedin_url}</a>
                     </div>
                   )}
                   {profile.company_description && (
@@ -165,9 +165,9 @@ export default async function DashboardPage() {
                     <div><span className="font-medium">{t.dashboard.companyProfile.whyJoinUs}:</span> {profile.bio}</div>
                   )}
                   {!profile.company_name && !profile.company_description && (
-                    <p className="text-lala-muted/70 py-4 text-center">
+                    <p className="text-gray-400 py-4 text-center">
                       {t.dashboard.companyProfile.noProfile}{" "}
-                      <Link href="/profile/edit" className="text-lala-indigo hover:underline">{t.dashboard.companyProfile.completeProfile}</Link>
+                      <Link href="/profile/edit" className="text-blue-600 hover:underline">{t.dashboard.companyProfile.completeProfile}</Link>
                     </p>
                   )}
                 </CardContent>
@@ -201,7 +201,7 @@ export default async function DashboardPage() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-lala-muted line-clamp-2">{pos.description}</p>
+                      <p className="text-sm text-gray-600 line-clamp-2">{pos.description}</p>
                     </CardContent>
                     <CardFooter>
                       <Link href={`/positions/${pos.id}/matches`}>
@@ -213,9 +213,9 @@ export default async function DashboardPage() {
               </div>
             ) : (
               <Card>
-                <CardContent className="py-10 text-center text-lala-muted/70">
+                <CardContent className="py-10 text-center text-gray-400">
                   {t.dashboard.positions.empty}{" "}
-                  <Link href="/positions/new" className="text-lala-indigo hover:underline">
+                  <Link href="/positions/new" className="text-blue-600 hover:underline">
                     {t.dashboard.positions.postFirst}
                   </Link>
                 </CardContent>
@@ -247,13 +247,13 @@ export default async function DashboardPage() {
                   {profile.linkedin_url && (
                     <div>
                       <span className="font-medium">{t.dashboard.laliderProfile.linkedin}:</span>{" "}
-                      <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-lala-indigo hover:underline">{profile.linkedin_url}</a>
+                      <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.linkedin_url}</a>
                     </div>
                   )}
                   {!profile.education && !profile.experience && !profile.skills && (
-                    <p className="text-lala-muted/70 py-4 text-center">
+                    <p className="text-gray-400 py-4 text-center">
                       {t.dashboard.laliderProfile.incompletePrefix}{" "}
-                      <Link href="/profile/edit" className="text-lala-indigo hover:underline">{t.dashboard.laliderProfile.fillIn}</Link>{" "}
+                      <Link href="/profile/edit" className="text-blue-600 hover:underline">{t.dashboard.laliderProfile.fillIn}</Link>{" "}
                       {t.dashboard.laliderProfile.incompleteSuffix}
                     </p>
                   )}
@@ -266,7 +266,7 @@ export default async function DashboardPage() {
               <h2 className="text-lg font-semibold">
                 {t.dashboard.matches.sectionTitle}
                 {laliderMatches && laliderMatches.length > 0 && (
-                  <span className="ml-2 text-sm font-normal text-lala-muted">
+                  <span className="ml-2 text-sm font-normal text-gray-500">
                     ({laliderMatches.length} match{laliderMatches.length > 1 ? "es" : ""})
                   </span>
                 )}
@@ -274,7 +274,7 @@ export default async function DashboardPage() {
 
               {!laliderMatches || laliderMatches.length === 0 ? (
                 <Card>
-                  <CardContent className="py-10 text-center text-lala-muted/70">
+                  <CardContent className="py-10 text-center text-gray-400">
                     {t.dashboard.matches.noMatches}
                   </CardContent>
                 </Card>
@@ -304,30 +304,30 @@ export default async function DashboardPage() {
                         <CardContent className="space-y-3">
                           {company?.company_description && (
                             <div>
-                              <p className="text-sm font-medium text-lala-dark mb-1">{t.dashboard.matches.aboutCompany}</p>
-                              <p className="text-sm text-lala-muted">{company.company_description}</p>
+                              <p className="text-sm font-medium text-gray-700 mb-1">{t.dashboard.matches.aboutCompany}</p>
+                              <p className="text-sm text-gray-600">{company.company_description}</p>
                             </div>
                           )}
                           {company?.bio && (
                             <>
                               <Separator />
                               <div>
-                                <p className="text-sm font-medium text-lala-dark mb-1">{t.dashboard.matches.whyJoin}</p>
-                                <p className="text-sm text-lala-muted">{company.bio}</p>
+                                <p className="text-sm font-medium text-gray-700 mb-1">{t.dashboard.matches.whyJoin}</p>
+                                <p className="text-sm text-gray-600">{company.bio}</p>
                               </div>
                             </>
                           )}
                           <Separator />
                           <div>
-                            <p className="text-sm font-medium text-lala-dark mb-1">{t.dashboard.matches.goodFit}</p>
-                            <p className="text-sm text-lala-muted">{m.match_reason}</p>
+                            <p className="text-sm font-medium text-gray-700 mb-1">{t.dashboard.matches.goodFit}</p>
+                            <p className="text-sm text-gray-600">{m.match_reason}</p>
                           </div>
                           {m.gaps && (
                             <>
                               <Separator />
                               <div>
-                                <p className="text-sm font-medium text-lala-dark mb-1">{t.dashboard.matches.areasToDevelop}</p>
-                                <p className="text-sm text-lala-muted">{m.gaps}</p>
+                                <p className="text-sm font-medium text-gray-700 mb-1">{t.dashboard.matches.areasToDevelop}</p>
+                                <p className="text-sm text-gray-500">{m.gaps}</p>
                               </div>
                             </>
                           )}
@@ -340,7 +340,7 @@ export default async function DashboardPage() {
                                     href={company.website}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-sm text-lala-indigo hover:underline"
+                                    className="text-sm text-blue-600 hover:underline"
                                   >
                                     {t.dashboard.matches.visitWebsite}
                                   </a>
@@ -350,7 +350,7 @@ export default async function DashboardPage() {
                                     href={company.linkedin_url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-sm text-lala-indigo hover:underline"
+                                    className="text-sm text-blue-600 hover:underline"
                                   >
                                     {t.dashboard.matches.linkedinLink}
                                   </a>

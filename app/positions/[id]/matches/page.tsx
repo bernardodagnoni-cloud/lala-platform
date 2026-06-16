@@ -28,8 +28,8 @@ type Position = {
 function ScoreBadge({ score }: { score: number }) {
   const color =
     score >= 8 ? "bg-green-100 text-green-800" :
-    score >= 6 ? "bg-lala-gold/25 text-lala-dark" :
-    "bg-lala-cream-dark/60 text-lala-muted";
+    score >= 6 ? "bg-yellow-100 text-yellow-800" :
+    "bg-orange-100 text-orange-800";
   return (
     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${color}`}>
       {score}/10
@@ -117,9 +117,9 @@ export default function MatchesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-lala-cream">
+    <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <span className="font-bold text-xl text-lala-dark">{t.common.lalaPlatform}</span>
+        <span className="font-bold text-xl text-blue-700">{t.common.lalaPlatform}</span>
         <Link href="/dashboard">
           <Button variant="ghost" size="sm">← Dashboard</Button>
         </Link>
@@ -129,7 +129,7 @@ export default function MatchesPage() {
         {position && (
           <div>
             <h1 className="text-2xl font-bold">{position.title}</h1>
-            <p className="text-lala-muted mt-1">
+            <p className="text-gray-500 mt-1">
               {position.opportunity_type}
               {position.location ? ` · ${position.location}` : ""}
             </p>
@@ -139,7 +139,7 @@ export default function MatchesPage() {
         {!fetched && (
           <Card>
             <CardContent className="py-10 flex flex-col items-center gap-4">
-              <p className="text-lala-muted text-center max-w-sm">
+              <p className="text-gray-500 text-center max-w-sm">
                 {t.positionsMatches.analyzeDescription}
               </p>
               <Button onClick={runMatching} disabled={loading} size="lg">
@@ -165,7 +165,7 @@ export default function MatchesPage() {
 
             {matches.length === 0 && (
               <Card>
-                <CardContent className="py-8 text-center text-lala-muted/70">
+                <CardContent className="py-8 text-center text-gray-400">
                   {t.positionsMatches.noLalideres}
                 </CardContent>
               </Card>
@@ -184,15 +184,15 @@ export default function MatchesPage() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
-                    <p className="text-sm font-medium text-lala-dark mb-1">{t.positionsMatches.whyTheyFit}</p>
-                    <p className="text-sm text-lala-muted">{match.matchReason}</p>
+                    <p className="text-sm font-medium text-gray-700 mb-1">{t.positionsMatches.whyTheyFit}</p>
+                    <p className="text-sm text-gray-600">{match.matchReason}</p>
                   </div>
                   {match.gaps && (
                     <>
                       <Separator />
                       <div>
-                        <p className="text-sm font-medium text-lala-dark mb-1">{t.positionsMatches.potentialGaps}</p>
-                        <p className="text-sm text-lala-muted">{match.gaps}</p>
+                        <p className="text-sm font-medium text-gray-700 mb-1">{t.positionsMatches.potentialGaps}</p>
+                        <p className="text-sm text-gray-500">{match.gaps}</p>
                       </div>
                     </>
                   )}
@@ -203,7 +203,7 @@ export default function MatchesPage() {
                         href={match.linkedin_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-lala-indigo hover:underline font-medium"
+                        className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline font-medium"
                       >
                         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>

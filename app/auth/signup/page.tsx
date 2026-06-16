@@ -64,7 +64,7 @@ function SignupForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-lala-cream p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">{t.auth.signup.title}</CardTitle>
@@ -126,9 +126,9 @@ function SignupForm() {
             <Button type="submit" className="w-full" disabled={loading || !role}>
               {loading ? t.auth.signup.submitting : t.auth.signup.submit}
             </Button>
-            <p className="text-sm text-lala-muted text-center">
+            <p className="text-sm text-gray-500 text-center">
               {t.auth.signup.haveAccount}{" "}
-              <Link href="/auth/login" className="text-lala-indigo hover:underline">
+              <Link href="/auth/login" className="text-blue-600 hover:underline">
                 {t.auth.signup.signInLink}
               </Link>
             </p>
