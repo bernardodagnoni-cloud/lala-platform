@@ -25,6 +25,9 @@ export default function EditProfilePage() {
   const [locationCountry, setLocationCountry] = useState("");
   const [locationRegion, setLocationRegion] = useState("");
   const [locationCity, setLocationCity] = useState("");
+  const [eduUniversity, setEduUniversity] = useState("");
+  const [eduDegree, setEduDegree] = useState("");
+  const [eduYear, setEduYear] = useState("");
 
   useEffect(() => {
     async function loadProfile() {
@@ -41,6 +44,12 @@ export default function EditProfilePage() {
       if (data) {
         setProfile(data);
         setRole(data.role as UserRole);
+        if (data.role === "laLider" && data.education) {
+          const eduParts = data.education.split(" | ");
+          setEduUniversity(eduParts[0]?.trim() ?? "");
+          setEduDegree(eduParts[1]?.trim() ?? "");
+          setEduYear(eduParts[2]?.trim() ?? "");
+        }
         if (data.role === "laLider" && data.location) {
           const parts = data.location.split(", ").map((s: string) => s.trim());
           if (parts.length >= 3) {
@@ -67,8 +76,9 @@ export default function EditProfilePage() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     if (!profile.full_name?.trim()) { setError(t.profileEdit.errorFullName); return; }
+    const combinedEducation = [eduUniversity, eduDegree, eduYear].filter(Boolean).join(" | ") || null;
     if (role === "laLider") {
-      if (!profile.education?.trim() && !profile.experience?.trim()) {
+      if (!combinedEducation && !profile.experience?.trim()) {
         setError(t.profileEdit.errorEducationOrExperience); return;
       }
       if (!profile.opportunity_type) { setError(t.profileEdit.errorOpportunityType); return; }
@@ -94,7 +104,7 @@ export default function EditProfilePage() {
           ? [locationCity, locationRegion, locationCountry].filter(Boolean).join(", ") || null
           : profile.location,
         bio: profile.bio,
-        education: profile.education,
+        education: role === "laLider" ? combinedEducation : profile.education,
         experience: profile.experience,
         opportunity_type: profile.opportunity_type,
         skills: profile.skills,
@@ -174,13 +184,30 @@ export default function EditProfilePage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="education">{t.profileEdit.education}</Label>
-                    <Textarea
-                      id="education"
-                      placeholder={t.profileEdit.educationPlaceholder}
-                      value={profile.education ?? ""}
-                      onChange={(e) => update("education", e.target.value)}
-                      rows={3}
+                    <Label htmlFor="edu_university">{t.profileEdit.university}</Label>
+                    <Input
+                      id="edu_university"
+                      placeholder={t.profileEdit.universityPlaceholder}
+                      value={eduUniversity}
+                      onChange={(e) => setEduUniversity(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="edu_degree">{t.profileEdit.degree}</Label>
+                    <Input
+                      id="edu_degree"
+                      placeholder={t.profileEdit.degreePlaceholder}
+                      value={eduDegree}
+                      onChange={(e) => setEduDegree(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="edu_year">{t.profileEdit.graduationYear}</Label>
+                    <Input
+                      id="edu_year"
+                      placeholder={t.profileEdit.graduationYearPlaceholder}
+                      value={eduYear}
+                      onChange={(e) => setEduYear(e.target.value)}
                     />
                   </div>
                   <div className="space-y-1">
