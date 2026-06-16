@@ -37,7 +37,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-lala-cream p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">{t.auth.login.title}</CardTitle>
@@ -77,9 +77,9 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? t.auth.login.submitting : t.auth.login.submit}
             </Button>
-            <p className="text-sm text-gray-500 text-center">
+            <p className="text-sm text-lala-muted text-center">
               {t.auth.login.noAccount}{" "}
-              <Link href="/auth/signup" className="text-blue-600 hover:underline">
+              <Link href="/auth/signup" className="text-lala-indigo hover:underline">
                 {t.auth.login.signUpLink}
               </Link>
             </p>

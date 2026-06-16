@@ -55,7 +55,7 @@ export default function NewPositionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-lala-cream p-4">
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>

@@ -46,41 +46,58 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* ── LALA brand palette tokens ── */
+  --color-lala-gold: #FFC200;
+  --color-lala-gold-hover: #FB6941;
+  --color-lala-gold-light: #FFDA66;
+  --color-lala-gold-pale: #FFF3CC;
+  --color-lala-orange: #FF4405;
+  --color-lala-orange-soft: #FB6941;
+  --color-lala-indigo: #3C35DE;
+  --color-lala-indigo-light: #635DE5;
+  --color-lala-indigo-pale: #D8D7F8;
+  --color-lala-dark: #303030;
+  --color-lala-dark-2: #1e1e1e;
+  --color-lala-muted: #605D5D;
+  --color-lala-cream: #EFEBE7;
+  --color-lala-cream-dark: #DDD7D2;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  /* ── LALA brand: shadcn semantic token mapping ── */
+  --background: #EFEBE7;        /* brand cream — page background              */
+  --foreground: #303030;        /* brand near-black — body text                */
+  --card: #FFFFFF;              /* white card surfaces                         */
+  --card-foreground: #303030;
+  --popover: #FFFFFF;
+  --popover-foreground: #303030;
+  --primary: #FFC200;           /* LALA gold — primary CTAs & buttons          */
+  --primary-foreground: #303030;/* dark text on gold (13:1 contrast — AAA)    */
+  --secondary: #EFEBE7;         /* cream — secondary button surfaces           */
+  --secondary-foreground: #303030;
+  --muted: #EFEBE7;
+  --muted-foreground: #605D5D;  /* brand muted text                            */
+  --accent: #FB6941;            /* brand orange — hover/active accent          */
+  --accent-foreground: #FFFFFF;
+  --destructive: oklch(0.577 0.245 27.325); /* keep semantic red for errors    */
+  --border: #DDD7D2;            /* slightly darker cream for borders           */
+  --input: #DDD7D2;
+  --ring: #3C35DE;              /* brand indigo — focus rings                  */
+  --chart-1: #FFC200;           /* gold — primary series                       */
+  --chart-2: #FB6941;           /* orange — secondary series                   */
+  --chart-3: #3C35DE;           /* indigo — tertiary series                    */
+  --chart-4: #605D5D;           /* muted — quaternary series                   */
+  --chart-5: #303030;           /* dark — quinary series                       */
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #303030;
+  --sidebar-primary: #FFC200;
+  --sidebar-primary-foreground: #303030;
+  --sidebar-accent: #EFEBE7;
+  --sidebar-accent-foreground: #303030;
+  --sidebar-border: #DDD7D2;
+  --sidebar-ring: #3C35DE;
 }
 
 .dark {
