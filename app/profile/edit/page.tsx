@@ -22,6 +22,9 @@ export default function EditProfilePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [locationCountry, setLocationCountry] = useState("");
+  const [locationRegion, setLocationRegion] = useState("");
+  const [locationCity, setLocationCity] = useState("");
 
   useEffect(() => {
     async function loadProfile() {
@@ -38,6 +41,19 @@ export default function EditProfilePage() {
       if (data) {
         setProfile(data);
         setRole(data.role as UserRole);
+        if (data.role === "laLider" && data.location) {
+          const parts = data.location.split(", ").map((s: string) => s.trim());
+          if (parts.length >= 3) {
+            setLocationCity(parts[0]);
+            setLocationRegion(parts[1]);
+            setLocationCountry(parts[2]);
+          } else if (parts.length === 2) {
+            setLocationCity(parts[0]);
+            setLocationCountry(parts[1]);
+          } else {
+            setLocationCity(parts[0] ?? "");
+          }
+        }
       }
       setLoading(false);
     }
@@ -74,7 +90,9 @@ export default function EditProfilePage() {
       .from("profiles")
       .update({
         full_name: profile.full_name,
-        location: profile.location,
+        location: role === "laLider"
+          ? [locationCity, locationRegion, locationCountry].filter(Boolean).join(", ") || null
+          : profile.location,
         bio: profile.bio,
         education: profile.education,
         experience: profile.experience,
@@ -129,11 +147,30 @@ export default function EditProfilePage() {
               {role === "laLider" && (
                 <>
                   <div className="space-y-1">
-                    <Label htmlFor="location">{t.profileEdit.location}</Label>
+                    <Label htmlFor="location_country">{t.profileEdit.country}</Label>
                     <Input
-                      id="location"
-                      value={profile.location ?? ""}
-                      onChange={(e) => update("location", e.target.value)}
+                      id="location_country"
+                      placeholder={t.profileEdit.countryPlaceholder}
+                      value={locationCountry}
+                      onChange={(e) => setLocationCountry(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="location_region">{t.profileEdit.stateProvince}</Label>
+                    <Input
+                      id="location_region"
+                      placeholder={t.profileEdit.stateProvincePlaceholder}
+                      value={locationRegion}
+                      onChange={(e) => setLocationRegion(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="location_city">{t.profileEdit.city}</Label>
+                    <Input
+                      id="location_city"
+                      placeholder={t.profileEdit.cityPlaceholder}
+                      value={locationCity}
+                      onChange={(e) => setLocationCity(e.target.value)}
                     />
                   </div>
                   <div className="space-y-1">
