@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -39,6 +40,7 @@ function ScoreBadge({ score }: { score: number }) {
 export default function MatchesPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const t = useT();
 
   const [position, setPosition] = useState<Position | null>(null);
   const [matches, setMatches] = useState<Match[]>([]);
@@ -117,7 +119,7 @@ export default function MatchesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <span className="font-bold text-xl text-blue-700">LALA Platform</span>
+        <span className="font-bold text-xl text-blue-700">{t.common.lalaPlatform}</span>
         <Link href="/dashboard">
           <Button variant="ghost" size="sm">← Dashboard</Button>
         </Link>
@@ -138,10 +140,10 @@ export default function MatchesPage() {
           <Card>
             <CardContent className="py-10 flex flex-col items-center gap-4">
               <p className="text-gray-500 text-center max-w-sm">
-                Click below to let Claude analyze all LaLider profiles and find the best matches for this position.
+                {t.positionsMatches.analyzeDescription}
               </p>
               <Button onClick={runMatching} disabled={loading} size="lg">
-                {loading ? "Analyzing candidates…" : "Find AI matches"}
+                {loading ? t.positionsMatches.analyzing : t.positionsMatches.findMatches}
               </Button>
               {error && <p className="text-red-600 text-sm">{error}</p>}
             </CardContent>
@@ -153,18 +155,18 @@ export default function MatchesPage() {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">
                 {matches.length > 0
-                  ? `${matches.length} matched candidate${matches.length > 1 ? "s" : ""}`
-                  : "No strong matches found"}
+                  ? `${matches.length} ${matches.length > 1 ? t.positionsMatches.matchedCandidates : t.positionsMatches.matchedCandidate}`
+                  : t.positionsMatches.noStrongMatches}
               </h2>
               <Button variant="outline" size="sm" onClick={runMatching} disabled={loading}>
-                {loading ? "Re-running…" : "Re-run matching"}
+                {loading ? t.positionsMatches.reRunning : t.positionsMatches.reRun}
               </Button>
             </div>
 
             {matches.length === 0 && (
               <Card>
                 <CardContent className="py-8 text-center text-gray-400">
-                  No LaLideres with a strong fit were found. Try broadening the position requirements.
+                  {t.positionsMatches.noLalideres}
                 </CardContent>
               </Card>
             )}
@@ -175,21 +177,21 @@ export default function MatchesPage() {
                   <div className="flex items-start justify-between">
                     <div>
                       <CardTitle className="text-base">#{i + 1} — {match.name}</CardTitle>
-                      <CardDescription>Match score</CardDescription>
+                      <CardDescription>{t.positionsMatches.matchScore}</CardDescription>
                     </div>
                     <ScoreBadge score={match.score} />
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
-                    <p className="text-sm font-medium text-gray-700 mb-1">Why they fit</p>
+                    <p className="text-sm font-medium text-gray-700 mb-1">{t.positionsMatches.whyTheyFit}</p>
                     <p className="text-sm text-gray-600">{match.matchReason}</p>
                   </div>
                   {match.gaps && (
                     <>
                       <Separator />
                       <div>
-                        <p className="text-sm font-medium text-gray-700 mb-1">Potential gaps</p>
+                        <p className="text-sm font-medium text-gray-700 mb-1">{t.positionsMatches.potentialGaps}</p>
                         <p className="text-sm text-gray-500">{match.gaps}</p>
                       </div>
                     </>
@@ -206,7 +208,7 @@ export default function MatchesPage() {
                         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                         </svg>
-                        View LinkedIn profile
+                        {t.positionsMatches.viewLinkedin}
                       </a>
                     </>
                   )}

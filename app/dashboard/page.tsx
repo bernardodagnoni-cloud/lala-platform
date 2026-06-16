@@ -2,10 +2,12 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
+import { getServerT } from "@/lib/i18n/server";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 type LaliderMatch = {
   score: number;
@@ -55,6 +57,8 @@ export default async function DashboardPage() {
 
   const isCompany = profile.role === "company";
 
+  const { t } = await getServerT();
+
   let positions: import("@/types/database").PositionRow[] | null = null;
   let laliderMatches: LaliderMatch[] | null = null;
 
@@ -99,12 +103,13 @@ export default async function DashboardPage() {
       <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl text-blue-700">
             <Image src="/lala-logo.png" alt="LALA" width={32} height={32} className="rounded-sm" />
-            LALA Platform
+            {t.common.lalaPlatform}
           </Link>
         <div className="flex items-center gap-4">
+          <LanguageSwitcher />
           <span className="text-sm text-gray-500">{profile.full_name}</span>
           <form action="/api/auth/logout" method="POST">
-            <Button variant="ghost" size="sm" type="submit">Sign out</Button>
+            <Button variant="ghost" size="sm" type="submit">{t.common.signOut}</Button>
           </form>
         </div>
       </nav>
@@ -116,8 +121,8 @@ export default async function DashboardPage() {
           </h1>
           <p className="text-gray-500 mt-1">
             {isCompany
-              ? "Manage your positions and find the best LaLideres for your team."
-              : "See which companies have matched you and keep your profile up to date."}
+              ? t.dashboard.welcomeSubtitleCompany
+              : t.dashboard.welcomeSubtitleLalider}
           </p>
         </div>
 
@@ -128,41 +133,41 @@ export default async function DashboardPage() {
             {/* Company profile section */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">Your company profile</h2>
+                <h2 className="text-lg font-semibold">{t.dashboard.companyProfile.sectionTitle}</h2>
                 <Link href="/profile/edit">
-                  <Button variant="outline" size="sm">Edit profile</Button>
+                  <Button variant="outline" size="sm">{t.common.editProfile}</Button>
                 </Link>
               </div>
               <Card>
                 <CardContent className="pt-6 space-y-3 text-sm">
                   {profile.company_name && (
-                    <div><span className="font-medium">Company:</span> {profile.company_name}</div>
+                    <div><span className="font-medium">{t.dashboard.companyProfile.company}:</span> {profile.company_name}</div>
                   )}
                   {profile.location && (
-                    <div><span className="font-medium">Headquarters:</span> {profile.location}</div>
+                    <div><span className="font-medium">{t.dashboard.companyProfile.headquarters}:</span> {profile.location}</div>
                   )}
                   {profile.website && (
                     <div>
-                      <span className="font-medium">Website:</span>{" "}
+                      <span className="font-medium">{t.dashboard.companyProfile.website}:</span>{" "}
                       <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.website}</a>
                     </div>
                   )}
                   {profile.linkedin_url && (
                     <div>
-                      <span className="font-medium">LinkedIn:</span>{" "}
+                      <span className="font-medium">{t.dashboard.companyProfile.linkedin}:</span>{" "}
                       <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.linkedin_url}</a>
                     </div>
                   )}
                   {profile.company_description && (
-                    <div><span className="font-medium">What we do:</span> {profile.company_description}</div>
+                    <div><span className="font-medium">{t.dashboard.companyProfile.whatWeDo}:</span> {profile.company_description}</div>
                   )}
                   {profile.bio && (
-                    <div><span className="font-medium">Why join us:</span> {profile.bio}</div>
+                    <div><span className="font-medium">{t.dashboard.companyProfile.whyJoinUs}:</span> {profile.bio}</div>
                   )}
                   {!profile.company_name && !profile.company_description && (
                     <p className="text-gray-400 py-4 text-center">
-                      No profile yet.{" "}
-                      <Link href="/profile/edit" className="text-blue-600 hover:underline">Complete your company profile.</Link>
+                      {t.dashboard.companyProfile.noProfile}{" "}
+                      <Link href="/profile/edit" className="text-blue-600 hover:underline">{t.dashboard.companyProfile.completeProfile}</Link>
                     </p>
                   )}
                 </CardContent>
@@ -172,9 +177,9 @@ export default async function DashboardPage() {
             {/* Positions section */}
             <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Your positions</h2>
+              <h2 className="text-lg font-semibold">{t.dashboard.positions.sectionTitle}</h2>
               <Link href="/positions/new">
-                <Button size="sm">+ Post position</Button>
+                <Button size="sm">{t.dashboard.positions.postButton}</Button>
               </Link>
             </div>
 
@@ -191,7 +196,7 @@ export default async function DashboardPage() {
                           </CardDescription>
                         </div>
                         <Badge variant={pos.is_active ? "default" : "secondary"}>
-                          {pos.is_active ? "Active" : "Closed"}
+                          {pos.is_active ? t.dashboard.positions.active : t.dashboard.positions.closed}
                         </Badge>
                       </div>
                     </CardHeader>
@@ -200,7 +205,7 @@ export default async function DashboardPage() {
                     </CardContent>
                     <CardFooter>
                       <Link href={`/positions/${pos.id}/matches`}>
-                        <Button size="sm">View AI matches</Button>
+                        <Button size="sm">{t.dashboard.positions.viewMatches}</Button>
                       </Link>
                     </CardFooter>
                   </Card>
@@ -209,9 +214,9 @@ export default async function DashboardPage() {
             ) : (
               <Card>
                 <CardContent className="py-10 text-center text-gray-400">
-                  No positions yet.{" "}
+                  {t.dashboard.positions.empty}{" "}
                   <Link href="/positions/new" className="text-blue-600 hover:underline">
-                    Post your first one.
+                    {t.dashboard.positions.postFirst}
                   </Link>
                 </CardContent>
               </Card>
@@ -226,28 +231,30 @@ export default async function DashboardPage() {
             {/* Profile section */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">Your profile</h2>
+                <h2 className="text-lg font-semibold">{t.dashboard.laliderProfile.sectionTitle}</h2>
                 <Link href="/profile/edit">
-                  <Button variant="outline" size="sm">Edit profile</Button>
+                  <Button variant="outline" size="sm">{t.common.editProfile}</Button>
                 </Link>
               </div>
               <Card>
                 <CardContent className="pt-6 space-y-2 text-sm">
-                  {profile.location && <div><span className="font-medium">Location:</span> {profile.location}</div>}
-                  {profile.education && <div><span className="font-medium">Education:</span> {profile.education}</div>}
-                  {profile.experience && <div><span className="font-medium">Experience:</span> {profile.experience}</div>}
-                  {profile.skills && <div><span className="font-medium">Skills:</span> {profile.skills}</div>}
-                  {profile.opportunity_type && <div><span className="font-medium">Looking for:</span> {profile.opportunity_type}</div>}
-                  {profile.bio && <div><span className="font-medium">About:</span> {profile.bio}</div>}
+                  {profile.location && <div><span className="font-medium">{t.dashboard.laliderProfile.location}:</span> {profile.location}</div>}
+                  {profile.education && <div><span className="font-medium">{t.dashboard.laliderProfile.education}:</span> {profile.education}</div>}
+                  {profile.experience && <div><span className="font-medium">{t.dashboard.laliderProfile.experience}:</span> {profile.experience}</div>}
+                  {profile.skills && <div><span className="font-medium">{t.dashboard.laliderProfile.skills}:</span> {profile.skills}</div>}
+                  {profile.opportunity_type && <div><span className="font-medium">{t.dashboard.laliderProfile.lookingFor}:</span> {profile.opportunity_type}</div>}
+                  {profile.bio && <div><span className="font-medium">{t.dashboard.laliderProfile.about}:</span> {profile.bio}</div>}
                   {profile.linkedin_url && (
                     <div>
-                      <span className="font-medium">LinkedIn:</span>{" "}
+                      <span className="font-medium">{t.dashboard.laliderProfile.linkedin}:</span>{" "}
                       <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.linkedin_url}</a>
                     </div>
                   )}
                   {!profile.education && !profile.experience && !profile.skills && (
                     <p className="text-gray-400 py-4 text-center">
-                      Your profile is incomplete — <Link href="/profile/edit" className="text-blue-600 hover:underline">fill it in</Link> so companies can find you.
+                      {t.dashboard.laliderProfile.incompletePrefix}{" "}
+                      <Link href="/profile/edit" className="text-blue-600 hover:underline">{t.dashboard.laliderProfile.fillIn}</Link>{" "}
+                      {t.dashboard.laliderProfile.incompleteSuffix}
                     </p>
                   )}
                 </CardContent>
@@ -257,7 +264,7 @@ export default async function DashboardPage() {
             {/* Matches section */}
             <div className="space-y-4">
               <h2 className="text-lg font-semibold">
-                Companies that matched you
+                {t.dashboard.matches.sectionTitle}
                 {laliderMatches && laliderMatches.length > 0 && (
                   <span className="ml-2 text-sm font-normal text-gray-500">
                     ({laliderMatches.length} match{laliderMatches.length > 1 ? "es" : ""})
@@ -268,7 +275,7 @@ export default async function DashboardPage() {
               {!laliderMatches || laliderMatches.length === 0 ? (
                 <Card>
                   <CardContent className="py-10 text-center text-gray-400">
-                    No matches yet — make sure your profile is complete so companies can find you.
+                    {t.dashboard.matches.noMatches}
                   </CardContent>
                 </Card>
               ) : (
@@ -297,7 +304,7 @@ export default async function DashboardPage() {
                         <CardContent className="space-y-3">
                           {company?.company_description && (
                             <div>
-                              <p className="text-sm font-medium text-gray-700 mb-1">About the company</p>
+                              <p className="text-sm font-medium text-gray-700 mb-1">{t.dashboard.matches.aboutCompany}</p>
                               <p className="text-sm text-gray-600">{company.company_description}</p>
                             </div>
                           )}
@@ -305,21 +312,21 @@ export default async function DashboardPage() {
                             <>
                               <Separator />
                               <div>
-                                <p className="text-sm font-medium text-gray-700 mb-1">Why join their team</p>
+                                <p className="text-sm font-medium text-gray-700 mb-1">{t.dashboard.matches.whyJoin}</p>
                                 <p className="text-sm text-gray-600">{company.bio}</p>
                               </div>
                             </>
                           )}
                           <Separator />
                           <div>
-                            <p className="text-sm font-medium text-gray-700 mb-1">Why you&apos;re a good fit</p>
+                            <p className="text-sm font-medium text-gray-700 mb-1">{t.dashboard.matches.goodFit}</p>
                             <p className="text-sm text-gray-600">{m.match_reason}</p>
                           </div>
                           {m.gaps && (
                             <>
                               <Separator />
                               <div>
-                                <p className="text-sm font-medium text-gray-700 mb-1">Areas to develop</p>
+                                <p className="text-sm font-medium text-gray-700 mb-1">{t.dashboard.matches.areasToDevelop}</p>
                                 <p className="text-sm text-gray-500">{m.gaps}</p>
                               </div>
                             </>
@@ -335,7 +342,7 @@ export default async function DashboardPage() {
                                     rel="noopener noreferrer"
                                     className="text-sm text-blue-600 hover:underline"
                                   >
-                                    Visit website →
+                                    {t.dashboard.matches.visitWebsite}
                                   </a>
                                 )}
                                 {company?.linkedin_url && (
@@ -345,7 +352,7 @@ export default async function DashboardPage() {
                                     rel="noopener noreferrer"
                                     className="text-sm text-blue-600 hover:underline"
                                   >
-                                    LinkedIn →
+                                    {t.dashboard.matches.linkedinLink}
                                   </a>
                                 )}
                               </div>

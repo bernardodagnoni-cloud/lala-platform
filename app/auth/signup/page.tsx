@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,6 +23,7 @@ export default function SignupPage() {
 function SignupForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useT();
   const initialRole = (searchParams.get("role") as UserRole) || "";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,9 +34,9 @@ function SignupForm() {
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
-    if (!role) { setError("Please select your role."); return; }
-    if (fullName.trim().length < 2) { setError("Please enter your full name."); return; }
-    if (password.length < 8) { setError("Password must be at least 8 characters."); return; }
+    if (!role) { setError(t.auth.signup.errorSelectRole); return; }
+    if (fullName.trim().length < 2) { setError(t.auth.signup.errorFullName); return; }
+    if (password.length < 8) { setError(t.auth.signup.errorPassword); return; }
     setLoading(true);
     setError(null);
 
@@ -65,8 +67,8 @@ function SignupForm() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">Create your account</CardTitle>
-          <CardDescription>Join the LALA talent platform</CardDescription>
+          <CardTitle className="text-2xl">{t.auth.signup.title}</CardTitle>
+          <CardDescription>{t.auth.signup.description}</CardDescription>
         </CardHeader>
         <form onSubmit={handleSignup}>
           <CardContent className="space-y-4">
@@ -76,7 +78,7 @@ function SignupForm() {
               </div>
             )}
             <div className="space-y-1">
-              <Label htmlFor="fullName">Full name</Label>
+              <Label htmlFor="fullName">{t.auth.signup.fullName}</Label>
               <Input
                 id="fullName"
                 value={fullName}
@@ -85,7 +87,7 @@ function SignupForm() {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t.auth.signup.email}</Label>
               <Input
                 id="email"
                 type="email"
@@ -96,7 +98,7 @@ function SignupForm() {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t.auth.signup.password}</Label>
               <Input
                 id="password"
                 type="password"
@@ -108,26 +110,26 @@ function SignupForm() {
               />
             </div>
             <div className="space-y-1">
-              <Label>I am a…</Label>
+              <Label>{t.auth.signup.roleLabel}</Label>
               <Select value={role} onValueChange={(v: string | null) => setRole((v ?? "") as UserRole)} required>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select your role" />
+                  <SelectValue placeholder={t.auth.signup.roleLabel} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="laLider">LaLider (student)</SelectItem>
-                  <SelectItem value="company">Company</SelectItem>
+                  <SelectItem value="laLider">{t.auth.signup.roleLalider}</SelectItem>
+                  <SelectItem value="company">{t.auth.signup.roleCompany}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-3">
             <Button type="submit" className="w-full" disabled={loading || !role}>
-              {loading ? "Creating account…" : "Create account"}
+              {loading ? t.auth.signup.submitting : t.auth.signup.submit}
             </Button>
             <p className="text-sm text-gray-500 text-center">
-              Already have an account?{" "}
+              {t.auth.signup.haveAccount}{" "}
               <Link href="/auth/login" className="text-blue-600 hover:underline">
-                Sign in
+                {t.auth.signup.signInLink}
               </Link>
             </p>
           </CardFooter>

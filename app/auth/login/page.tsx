@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 export default function LoginPage() {
   const router = useRouter();
+  const t = useT();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -38,8 +40,8 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">Sign in to LALA</CardTitle>
-          <CardDescription>Enter your credentials to access your account</CardDescription>
+          <CardTitle className="text-2xl">{t.auth.login.title}</CardTitle>
+          <CardDescription>{t.auth.login.description}</CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
@@ -49,7 +51,7 @@ export default function LoginPage() {
               </div>
             )}
             <div className="space-y-1">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t.auth.login.email}</Label>
               <Input
                 id="email"
                 type="email"
@@ -60,7 +62,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t.auth.login.password}</Label>
               <Input
                 id="password"
                 type="password"
@@ -73,12 +75,12 @@ export default function LoginPage() {
           </CardContent>
           <CardFooter className="flex flex-col gap-3">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in…" : "Sign in"}
+              {loading ? t.auth.login.submitting : t.auth.login.submit}
             </Button>
             <p className="text-sm text-gray-500 text-center">
-              Don&apos;t have an account?{" "}
+              {t.auth.login.noAccount}{" "}
               <Link href="/auth/signup" className="text-blue-600 hover:underline">
-                Sign up
+                {t.auth.login.signUpLink}
               </Link>
             </p>
           </CardFooter>

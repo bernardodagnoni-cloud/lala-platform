@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,16 +14,9 @@ import type { ProfileRow, UserRole } from "@/types/database";
 
 type Profile = ProfileRow;
 
-const OPPORTUNITY_TYPES = [
-  "Full-time employment",
-  "Part-time employment",
-  "Internship",
-  "Freelance / consulting",
-  "Scholarships / fellowships",
-];
-
 export default function EditProfilePage() {
   const router = useRouter();
+  const t = useT();
   const [profile, setProfile] = useState<Partial<Profile>>({});
   const [role, setRole] = useState<UserRole | null>(null);
   const [loading, setLoading] = useState(true);
@@ -56,18 +50,18 @@ export default function EditProfilePage() {
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    if (!profile.full_name?.trim()) { setError("Full name is required."); return; }
+    if (!profile.full_name?.trim()) { setError(t.profileEdit.errorFullName); return; }
     if (role === "laLider") {
       if (!profile.education?.trim() && !profile.experience?.trim()) {
-        setError("Please fill in at least your education or work experience."); return;
+        setError(t.profileEdit.errorEducationOrExperience); return;
       }
-      if (!profile.opportunity_type) { setError("Please select the type of opportunity you are looking for."); return; }
+      if (!profile.opportunity_type) { setError(t.profileEdit.errorOpportunityType); return; }
     }
     if (role === "company" && !profile.company_name?.trim()) {
-      setError("Company name is required."); return;
+      setError(t.profileEdit.errorCompanyName); return;
     }
     if (profile.linkedin_url && !profile.linkedin_url.startsWith("https://")) {
-      setError("LinkedIn URL must start with https://"); return;
+      setError(t.profileEdit.errorLinkedinUrl); return;
     }
     setSaving(true);
     setError(null);
@@ -109,11 +103,11 @@ export default function EditProfilePage() {
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle>{role === "company" ? "Create your company profile" : "Complete your profile"}</CardTitle>
+            <CardTitle>{role === "company" ? t.profileEdit.titleCompany : t.profileEdit.titleLalider}</CardTitle>
             <CardDescription>
               {role === "laLider"
-                ? "Tell us about yourself so companies can find you."
-                : "LaLideres will see this profile when they're matched with your positions."}
+                ? t.profileEdit.descriptionLalider
+                : t.profileEdit.descriptionCompany}
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSave}>
@@ -123,7 +117,7 @@ export default function EditProfilePage() {
               )}
 
               <div className="space-y-1">
-                <Label htmlFor="full_name">Full name</Label>
+                <Label htmlFor="full_name">{t.profileEdit.fullName}</Label>
                 <Input
                   id="full_name"
                   value={profile.full_name ?? ""}
@@ -135,7 +129,7 @@ export default function EditProfilePage() {
               {role === "laLider" && (
                 <>
                   <div className="space-y-1">
-                    <Label htmlFor="location">Location (city, country)</Label>
+                    <Label htmlFor="location">{t.profileEdit.location}</Label>
                     <Input
                       id="location"
                       value={profile.location ?? ""}
@@ -143,66 +137,66 @@ export default function EditProfilePage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="education">Education</Label>
+                    <Label htmlFor="education">{t.profileEdit.education}</Label>
                     <Textarea
                       id="education"
-                      placeholder="University, degree, graduation year…"
+                      placeholder={t.profileEdit.educationPlaceholder}
                       value={profile.education ?? ""}
                       onChange={(e) => update("education", e.target.value)}
                       rows={3}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="experience">Work experience</Label>
+                    <Label htmlFor="experience">{t.profileEdit.experience}</Label>
                     <Textarea
                       id="experience"
-                      placeholder="Previous roles, internships, projects…"
+                      placeholder={t.profileEdit.experiencePlaceholder}
                       value={profile.experience ?? ""}
                       onChange={(e) => update("experience", e.target.value)}
                       rows={4}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="skills">Skills</Label>
+                    <Label htmlFor="skills">{t.profileEdit.skills}</Label>
                     <Input
                       id="skills"
-                      placeholder="e.g. Python, project management, public speaking"
+                      placeholder={t.profileEdit.skillsPlaceholder}
                       value={profile.skills ?? ""}
                       onChange={(e) => update("skills", e.target.value)}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label>Type of opportunity sought</Label>
+                    <Label>{t.profileEdit.opportunityTypeLabel}</Label>
                     <Select
                       value={profile.opportunity_type ?? ""}
                       onValueChange={(v: string | null) => update("opportunity_type", v ?? "")}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select opportunity type" />
+                        <SelectValue placeholder={t.profileEdit.opportunityTypePlaceholder} />
                       </SelectTrigger>
                       <SelectContent>
-                        {OPPORTUNITY_TYPES.map((t) => (
-                          <SelectItem key={t} value={t}>{t}</SelectItem>
+                        {t.profileEdit.opportunityTypes.map((type) => (
+                          <SelectItem key={type} value={type}>{type}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="bio">About you</Label>
+                    <Label htmlFor="bio">{t.profileEdit.bio}</Label>
                     <Textarea
                       id="bio"
-                      placeholder="Tell companies a bit about yourself, your goals, and what makes you unique…"
+                      placeholder={t.profileEdit.bioPlaceholder}
                       value={profile.bio ?? ""}
                       onChange={(e) => update("bio", e.target.value)}
                       rows={4}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="linkedin_url">LinkedIn profile URL</Label>
+                    <Label htmlFor="linkedin_url">{t.profileEdit.linkedinProfile}</Label>
                     <Input
                       id="linkedin_url"
                       type="url"
-                      placeholder="https://linkedin.com/in/yourname"
+                      placeholder={t.profileEdit.linkedinProfilePlaceholder}
                       value={profile.linkedin_url ?? ""}
                       onChange={(e) => update("linkedin_url", e.target.value)}
                     />
@@ -213,7 +207,7 @@ export default function EditProfilePage() {
               {role === "company" && (
                 <>
                   <div className="space-y-1">
-                    <Label htmlFor="company_name">Company name</Label>
+                    <Label htmlFor="company_name">{t.profileEdit.companyName}</Label>
                     <Input
                       id="company_name"
                       value={profile.company_name ?? ""}
@@ -222,16 +216,16 @@ export default function EditProfilePage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="location">Headquarters (city, country)</Label>
+                    <Label htmlFor="location">{t.profileEdit.headquarters}</Label>
                     <Input
                       id="location"
-                      placeholder="e.g. Mexico City, Mexico"
+                      placeholder={t.profileEdit.headquartersPlaceholder}
                       value={profile.location ?? ""}
                       onChange={(e) => update("location", e.target.value)}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="website">Website</Label>
+                    <Label htmlFor="website">{t.profileEdit.website}</Label>
                     <Input
                       id="website"
                       type="url"
@@ -241,30 +235,30 @@ export default function EditProfilePage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="linkedin_url">LinkedIn company page</Label>
+                    <Label htmlFor="linkedin_url">{t.profileEdit.linkedinCompany}</Label>
                     <Input
                       id="linkedin_url"
                       type="url"
-                      placeholder="https://linkedin.com/company/yourcompany"
+                      placeholder={t.profileEdit.linkedinCompanyPlaceholder}
                       value={profile.linkedin_url ?? ""}
                       onChange={(e) => update("linkedin_url", e.target.value)}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="company_description">What does your company do?</Label>
+                    <Label htmlFor="company_description">{t.profileEdit.whatCompanyDoes}</Label>
                     <Textarea
                       id="company_description"
-                      placeholder="Describe your mission, industry, and what you build or offer…"
+                      placeholder={t.profileEdit.whatCompanyPlaceholder}
                       value={profile.company_description ?? ""}
                       onChange={(e) => update("company_description", e.target.value)}
                       rows={3}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="bio">Why join your team?</Label>
+                    <Label htmlFor="bio">{t.profileEdit.whyJoin}</Label>
                     <Textarea
                       id="bio"
-                      placeholder="Share your culture, values, growth opportunities, or what makes your team unique…"
+                      placeholder={t.profileEdit.whyJoinPlaceholder}
                       value={profile.bio ?? ""}
                       onChange={(e) => update("bio", e.target.value)}
                       rows={3}
@@ -275,7 +269,7 @@ export default function EditProfilePage() {
             </CardContent>
             <CardFooter>
               <Button type="submit" disabled={saving} className="w-full">
-                {saving ? "Saving…" : "Save profile"}
+                {saving ? t.profileEdit.saving : t.profileEdit.save}
               </Button>
             </CardFooter>
           </form>

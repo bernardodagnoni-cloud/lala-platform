@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,16 +11,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const OPPORTUNITY_TYPES = [
-  "Full-time employment",
-  "Part-time employment",
-  "Internship",
-  "Freelance / consulting",
-  "Scholarships / fellowships",
-];
-
 export default function NewPositionPage() {
   const router = useRouter();
+  const t = useT();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState("");
@@ -65,7 +59,7 @@ export default function NewPositionPage() {
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle>Post a new position</CardTitle>
+            <CardTitle>{t.positionsNew.title}</CardTitle>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
@@ -73,29 +67,29 @@ export default function NewPositionPage() {
                 <div className="bg-red-50 text-red-700 text-sm rounded-md px-3 py-2">{error}</div>
               )}
               <div className="space-y-1">
-                <Label htmlFor="title">Position title</Label>
+                <Label htmlFor="title">{t.positionsNew.positionTitle}</Label>
                 <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
               </div>
               <div className="space-y-1">
-                <Label>Opportunity type</Label>
+                <Label>{t.positionsNew.opportunityType}</Label>
                 <Select onValueChange={(v: string | null) => setOpportunityType(v ?? "")} required>
-                  <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={t.positionsNew.opportunityTypePlaceholder} /></SelectTrigger>
                   <SelectContent>
-                    {OPPORTUNITY_TYPES.map((t) => (
-                      <SelectItem key={t} value={t}>{t}</SelectItem>
+                    {t.positionsNew.opportunityTypes.map((type) => (
+                      <SelectItem key={type} value={type}>{type}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-1">
-                <Label htmlFor="location">Location (optional)</Label>
-                <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="City, country or Remote" />
+                <Label htmlFor="location">{t.positionsNew.location}</Label>
+                <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder={t.positionsNew.locationPlaceholder} />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="description">Position description</Label>
+                <Label htmlFor="description">{t.positionsNew.description}</Label>
                 <Textarea
                   id="description"
-                  placeholder="What will this person do? What's the team like?"
+                  placeholder={t.positionsNew.descriptionPlaceholder}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={5}
@@ -103,10 +97,10 @@ export default function NewPositionPage() {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="requirements">Requirements & ideal candidate</Label>
+                <Label htmlFor="requirements">{t.positionsNew.requirements}</Label>
                 <Textarea
                   id="requirements"
-                  placeholder="Skills, experience, education, and any other expectations…"
+                  placeholder={t.positionsNew.requirementsPlaceholder}
                   value={requirements}
                   onChange={(e) => setRequirements(e.target.value)}
                   rows={5}
@@ -116,7 +110,7 @@ export default function NewPositionPage() {
             </CardContent>
             <CardFooter>
               <Button type="submit" disabled={saving || !opportunityType} className="w-full">
-                {saving ? "Posting…" : "Post position"}
+                {saving ? t.positionsNew.submitting : t.positionsNew.submit}
               </Button>
             </CardFooter>
           </form>
