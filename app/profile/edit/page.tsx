@@ -107,6 +107,7 @@ export default function EditProfilePage() {
         education: role === "laLider" ? combinedEducation : profile.education,
         experience: profile.experience,
         opportunity_type: profile.opportunity_type,
+        desired_role: profile.desired_role,
         skills: profile.skills,
         company_name: profile.company_name,
         company_description: profile.company_description,
@@ -244,6 +245,15 @@ export default function EditProfilePage() {
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="desired_role">{t.profileEdit.desiredRole}</Label>
+                    <Input
+                      id="desired_role"
+                      placeholder={t.profileEdit.desiredRolePlaceholder}
+                      value={profile.desired_role ?? ""}
+                      onChange={(e) => update("desired_role", e.target.value)}
+                    />
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="bio">{t.profileEdit.bio}</Label>

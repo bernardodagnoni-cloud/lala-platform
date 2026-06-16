@@ -243,6 +243,7 @@ export default async function DashboardPage() {
                   {profile.experience && <div><span className="font-medium">{t.dashboard.laliderProfile.experience}:</span> {profile.experience}</div>}
                   {profile.skills && <div><span className="font-medium">{t.dashboard.laliderProfile.skills}:</span> {profile.skills}</div>}
                   {profile.opportunity_type && <div><span className="font-medium">{t.dashboard.laliderProfile.lookingFor}:</span> {profile.opportunity_type}</div>}
+                  {profile.desired_role && <div><span className="font-medium">{t.dashboard.laliderProfile.desiredRole}:</span> {profile.desired_role}</div>}
                   {profile.bio && <div><span className="font-medium">{t.dashboard.laliderProfile.about}:</span> {profile.bio}</div>}
                   {profile.linkedin_url && (
                     <div>

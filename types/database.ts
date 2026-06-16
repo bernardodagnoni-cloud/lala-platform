@@ -10,6 +10,7 @@ export type ProfileRow = {
   education: string | null;
   experience: string | null;
   opportunity_type: string | null;
+  desired_role: string | null;
   skills: string | null;
   company_name: string | null;
   company_description: string | null;
@@ -28,6 +29,7 @@ export type ProfileInsert = {
   education?: string | null;
   experience?: string | null;
   opportunity_type?: string | null;
+  desired_role?: string | null;
   skills?: string | null;
   company_name?: string | null;
   company_description?: string | null;
