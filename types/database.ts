@@ -11,6 +11,7 @@ export type ProfileRow = {
   experience: string | null;
   opportunity_type: string | null;
   desired_role: string | null;
+  open_to_relocate: string | null;
   skills: string | null;
   company_name: string | null;
   company_description: string | null;
@@ -30,6 +31,7 @@ export type ProfileInsert = {
   experience?: string | null;
   opportunity_type?: string | null;
   desired_role?: string | null;
+  open_to_relocate?: string | null;
   skills?: string | null;
   company_name?: string | null;
   company_description?: string | null;
@@ -47,6 +49,7 @@ export type PositionRow = {
   requirements: string;
   location: string | null;
   opportunity_type: string;
+  work_modality: string | null;
   is_active: boolean;
   created_at: string;
 };
@@ -58,6 +61,7 @@ export type PositionInsert = {
   requirements: string;
   location?: string | null;
   opportunity_type: string;
+  work_modality?: string | null;
   is_active?: boolean;
 };
 

@@ -36,10 +36,10 @@ export async function POST(request: NextRequest) {
 
   const { data: lalideres } = await supabase
     .from("profiles")
-    .select("id, full_name, location, bio, education, experience, skills, opportunity_type, desired_role, linkedin_url")
+    .select("id, full_name, location, bio, education, experience, skills, opportunity_type, desired_role, open_to_relocate, linkedin_url")
     .eq("role", "laLider");
 
-  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type" | "desired_role" | "linkedin_url">[] | null;
+  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type" | "desired_role" | "open_to_relocate" | "linkedin_url">[] | null;
 
   if (!candidates || candidates.length === 0) {
     return NextResponse.json({ matches: [] });
@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
   const positionContext = `
 Position: ${pos.title}
 Type: ${pos.opportunity_type}
+Work modality: ${pos.work_modality ?? "Not specified"}
 Location: ${pos.location ?? "Not specified"}
 Company: ${company?.company_name ?? ""}
 Company description: ${company?.company_description ?? ""}
@@ -65,6 +66,7 @@ Experience: ${l.experience ?? "Not specified"}
 Skills: ${l.skills ?? "Not specified"}
 Opportunity type sought: ${l.opportunity_type ?? "Not specified"}
 Desired role / area: ${l.desired_role ?? "Not specified"}
+Open to relocate: ${l.open_to_relocate ?? "Not specified"}
 About: ${l.bio ?? "Not specified"}
 `.trim())
     .join("\n\n---\n\n");

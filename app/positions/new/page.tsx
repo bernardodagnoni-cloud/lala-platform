@@ -19,6 +19,7 @@ export default function NewPositionPage() {
   const [requirements, setRequirements] = useState("");
   const [location, setLocation] = useState("");
   const [opportunityType, setOpportunityType] = useState("");
+  const [workModality, setWorkModality] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,6 +47,7 @@ export default function NewPositionPage() {
       requirements,
       location: location || null,
       opportunity_type: opportunityType,
+      work_modality: workModality || null,
       is_active: true,
     });
 
@@ -84,6 +86,17 @@ export default function NewPositionPage() {
               <div className="space-y-1">
                 <Label htmlFor="location">{t.positionsNew.location}</Label>
                 <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder={t.positionsNew.locationPlaceholder} />
+              </div>
+              <div className="space-y-1">
+                <Label>{t.positionsNew.workModality}</Label>
+                <Select onValueChange={(v: string | null) => setWorkModality(v ?? "")}>
+                  <SelectTrigger><SelectValue placeholder={t.positionsNew.workModalityPlaceholder} /></SelectTrigger>
+                  <SelectContent>
+                    {t.positionsNew.workModalityOptions.map((opt) => (
+                      <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-1">
                 <Label htmlFor="description">{t.positionsNew.description}</Label>

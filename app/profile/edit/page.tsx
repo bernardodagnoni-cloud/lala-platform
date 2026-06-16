@@ -28,6 +28,7 @@ export default function EditProfilePage() {
   const [eduUniversity, setEduUniversity] = useState("");
   const [eduDegree, setEduDegree] = useState("");
   const [eduYear, setEduYear] = useState("");
+  const [openToRelocate, setOpenToRelocate] = useState("");
 
   useEffect(() => {
     async function loadProfile() {
@@ -49,6 +50,9 @@ export default function EditProfilePage() {
           setEduUniversity(eduParts[0]?.trim() ?? "");
           setEduDegree(eduParts[1]?.trim() ?? "");
           setEduYear(eduParts[2]?.trim() ?? "");
+        }
+        if (data.role === "laLider" && data.open_to_relocate) {
+          setOpenToRelocate(data.open_to_relocate);
         }
         if (data.role === "laLider" && data.location) {
           const parts = data.location.split(", ").map((s: string) => s.trim());
@@ -108,6 +112,7 @@ export default function EditProfilePage() {
         experience: profile.experience,
         opportunity_type: profile.opportunity_type,
         desired_role: profile.desired_role,
+        open_to_relocate: role === "laLider" ? openToRelocate || null : undefined,
         skills: profile.skills,
         company_name: profile.company_name,
         company_description: profile.company_description,
@@ -254,6 +259,22 @@ export default function EditProfilePage() {
                       value={profile.desired_role ?? ""}
                       onChange={(e) => update("desired_role", e.target.value)}
                     />
+                  </div>
+                  <div className="space-y-1">
+                    <Label>{t.profileEdit.openToRelocate}</Label>
+                    <Select
+                      value={openToRelocate}
+                      onValueChange={(v: string | null) => setOpenToRelocate(v ?? "")}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={t.profileEdit.openToRelocatePlaceholder} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {t.profileEdit.openToRelocateOptions.map((opt) => (
+                          <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="bio">{t.profileEdit.bio}</Label>

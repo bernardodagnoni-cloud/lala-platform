@@ -22,6 +22,7 @@ type Position = {
   id: string;
   title: string;
   opportunity_type: string;
+  work_modality: string | null;
   location: string | null;
 };
 
@@ -56,7 +57,7 @@ export default function MatchesPage() {
 
       const { data: posData } = await supabase
         .from("positions")
-        .select("id, title, opportunity_type, location")
+        .select("id, title, opportunity_type, work_modality, location")
         .eq("id", id)
         .single();
 
@@ -131,6 +132,7 @@ export default function MatchesPage() {
             <h1 className="text-2xl font-bold">{position.title}</h1>
             <p className="text-gray-500 mt-1">
               {position.opportunity_type}
+              {position.work_modality ? ` · ${position.work_modality}` : ""}
               {position.location ? ` · ${position.location}` : ""}
             </p>
           </div>

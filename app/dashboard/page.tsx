@@ -18,6 +18,7 @@ type LaliderMatch = {
     id: string;
     title: string;
     opportunity_type: string;
+    work_modality: string | null;
     location: string | null;
     profiles: {
       company_name: string | null;
@@ -82,6 +83,7 @@ export default async function DashboardPage() {
           id,
           title,
           opportunity_type,
+          work_modality,
           location,
           profiles!company_profile_id (
             company_name,
@@ -192,7 +194,7 @@ export default async function DashboardPage() {
                         <div>
                           <CardTitle className="text-base">{pos.title}</CardTitle>
                           <CardDescription>
-                            {pos.opportunity_type}{pos.location ? ` · ${pos.location}` : ""}
+                            {pos.opportunity_type}{pos.work_modality ? ` · ${pos.work_modality}` : ""}{pos.location ? ` · ${pos.location}` : ""}
                           </CardDescription>
                         </div>
                         <Badge variant={pos.is_active ? "default" : "secondary"}>
@@ -244,6 +246,7 @@ export default async function DashboardPage() {
                   {profile.skills && <div><span className="font-medium">{t.dashboard.laliderProfile.skills}:</span> {profile.skills}</div>}
                   {profile.opportunity_type && <div><span className="font-medium">{t.dashboard.laliderProfile.lookingFor}:</span> {profile.opportunity_type}</div>}
                   {profile.desired_role && <div><span className="font-medium">{t.dashboard.laliderProfile.desiredRole}:</span> {profile.desired_role}</div>}
+                  {profile.open_to_relocate && <div><span className="font-medium">{t.dashboard.laliderProfile.openToRelocate}:</span> {profile.open_to_relocate}</div>}
                   {profile.bio && <div><span className="font-medium">{t.dashboard.laliderProfile.about}:</span> {profile.bio}</div>}
                   {profile.linkedin_url && (
                     <div>
@@ -296,6 +299,7 @@ export default async function DashboardPage() {
                                 {company?.company_name}
                                 {company?.location ? ` · ${company.location}` : ""}
                                 {pos?.opportunity_type ? ` · ${pos.opportunity_type}` : ""}
+                                {pos?.work_modality ? ` · ${pos.work_modality}` : ""}
                                 {pos?.location ? ` · ${pos.location}` : ""}
                               </CardDescription>
                             </div>
