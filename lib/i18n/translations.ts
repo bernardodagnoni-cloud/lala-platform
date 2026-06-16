@@ -459,7 +459,7 @@ const pt = {
     skillsPlaceholder: "ex.: Python, gestão de projetos, oratória",
     opportunityTypeLabel: "Tipo de oportunidade buscada",
     opportunityTypePlaceholder: "Selecione o tipo de oportunidade",
-    desiredRole: "Cargo e área de atuação",
+    desiredRole: "Cargo e área de atuação desejados",
     desiredRolePlaceholder: "ex.: Analista júnior, consultoria",
     bio: "Sobre você",
     bioPlaceholder:
