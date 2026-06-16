@@ -78,6 +78,12 @@ About: ${l.bio ?? "Not specified"}
     max_tokens: 2048,
     system: `You are a talent matching assistant for LALA, an NGO that empowers Latin American leaders (LaLideres).
 Your job is to rank LaLider candidates for a given position and explain each match.
+
+Scoring guidance on work modality and relocation:
+- If the position is Hybrid or In-person, relocation compatibility is a strong signal. Candidates open to international relocation or relocation within the country should score significantly higher than those not open to relocation, unless the candidate's current location already matches the position's location. Unwillingness to relocate for a Hybrid or In-person role should reduce the score by 2-3 points.
+- If the position is Remote, relocation openness is irrelevant — do not factor it in.
+- Skills, experience, and role fit remain the primary criteria; relocation is a meaningful modifier.
+
 Always return a valid JSON array — no prose before or after it.`,
     messages: [
       {
