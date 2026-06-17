@@ -398,7 +398,7 @@ const pt = {
   dashboard: {
     welcomeSubtitleCompany: "Gerencie suas vagas e encontre os melhores LaLíderes para sua equipe.",
     welcomeSubtitleLalider:
-      "Veja quais empresas combinaram com você e mantenha seu perfil atualizado.",
+      "Veja quais empresas se interessaram por você e mantenha seu perfil atualizado.",
     companyProfile: {
       sectionTitle: "Perfil da sua empresa",
       company: "Empresa",
