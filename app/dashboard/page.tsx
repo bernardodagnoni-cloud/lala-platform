@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { GoldStar, BlueSparkle } from "@/components/brand-icons";
 
 type LaliderMatch = {
   score: number;
@@ -101,24 +102,27 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-brand text-xl text-blue-700">
+    <div className="min-h-screen bg-slate-50">
+      <nav className="bg-blue-950 px-6 py-4 flex items-center justify-between relative overflow-hidden">
+        <GoldStar className="absolute -top-5 right-40 w-20 h-20 opacity-[0.08] rotate-12 pointer-events-none select-none" />
+        <BlueSparkle className="absolute -bottom-5 right-6 w-16 h-16 opacity-[0.22] pointer-events-none select-none" />
+        <Link href="/" className="flex items-center gap-2 font-brand text-xl text-white">
             <Image src="/lala-logo.png" alt="LALA" width={32} height={32} className="rounded-sm" />
             {t.common.lalaPlatform}
           </Link>
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
-          <span className="text-sm text-gray-500">{profile.full_name}</span>
+          <span className="text-sm text-blue-200">{profile.full_name}</span>
           <form action="/api/auth/logout" method="POST">
-            <Button variant="ghost" size="sm" type="submit">{t.common.signOut}</Button>
+            <Button variant="ghost" size="sm" type="submit" className="text-white hover:bg-blue-900">{t.common.signOut}</Button>
           </form>
         </div>
       </nav>
 
+      <div className="bg-blue-900 h-1 w-full" style={{background: "linear-gradient(to right, #1e3a8a, #3C35DE, #FFC200)"}} />
       <main className="max-w-4xl mx-auto p-6 space-y-6">
         <div>
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-2xl font-bold text-blue-950">
             Welcome, {isCompany ? profile.company_name || profile.full_name : profile.full_name}
           </h1>
           <p className="text-gray-500 mt-1">
@@ -135,7 +139,7 @@ export default async function DashboardPage() {
             {/* Company profile section */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">{t.dashboard.companyProfile.sectionTitle}</h2>
+                <h2 className="text-lg font-semibold text-blue-900">{t.dashboard.companyProfile.sectionTitle}</h2>
                 <Link href="/profile/edit">
                   <Button variant="outline" size="sm">{t.common.editProfile}</Button>
                 </Link>
@@ -179,7 +183,7 @@ export default async function DashboardPage() {
             {/* Positions section */}
             <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">{t.dashboard.positions.sectionTitle}</h2>
+              <h2 className="text-lg font-semibold text-blue-900">{t.dashboard.positions.sectionTitle}</h2>
               <Link href="/positions/new">
                 <Button size="sm">{t.dashboard.positions.postButton}</Button>
               </Link>
@@ -233,7 +237,7 @@ export default async function DashboardPage() {
             {/* Profile section */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">{t.dashboard.laliderProfile.sectionTitle}</h2>
+                <h2 className="text-lg font-semibold text-blue-900">{t.dashboard.laliderProfile.sectionTitle}</h2>
                 <Link href="/profile/edit">
                   <Button variant="outline" size="sm">{t.common.editProfile}</Button>
                 </Link>
@@ -267,7 +271,7 @@ export default async function DashboardPage() {
 
             {/* Matches section */}
             <div className="space-y-4">
-              <h2 className="text-lg font-semibold">
+              <h2 className="text-lg font-semibold text-blue-900">
                 {t.dashboard.matches.sectionTitle}
                 {laliderMatches && laliderMatches.length > 0 && (
                   <span className="ml-2 text-sm font-normal text-gray-500">

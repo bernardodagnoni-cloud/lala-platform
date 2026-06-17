@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
@@ -10,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { GoldStar, BlueSparkle } from "@/components/brand-icons";
 import type { ProfileRow, UserRole } from "@/types/database";
 
 type Profile = ProfileRow;
@@ -133,7 +136,20 @@ export default function EditProfilePage() {
   if (loading) return <div className="min-h-screen flex items-center justify-center">Loading…</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-slate-50">
+      <nav className="bg-blue-950 px-6 py-4 flex items-center justify-between relative overflow-hidden">
+        <GoldStar className="absolute -top-5 right-36 w-20 h-20 opacity-[0.08] rotate-12 pointer-events-none select-none" />
+        <BlueSparkle className="absolute -bottom-5 right-4 w-16 h-16 opacity-[0.22] pointer-events-none select-none" />
+        <Link href="/" className="flex items-center gap-2 font-brand text-xl text-white">
+          <Image src="/lala-logo.png" alt="LALA" width={32} height={32} className="rounded-sm" />
+          {t.common.lalaPlatform}
+        </Link>
+        <Link href="/dashboard">
+          <Button variant="ghost" size="sm" className="text-white hover:bg-blue-900">← Dashboard</Button>
+        </Link>
+      </nav>
+      <div className="h-1 w-full" style={{background: "linear-gradient(to right, #1e3a8a, #3C35DE, #FFC200)"}} />
+      <div className="p-4">
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>
@@ -369,6 +385,7 @@ export default function EditProfilePage() {
             </CardFooter>
           </form>
         </Card>
+      </div>
       </div>
     </div>
   );

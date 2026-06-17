@@ -8,6 +8,7 @@ import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { GoldStar, BlueSparkle } from "@/components/brand-icons";
 
 type Match = {
   candidateId: string;
@@ -118,18 +119,21 @@ export default function MatchesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <span className="font-brand text-xl text-blue-700">{t.common.lalaPlatform}</span>
+    <div className="min-h-screen bg-slate-50">
+      <nav className="bg-blue-950 px-6 py-4 flex items-center justify-between relative overflow-hidden">
+        <GoldStar className="absolute -top-5 right-32 w-20 h-20 opacity-[0.08] rotate-12 pointer-events-none select-none" />
+        <BlueSparkle className="absolute -bottom-5 right-4 w-16 h-16 opacity-[0.22] pointer-events-none select-none" />
+        <span className="font-brand text-xl text-white">{t.common.lalaPlatform}</span>
         <Link href="/dashboard">
-          <Button variant="ghost" size="sm">← Dashboard</Button>
+          <Button variant="ghost" size="sm" className="text-white hover:bg-blue-900">← Dashboard</Button>
         </Link>
       </nav>
+      <div className="h-1 w-full" style={{background: "linear-gradient(to right, #1e3a8a, #3C35DE, #FFC200)"}} />
 
       <main className="max-w-3xl mx-auto p-6 space-y-6">
         {position && (
           <div>
-            <h1 className="text-2xl font-bold">{position.title}</h1>
+            <h1 className="text-2xl font-bold text-blue-950">{position.title}</h1>
             <p className="text-gray-500 mt-1">
               {position.opportunity_type}
               {position.work_modality ? ` · ${position.work_modality}` : ""}
