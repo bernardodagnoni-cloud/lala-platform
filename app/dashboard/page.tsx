@@ -111,7 +111,7 @@ export default async function DashboardPage() {
             {t.common.lalaPlatform}
           </Link>
         <div className="flex items-center gap-4">
-          <LanguageSwitcher />
+          <LanguageSwitcher className="text-white" />
           <span className="text-sm text-blue-200">{profile.full_name}</span>
           <form action="/api/auth/logout" method="POST">
             <Button variant="ghost" size="sm" type="submit" className="text-white hover:bg-blue-900">{t.common.signOut}</Button>
