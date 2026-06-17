@@ -141,7 +141,7 @@ export default async function DashboardPage() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-blue-900">{t.dashboard.companyProfile.sectionTitle}</h2>
                 <Link href="/profile/edit">
-                  <Button variant="outline" size="sm">{t.common.editProfile}</Button>
+                  <Button size="sm" className="bg-blue-700 hover:bg-blue-800 text-white">{t.common.editProfile}</Button>
                 </Link>
               </div>
               <Card>
@@ -185,7 +185,7 @@ export default async function DashboardPage() {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-blue-900">{t.dashboard.positions.sectionTitle}</h2>
               <Link href="/positions/new">
-                <Button size="sm">{t.dashboard.positions.postButton}</Button>
+                <Button size="sm" className="bg-blue-700 hover:bg-blue-800 text-white">{t.dashboard.positions.postButton}</Button>
               </Link>
             </div>
 
@@ -239,7 +239,7 @@ export default async function DashboardPage() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-blue-900">{t.dashboard.laliderProfile.sectionTitle}</h2>
                 <Link href="/profile/edit">
-                  <Button variant="outline" size="sm">{t.common.editProfile}</Button>
+                  <Button size="sm" className="bg-blue-700 hover:bg-blue-800 text-white">{t.common.editProfile}</Button>
                 </Link>
               </div>
               <Card>
