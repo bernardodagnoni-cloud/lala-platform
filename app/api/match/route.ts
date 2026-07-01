@@ -37,7 +37,8 @@ export async function POST(request: NextRequest) {
   const { data: lalideres } = await supabase
     .from("profiles")
     .select("id, full_name, location, bio, education, experience, skills, opportunity_type, desired_role, open_to_relocate, linkedin_url")
-    .eq("role", "laLider");
+    .eq("role", "laLider")
+    .neq("open_to_opportunities", false);
 
   const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type" | "desired_role" | "open_to_relocate" | "linkedin_url">[] | null;
 
