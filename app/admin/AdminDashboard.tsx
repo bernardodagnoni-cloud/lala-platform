@@ -38,7 +38,7 @@ type Tab = "users" | "positions" | "matches";
 
 export default function AdminDashboard({
   stats,
-  profiles,
+  profiles: initialProfiles,
   positions: initialPositions,
   matches,
 }: {
@@ -48,10 +48,12 @@ export default function AdminDashboard({
   matches: Match[];
 }) {
   const [tab, setTab] = useState<Tab>("users");
+  const [profiles, setProfiles] = useState(initialProfiles);
   const [positions, setPositions] = useState(initialPositions);
   const [toggling, setToggling] = useState<string | null>(null);
   const [matching, setMatching] = useState<string | null>(null);
   const [matchError, setMatchError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   async function togglePosition(id: string, current: boolean) {
     setToggling(id);
@@ -64,6 +66,16 @@ export default function AdminDashboard({
       setPositions((prev) => prev.map((p) => p.id === id ? { ...p, is_active: !current } : p));
     }
     setToggling(null);
+  }
+
+  async function deleteProfile(id: string, name: string) {
+    if (!confirm(`Delete profile for "${name}"? This will also remove their positions, matches, and login access. This cannot be undone.`)) return;
+    setDeleting(id);
+    const res = await fetch(`/api/admin/profiles/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      setProfiles((prev) => prev.filter((p) => p.id !== id));
+    }
+    setDeleting(null);
   }
 
   async function triggerMatch(positionId: string) {
@@ -141,6 +153,7 @@ export default function AdminDashboard({
                       <th className="px-4 py-3 font-medium">Role</th>
                       <th className="px-4 py-3 font-medium">Location</th>
                       <th className="px-4 py-3 font-medium">Joined</th>
+                      <th className="px-4 py-3 font-medium"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -156,10 +169,21 @@ export default function AdminDashboard({
                         <td className="px-4 py-3 text-gray-500">
                           {new Date(p.created_at).toLocaleDateString()}
                         </td>
+                        <td className="px-4 py-3">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            disabled={deleting === p.id}
+                            onClick={() => deleteProfile(p.id, p.full_name)}
+                            className="text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300"
+                          >
+                            {deleting === p.id ? "Deleting…" : "Delete"}
+                          </Button>
+                        </td>
                       </tr>
                     ))}
                     {profiles.length === 0 && (
-                      <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-400">No users yet.</td></tr>
+                      <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-400">No users yet.</td></tr>
                     )}
                   </tbody>
                 </table>
