@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import * as XLSX from "xlsx";
+import XLSX from "xlsx";
 
 const XLSX_PATH =
   "/Users/bernardodagnoni/Downloads/[CAR] Dados LALA Match _ WS de Empregabilidade 2026.1.xlsx";
@@ -62,16 +62,16 @@ for (const row of rows) {
     continue;
   }
 
-  const { error: profileError } = await admin.from("profiles").insert({
+  const { error: profileError } = await admin.from("profiles").upsert({
     user_id: data.user.id,
     role: "laLider",
     full_name: fullName,
     lala_id: lalaId,
     contact_email: contactEmail,
-  });
+  }, { onConflict: "user_id" });
 
   if (profileError) {
-    console.error(`ERROR ${lalaId} — profile insert failed: ${profileError.message}`);
+    console.error(`ERROR ${lalaId} — profile upsert failed: ${profileError.message}`);
     await admin.auth.admin.deleteUser(data.user.id);
     errors++;
     continue;
