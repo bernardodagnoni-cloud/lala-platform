@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 const FROM = process.env.RESEND_FROM_EMAIL ?? "LaLa Match <noreply@lalamatch.org>";
-const ADMIN_NOTIFY_EMAIL = "paloma.flores@somoslala.org";
+const ADMIN_NOTIFY_EMAILS = ["paloma.flores@somoslala.org", "analidia.schroeder@somoslala.org"];
 
 function getResend() {
   return new Resend(process.env.RESEND_API_KEY);
@@ -22,7 +22,7 @@ export async function sendCompanyRegistrationNotification({
 }) {
   await getResend().emails.send({
     from: FROM,
-    to: ADMIN_NOTIFY_EMAIL,
+    to: ADMIN_NOTIFY_EMAILS,
     subject: `New company registered on LaLa Match: ${companyName}`,
     html: `
       <h2>A new company has registered on LaLa Match</h2>
