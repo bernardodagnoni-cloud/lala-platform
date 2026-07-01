@@ -32,6 +32,7 @@ export default function EditProfilePage() {
   const [eduDegree, setEduDegree] = useState("");
   const [eduYear, setEduYear] = useState("");
   const [openToRelocate, setOpenToRelocate] = useState("");
+  const [lifeStage, setLifeStage] = useState("");
 
   useEffect(() => {
     async function loadProfile() {
@@ -56,6 +57,9 @@ export default function EditProfilePage() {
         }
         if (data.role === "laLider" && data.open_to_relocate) {
           setOpenToRelocate(data.open_to_relocate);
+        }
+        if (data.role === "laLider" && data.life_stage) {
+          setLifeStage(data.life_stage);
         }
         if (data.role === "laLider" && data.location) {
           const parts = data.location.split(", ").map((s: string) => s.trim());
@@ -116,6 +120,7 @@ export default function EditProfilePage() {
         opportunity_type: profile.opportunity_type,
         desired_role: profile.desired_role,
         open_to_relocate: role === "laLider" ? openToRelocate || null : undefined,
+        life_stage: role === "laLider" ? lifeStage || null : undefined,
         skills: profile.skills,
         company_name: profile.company_name,
         company_description: profile.company_description,
@@ -204,6 +209,22 @@ export default function EditProfilePage() {
                       value={locationCity}
                       onChange={(e) => setLocationCity(e.target.value)}
                     />
+                  </div>
+                  <div className="space-y-1">
+                    <Label>{t.profileEdit.lifeStageLabel}</Label>
+                    <Select
+                      value={lifeStage}
+                      onValueChange={(v: string | null) => setLifeStage(v ?? "")}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={t.profileEdit.lifeStagePlaceholder} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {t.profileEdit.lifeStageOptions.map((opt) => (
+                          <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="edu_university">{t.profileEdit.university}</Label>

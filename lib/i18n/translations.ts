@@ -143,6 +143,7 @@ const en = {
     },
     laliderProfile: {
       sectionTitle: "Your profile",
+      lifeStage: "Life stage",
       location: "Location",
       education: "Education",
       experience: "Experience",
@@ -194,6 +195,16 @@ const en = {
     opportunityTypePlaceholder: "Select opportunity type",
     desiredRole: "Desired position and area of interest",
     desiredRolePlaceholder: "e.g. Junior analyst, consulting",
+    lifeStageLabel: "Life stage",
+    lifeStagePlaceholder: "Select your current life stage",
+    lifeStageOptions: [
+      "High school",
+      "University / College",
+      "MBA",
+      "Graduate studies (Master's / PhD)",
+      "Working professional",
+      "Other",
+    ],
     openToRelocate: "Openness to relocate",
     openToRelocatePlaceholder: "Select your preference",
     openToRelocateOptions: [
@@ -421,6 +432,7 @@ const pt = {
     },
     laliderProfile: {
       sectionTitle: "Seu perfil",
+      lifeStage: "Fase de vida",
       location: "Localização",
       education: "Educação",
       experience: "Experiência",
@@ -473,6 +485,16 @@ const pt = {
     opportunityTypePlaceholder: "Selecione o tipo de oportunidade",
     desiredRole: "Cargo e área de atuação desejados",
     desiredRolePlaceholder: "ex.: Analista júnior, consultoria",
+    lifeStageLabel: "Fase de vida",
+    lifeStagePlaceholder: "Selecione sua fase atual",
+    lifeStageOptions: [
+      "Ensino médio",
+      "Universidade / Faculdade",
+      "MBA",
+      "Pós-graduação (Mestrado / Doutorado)",
+      "Profissional em atividade",
+      "Outro",
+    ],
     openToRelocate: "Disponibilidade para relocação",
     openToRelocatePlaceholder: "Selecione sua preferência",
     openToRelocateOptions: [
@@ -702,6 +724,7 @@ const es = {
     },
     laliderProfile: {
       sectionTitle: "Tu perfil",
+      lifeStage: "Etapa de vida",
       location: "Ubicación",
       education: "Educación",
       experience: "Experiencia",
@@ -754,6 +777,16 @@ const es = {
     opportunityTypePlaceholder: "Selecciona el tipo de oportunidad",
     desiredRole: "Puesto y área de interés",
     desiredRolePlaceholder: "p. ej. Analista junior, consultoría",
+    lifeStageLabel: "Etapa de vida",
+    lifeStagePlaceholder: "Selecciona tu etapa actual",
+    lifeStageOptions: [
+      "Secundaria",
+      "Universidad / Carrera",
+      "MBA",
+      "Posgrado (Maestría / Doctorado)",
+      "Profesional en actividad",
+      "Otro",
+    ],
     openToRelocate: "Disponibilidad para reubicarse",
     openToRelocatePlaceholder: "Selecciona tu preferencia",
     openToRelocateOptions: [

@@ -244,6 +244,7 @@ export default async function DashboardPage() {
               </div>
               <Card>
                 <CardContent className="pt-6 space-y-2 text-sm">
+                  {profile.life_stage && <div><span className="font-medium">{t.dashboard.laliderProfile.lifeStage}:</span> {profile.life_stage}</div>}
                   {profile.location && <div><span className="font-medium">{t.dashboard.laliderProfile.location}:</span> {profile.location}</div>}
                   {profile.education && <div><span className="font-medium">{t.dashboard.laliderProfile.education}:</span> {profile.education}</div>}
                   {profile.experience && <div><span className="font-medium">{t.dashboard.laliderProfile.experience}:</span> {profile.experience}</div>}

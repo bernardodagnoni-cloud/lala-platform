@@ -12,6 +12,7 @@ export type ProfileRow = {
   opportunity_type: string | null;
   desired_role: string | null;
   open_to_relocate: string | null;
+  life_stage: string | null;
   skills: string | null;
   company_name: string | null;
   company_description: string | null;
@@ -32,6 +33,7 @@ export type ProfileInsert = {
   opportunity_type?: string | null;
   desired_role?: string | null;
   open_to_relocate?: string | null;
+  life_stage?: string | null;
   skills?: string | null;
   company_name?: string | null;
   company_description?: string | null;
