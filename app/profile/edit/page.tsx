@@ -140,6 +140,10 @@ export default function EditProfilePage() {
       return;
     }
 
+    if (role === "company") {
+      await fetch("/api/company/notify", { method: "POST" });
+    }
+
     router.push("/dashboard");
   }
 

@@ -14,6 +14,8 @@ export type ProfileRow = {
   open_to_relocate: string | null;
   life_stage: string | null;
   open_to_opportunities: boolean | null;
+  approved: boolean | null;
+  registration_notified: boolean | null;
   skills: string | null;
   company_name: string | null;
   company_description: string | null;
@@ -36,6 +38,8 @@ export type ProfileInsert = {
   open_to_relocate?: string | null;
   life_stage?: string | null;
   open_to_opportunities?: boolean | null;
+  approved?: boolean | null;
+  registration_notified?: boolean | null;
   skills?: string | null;
   company_name?: string | null;
   company_description?: string | null;

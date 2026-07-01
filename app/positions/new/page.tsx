@@ -37,11 +37,12 @@ export default function NewPositionPage() {
 
     const { data: profile } = await supabase
       .from("profiles")
-      .select("id")
+      .select("id, approved")
       .eq("user_id", user.id)
       .single();
 
     if (!profile) { setError("Company profile not found."); setSaving(false); return; }
+    if (!profile.approved) { setError("Your account is pending approval by the LALA team. You'll receive an email once approved."); setSaving(false); return; }
 
     const { error } = await supabase.from("positions").insert({
       company_profile_id: profile.id,

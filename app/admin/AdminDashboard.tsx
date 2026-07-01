@@ -24,6 +24,7 @@ type Profile = {
   company_name: string | null;
   company_description: string | null;
   website: string | null;
+  approved: boolean | null;
   created_at: string;
 };
 
@@ -67,6 +68,7 @@ export default function AdminDashboard({
   const [matching, setMatching] = useState<string | null>(null);
   const [matchError, setMatchError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [approving, setApproving] = useState<string | null>(null);
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
 
   async function togglePosition(id: string, current: boolean) {
@@ -80,6 +82,15 @@ export default function AdminDashboard({
       setPositions((prev) => prev.map((p) => p.id === id ? { ...p, is_active: !current } : p));
     }
     setToggling(null);
+  }
+
+  async function approveProfile(id: string) {
+    setApproving(id);
+    const res = await fetch(`/api/admin/profiles/${id}/approve`, { method: "POST" });
+    if (res.ok) {
+      setProfiles((prev) => prev.map((p) => p.id === id ? { ...p, approved: true } : p));
+    }
+    setApproving(null);
   }
 
   async function deleteProfile(id: string, name: string) {
@@ -167,6 +178,7 @@ export default function AdminDashboard({
                       <th className="px-4 py-3 font-medium">Role</th>
                       <th className="px-4 py-3 font-medium">Location</th>
                       <th className="px-4 py-3 font-medium">Joined</th>
+                      <th className="px-4 py-3 font-medium">Status</th>
                       <th className="px-4 py-3 font-medium"></th>
                     </tr>
                   </thead>
@@ -183,21 +195,40 @@ export default function AdminDashboard({
                         <td className="px-4 py-3 text-gray-500">
                           {new Date(p.created_at).toLocaleDateString()}
                         </td>
+                        <td className="px-4 py-3">
+                          {p.role === "company" && (
+                            p.approved
+                              ? <span className="inline-flex items-center gap-1 text-xs text-green-700 bg-green-100 rounded-full px-2 py-0.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500" />Approved</span>
+                              : <span className="inline-flex items-center gap-1 text-xs text-amber-700 bg-amber-100 rounded-full px-2 py-0.5"><span className="w-1.5 h-1.5 rounded-full bg-amber-400" />Pending</span>
+                          )}
+                        </td>
                         <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            disabled={deleting === p.id}
-                            onClick={() => deleteProfile(p.id, p.full_name)}
-                            className="text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300"
-                          >
-                            {deleting === p.id ? "Deleting…" : "Delete"}
-                          </Button>
+                          <div className="flex items-center gap-2">
+                            {p.role === "company" && !p.approved && (
+                              <Button
+                                size="sm"
+                                disabled={approving === p.id}
+                                onClick={() => approveProfile(p.id)}
+                                className="bg-green-600 hover:bg-green-700 text-white"
+                              >
+                                {approving === p.id ? "Approving…" : "Approve"}
+                              </Button>
+                            )}
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              disabled={deleting === p.id}
+                              onClick={() => deleteProfile(p.id, p.full_name)}
+                              className="text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300"
+                            >
+                              {deleting === p.id ? "Deleting…" : "Delete"}
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     ))}
                     {profiles.length === 0 && (
-                      <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-400">No users yet.</td></tr>
+                      <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-400">No users yet.</td></tr>
                     )}
                   </tbody>
                 </table>

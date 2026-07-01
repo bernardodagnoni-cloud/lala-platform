@@ -9,7 +9,7 @@ export default async function AdminPage() {
     { data: positions },
     { data: matches },
   ] = await Promise.all([
-    admin.from("profiles").select("id, full_name, role, location, bio, education, experience, skills, opportunity_type, desired_role, open_to_relocate, life_stage, open_to_opportunities, linkedin_url, company_name, company_description, website, created_at").order("created_at", { ascending: false }),
+    admin.from("profiles").select("id, full_name, role, location, bio, education, experience, skills, opportunity_type, desired_role, open_to_relocate, life_stage, open_to_opportunities, linkedin_url, company_name, company_description, website, approved, created_at").order("created_at", { ascending: false }),
     admin
       .from("positions")
       .select("id, title, opportunity_type, location, is_active, created_at, company_profile_id, profiles!company_profile_id(company_name)")
