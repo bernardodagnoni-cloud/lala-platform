@@ -33,6 +33,7 @@ export default function EditProfilePage() {
   const [eduYear, setEduYear] = useState("");
   const [openToRelocate, setOpenToRelocate] = useState("");
   const [lifeStage, setLifeStage] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
   const [openToOpportunities, setOpenToOpportunities] = useState(true);
   const [availabilitySaving, setAvailabilitySaving] = useState(false);
 
@@ -65,6 +66,7 @@ export default function EditProfilePage() {
         }
         if (data.role === "laLider") {
           setOpenToOpportunities(data.open_to_opportunities ?? true);
+          setContactEmail(data.contact_email ?? "");
         }
         if (data.role === "laLider" && data.location) {
           const parts = data.location.split(", ").map((s: string) => s.trim());
@@ -126,6 +128,7 @@ export default function EditProfilePage() {
         desired_role: profile.desired_role,
         open_to_relocate: role === "laLider" ? openToRelocate || null : undefined,
         life_stage: role === "laLider" ? lifeStage || null : undefined,
+        contact_email: role === "laLider" ? contactEmail.trim() || null : undefined,
         skills: profile.skills,
         company_name: profile.company_name,
         company_description: profile.company_description,
@@ -249,6 +252,24 @@ export default function EditProfilePage() {
                       value={locationCity}
                       onChange={(e) => setLocationCity(e.target.value)}
                     />
+                  </div>
+                  {profile.lala_id && (
+                    <div className="space-y-1">
+                      <Label>LALA ID</Label>
+                      <div className="rounded-lg border border-input bg-muted px-3 py-2 text-sm text-muted-foreground font-mono">{profile.lala_id}</div>
+                    </div>
+                  )}
+                  <div className="space-y-1">
+                    <Label htmlFor="contact_email">{t.auth.signup.contactEmail}</Label>
+                    <Input
+                      id="contact_email"
+                      type="email"
+                      placeholder={t.auth.signup.contactEmailPlaceholder}
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      autoComplete="email"
+                    />
+                    <p className="text-xs text-gray-400">{t.auth.signup.contactEmailHint}</p>
                   </div>
                   <div className="space-y-1">
                     <Label>{t.profileEdit.lifeStageLabel}</Label>

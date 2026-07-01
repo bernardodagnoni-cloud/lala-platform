@@ -87,6 +87,7 @@ const en = {
     login: {
       title: "Sign in to LALA",
       description: "Enter your credentials to access your account",
+      identifier: "LALA ID or email",
       email: "Email",
       password: "Password",
       submit: "Sign in",
@@ -101,7 +102,7 @@ const en = {
       email: "Email",
       password: "Password",
       roleLabel: "I am a…",
-      roleLalider: "LaLider (student)",
+      roleLalider: "LaLider",
       roleCompany: "Company",
       submit: "Create account",
       submitting: "Creating account…",
@@ -110,6 +111,11 @@ const en = {
       errorSelectRole: "Please select your role.",
       errorFullName: "Please enter your full name.",
       errorPassword: "Password must be at least 8 characters.",
+      lalaId: "LALA ID",
+      lalaIdPlaceholder: "Your LALA ID",
+      contactEmail: "Contact email (optional)",
+      contactEmailPlaceholder: "your@email.com",
+      contactEmailHint: "Used for notifications only, not for login.",
     },
     checkEmail: {
       title: "Check your email",
@@ -383,6 +389,7 @@ const pt = {
     login: {
       title: "Entrar na LALA",
       description: "Digite suas credenciais para acessar sua conta",
+      identifier: "ID LALA ou e-mail",
       email: "E-mail",
       password: "Senha",
       submit: "Entrar",
@@ -406,6 +413,11 @@ const pt = {
       errorSelectRole: "Por favor, selecione seu papel.",
       errorFullName: "Por favor, insira seu nome completo.",
       errorPassword: "A senha deve ter pelo menos 8 caracteres.",
+      lalaId: "ID LALA",
+      lalaIdPlaceholder: "Seu ID LALA",
+      contactEmail: "E-mail de contato (opcional)",
+      contactEmailPlaceholder: "seu@email.com",
+      contactEmailHint: "Usado apenas para notificações, não para login.",
     },
     checkEmail: {
       title: "Verifique seu e-mail",
@@ -683,6 +695,7 @@ const es = {
     login: {
       title: "Iniciar sesión en LALA",
       description: "Ingresa tus credenciales para acceder a tu cuenta",
+      identifier: "ID LALA o correo electrónico",
       email: "Correo electrónico",
       password: "Contraseña",
       submit: "Iniciar sesión",
@@ -706,6 +719,11 @@ const es = {
       errorSelectRole: "Por favor, selecciona tu rol.",
       errorFullName: "Por favor, ingresa tu nombre completo.",
       errorPassword: "La contraseña debe tener al menos 8 caracteres.",
+      lalaId: "ID LALA",
+      lalaIdPlaceholder: "Tu ID LALA",
+      contactEmail: "Correo de contacto (opcional)",
+      contactEmailPlaceholder: "tu@correo.com",
+      contactEmailHint: "Solo para notificaciones, no para iniciar sesión.",
     },
     checkEmail: {
       title: "Revisa tu correo electrónico",

@@ -10,10 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
+function syntheticEmail(lalaId: string) {
+  return `${lalaId.toLowerCase().replace(/[^a-z0-9._-]/g, "-")}@lalaplatform.internal`;
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const t = useT();
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -24,10 +28,12 @@ export default function LoginPage() {
     setError(null);
 
     const supabase = createClient();
+    const email = identifier.includes("@") ? identifier : syntheticEmail(identifier.trim());
+
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      setError(error.message);
+      setError(identifier.includes("@") ? error.message : "Invalid LALA ID or password.");
       setLoading(false);
       return;
     }
@@ -46,19 +52,17 @@ export default function LoginPage() {
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="bg-red-50 text-red-700 text-sm rounded-md px-3 py-2">
-                {error}
-              </div>
+              <div className="bg-red-50 text-red-700 text-sm rounded-md px-3 py-2">{error}</div>
             )}
             <div className="space-y-1">
-              <Label htmlFor="email">{t.auth.login.email}</Label>
+              <Label htmlFor="identifier">{t.auth.login.identifier}</Label>
               <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="identifier"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                placeholder={t.auth.login.identifier}
                 required
-                autoComplete="email"
+                autoComplete="username"
               />
             </div>
             <div className="space-y-1">

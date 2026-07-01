@@ -16,6 +16,8 @@ export type ProfileRow = {
   open_to_opportunities: boolean | null;
   approved: boolean | null;
   registration_notified: boolean | null;
+  lala_id: string | null;
+  contact_email: string | null;
   skills: string | null;
   company_name: string | null;
   company_description: string | null;
@@ -40,6 +42,8 @@ export type ProfileInsert = {
   open_to_opportunities?: boolean | null;
   approved?: boolean | null;
   registration_notified?: boolean | null;
+  lala_id?: string | null;
+  contact_email?: string | null;
   skills?: string | null;
   company_name?: string | null;
   company_description?: string | null;
