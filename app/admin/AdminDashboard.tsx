@@ -11,6 +11,19 @@ type Profile = {
   full_name: string;
   role: string;
   location: string | null;
+  bio: string | null;
+  education: string | null;
+  experience: string | null;
+  skills: string | null;
+  opportunity_type: string | null;
+  desired_role: string | null;
+  open_to_relocate: string | null;
+  life_stage: string | null;
+  open_to_opportunities: boolean | null;
+  linkedin_url: string | null;
+  company_name: string | null;
+  company_description: string | null;
+  website: string | null;
   created_at: string;
 };
 
@@ -54,6 +67,7 @@ export default function AdminDashboard({
   const [matching, setMatching] = useState<string | null>(null);
   const [matchError, setMatchError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
 
   async function togglePosition(id: string, current: boolean) {
     setToggling(id);
@@ -158,7 +172,7 @@ export default function AdminDashboard({
                   </thead>
                   <tbody>
                     {profiles.map((p) => (
-                      <tr key={p.id} className="border-b last:border-0 hover:bg-gray-50">
+                      <tr key={p.id} className="border-b last:border-0 hover:bg-gray-50 cursor-pointer" onClick={() => setSelectedProfile(p)}>
                         <td className="px-4 py-3 font-medium">{p.full_name}</td>
                         <td className="px-4 py-3">
                           <Badge variant={p.role === "company" ? "default" : "secondary"}>
@@ -169,7 +183,7 @@ export default function AdminDashboard({
                         <td className="px-4 py-3 text-gray-500">
                           {new Date(p.created_at).toLocaleDateString()}
                         </td>
-                        <td className="px-4 py-3">
+                        <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                           <Button
                             size="sm"
                             variant="outline"
@@ -301,6 +315,76 @@ export default function AdminDashboard({
           </Card>
         )}
       </main>
+
+      {selectedProfile && (
+        <div className="fixed inset-0 z-50 flex" onClick={() => setSelectedProfile(null)}>
+          <div className="absolute inset-0 bg-black/40" />
+          <div
+            className="relative ml-auto h-full w-full max-w-md bg-white shadow-xl overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
+              <div>
+                <h2 className="font-semibold text-blue-900">{selectedProfile.full_name}</h2>
+                <p className="text-xs text-gray-400 mt-0.5">Joined {new Date(selectedProfile.created_at).toLocaleDateString()}</p>
+              </div>
+              <button onClick={() => setSelectedProfile(null)} className="text-gray-400 hover:text-gray-700 text-xl leading-none">✕</button>
+            </div>
+            <div className="p-6 space-y-4 text-sm">
+              <div className="flex items-center gap-2">
+                <Badge variant={selectedProfile.role === "company" ? "default" : "secondary"}>
+                  {selectedProfile.role === "laLider" ? "LaLider" : "Company"}
+                </Badge>
+                {selectedProfile.role === "laLider" && (
+                  <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${selectedProfile.open_to_opportunities !== false ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${selectedProfile.open_to_opportunities !== false ? "bg-green-500" : "bg-gray-400"}`} />
+                    {selectedProfile.open_to_opportunities !== false ? "Open to opportunities" : "Not open to opportunities"}
+                  </span>
+                )}
+              </div>
+
+              {selectedProfile.role === "laLider" && (
+                <>
+                  {selectedProfile.life_stage && <Row label="Life stage" value={selectedProfile.life_stage} />}
+                  {selectedProfile.location && <Row label="Location" value={selectedProfile.location} />}
+                  {selectedProfile.education && <Row label="Education" value={selectedProfile.education} />}
+                  {selectedProfile.experience && <Row label="Experience" value={selectedProfile.experience} />}
+                  {selectedProfile.skills && <Row label="Skills" value={selectedProfile.skills} />}
+                  {selectedProfile.opportunity_type && <Row label="Opportunity type" value={selectedProfile.opportunity_type} />}
+                  {selectedProfile.desired_role && <Row label="Desired role" value={selectedProfile.desired_role} />}
+                  {selectedProfile.open_to_relocate && <Row label="Open to relocate" value={selectedProfile.open_to_relocate} />}
+                  {selectedProfile.bio && <Row label="About" value={selectedProfile.bio} />}
+                  {selectedProfile.linkedin_url && <Row label="LinkedIn" value={selectedProfile.linkedin_url} link />}
+                </>
+              )}
+
+              {selectedProfile.role === "company" && (
+                <>
+                  {selectedProfile.company_name && <Row label="Company" value={selectedProfile.company_name} />}
+                  {selectedProfile.location && <Row label="Headquarters" value={selectedProfile.location} />}
+                  {selectedProfile.website && <Row label="Website" value={selectedProfile.website} link />}
+                  {selectedProfile.linkedin_url && <Row label="LinkedIn" value={selectedProfile.linkedin_url} link />}
+                  {selectedProfile.company_description && <Row label="What they do" value={selectedProfile.company_description} />}
+                  {selectedProfile.bio && <Row label="Why join" value={selectedProfile.bio} />}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Row({ label, value, link }: { label: string; value: string; link?: boolean }) {
+  return (
+    <div>
+      <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-0.5">{label}</p>
+      {link ? (
+        <a href={value} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">{value}</a>
+      ) : (
+        <p className="text-gray-800 whitespace-pre-wrap">{value}</p>
+      )}
     </div>
   );
 }
