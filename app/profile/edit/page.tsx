@@ -33,6 +33,8 @@ export default function EditProfilePage() {
   const [eduYear, setEduYear] = useState("");
   const [openToRelocate, setOpenToRelocate] = useState("");
   const [lifeStage, setLifeStage] = useState("");
+  const [openToOpportunities, setOpenToOpportunities] = useState(true);
+  const [availabilitySaving, setAvailabilitySaving] = useState(false);
 
   useEffect(() => {
     async function loadProfile() {
@@ -60,6 +62,9 @@ export default function EditProfilePage() {
         }
         if (data.role === "laLider" && data.life_stage) {
           setLifeStage(data.life_stage);
+        }
+        if (data.role === "laLider") {
+          setOpenToOpportunities(data.open_to_opportunities ?? true);
         }
         if (data.role === "laLider" && data.location) {
           const parts = data.location.split(", ").map((s: string) => s.trim());
@@ -138,6 +143,17 @@ export default function EditProfilePage() {
     router.push("/dashboard");
   }
 
+  async function toggleAvailability(value: boolean) {
+    setAvailabilitySaving(true);
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase.from("profiles").update({ open_to_opportunities: value }).eq("user_id", user.id);
+      setOpenToOpportunities(value);
+    }
+    setAvailabilitySaving(false);
+  }
+
   if (loading) return <div className="min-h-screen flex items-center justify-center">Loading…</div>;
 
   return (
@@ -155,7 +171,27 @@ export default function EditProfilePage() {
       </nav>
       <div className="h-1 w-full" style={{background: "linear-gradient(to right, #1e3a8a, #3C35DE, #FFC200)"}} />
       <div className="p-4">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-2xl mx-auto space-y-4">
+        {role === "laLider" && (
+          <div className={`rounded-xl ring-1 p-4 flex items-start justify-between gap-4 ${openToOpportunities ? "bg-green-50 ring-green-200" : "bg-gray-100 ring-gray-200"}`}>
+            <div>
+              <p className={`font-semibold text-sm ${openToOpportunities ? "text-green-800" : "text-gray-600"}`}>
+                {openToOpportunities ? t.profileEdit.availabilityOpen : t.profileEdit.availabilityClosed}
+              </p>
+              <p className={`text-xs mt-0.5 ${openToOpportunities ? "text-green-600" : "text-gray-400"}`}>
+                {openToOpportunities ? t.profileEdit.availabilityOpenDesc : t.profileEdit.availabilityClosedDesc}
+              </p>
+            </div>
+            <button
+              type="button"
+              disabled={availabilitySaving}
+              onClick={() => toggleAvailability(!openToOpportunities)}
+              className={`shrink-0 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none disabled:opacity-50 ${openToOpportunities ? "bg-green-500" : "bg-gray-300"}`}
+            >
+              <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${openToOpportunities ? "translate-x-6" : "translate-x-1"}`} />
+            </button>
+          </div>
+        )}
         <Card>
           <CardHeader>
             <CardTitle>{role === "company" ? t.profileEdit.titleCompany : t.profileEdit.titleLalider}</CardTitle>

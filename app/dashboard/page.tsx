@@ -244,6 +244,12 @@ export default async function DashboardPage() {
               </div>
               <Card>
                 <CardContent className="pt-6 space-y-2 text-sm">
+                  <div>
+                    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${profile.open_to_opportunities !== false ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${profile.open_to_opportunities !== false ? "bg-green-500" : "bg-gray-400"}`} />
+                      {profile.open_to_opportunities !== false ? t.dashboard.laliderProfile.openToOpportunities : t.dashboard.laliderProfile.notOpenToOpportunities}
+                    </span>
+                  </div>
                   {profile.life_stage && <div><span className="font-medium">{t.dashboard.laliderProfile.lifeStage}:</span> {profile.life_stage}</div>}
                   {profile.location && <div><span className="font-medium">{t.dashboard.laliderProfile.location}:</span> {profile.location}</div>}
                   {profile.education && <div><span className="font-medium">{t.dashboard.laliderProfile.education}:</span> {profile.education}</div>}
