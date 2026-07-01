@@ -36,11 +36,11 @@ export async function POST(request: NextRequest) {
 
   const { data: lalideres } = await supabase
     .from("profiles")
-    .select("id, full_name, location, bio, education, experience, skills, opportunity_type, desired_role, open_to_relocate, linkedin_url")
+    .select("id, full_name, location, bio, education, experience, skills, opportunity_type, desired_role, open_to_relocate, life_stage, linkedin_url")
     .eq("role", "laLider")
     .neq("open_to_opportunities", false);
 
-  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type" | "desired_role" | "open_to_relocate" | "linkedin_url">[] | null;
+  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type" | "desired_role" | "open_to_relocate" | "life_stage" | "linkedin_url">[] | null;
 
   if (!candidates || candidates.length === 0) {
     return NextResponse.json({ matches: [] });
@@ -61,6 +61,7 @@ Requirements: ${pos.requirements}
     .map((l, i) => `
 Candidate ${i + 1} (ID: ${l.id})
 Name: ${l.full_name}
+Life stage: ${l.life_stage ?? "Not specified"}
 Location: ${l.location ?? "Not specified"}
 Education: ${l.education ?? "Not specified"}
 Experience: ${l.experience ?? "Not specified"}
@@ -84,6 +85,14 @@ Scoring guidance on work modality and relocation:
 - If the position is Hybrid or In-person, relocation compatibility is a strong signal. Candidates open to international relocation or relocation within the country should score significantly higher than those not open to relocation, unless the candidate's current location already matches the position's location. Unwillingness to relocate for a Hybrid or In-person role should reduce the score by 2-3 points.
 - If the position is Remote, relocation openness is irrelevant — do not factor it in.
 - Skills, experience, and role fit remain the primary criteria; relocation is a meaningful modifier.
+- The candidate's stated desired role and area of interest is a soft signal only — treat it as a minor preference, not a hard requirement. A strong skills and experience match should outweigh a mismatch in desired role.
+
+Scoring guidance on life stage:
+- Use life stage to assess fit between the candidate's current situation and the position's seniority and expectations.
+- High school or University/College students are best suited for internships, part-time roles, or entry-level fellowships. Matching them to senior full-time roles should reduce the score by 2-3 points.
+- MBA or Graduate studies candidates are strong fits for consulting, strategy, management, or roles that require advanced academic preparation.
+- Working professionals are best suited for full-time roles and leadership positions. They may be overqualified for internships, which should reduce the score by 1-2 points unless the position explicitly targets experienced candidates.
+- If life stage is not specified, do not penalize the candidate — rely on their experience and education instead.
 
 Always return a valid JSON array — no prose before or after it.`,
     messages: [
