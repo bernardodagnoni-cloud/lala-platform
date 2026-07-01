@@ -1,9 +1,11 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM = process.env.RESEND_FROM_EMAIL ?? "LaLa Match <noreply@lalamatch.org>";
 const ADMIN_NOTIFY_EMAIL = "paloma.flores@somoslala.org";
+
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function sendCompanyRegistrationNotification({
   companyName,
@@ -18,7 +20,7 @@ export async function sendCompanyRegistrationNotification({
   website: string | null;
   linkedinUrl: string | null;
 }) {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: ADMIN_NOTIFY_EMAIL,
     subject: `New company registered on LaLa Match: ${companyName}`,
@@ -41,7 +43,7 @@ export async function sendCompanyApprovalEmail({
   toEmail: string;
   companyName: string;
 }) {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: toEmail,
     subject: "Your LaLa Match account has been approved",
