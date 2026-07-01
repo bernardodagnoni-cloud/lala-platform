@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { GoldStar, BlueSparkle } from "@/components/brand-icons";
+import { isAdmin } from "@/lib/admin";
 
 type LaliderMatch = {
   score: number;
@@ -58,6 +59,7 @@ export default async function DashboardPage() {
   if (!profile) redirect("/profile/edit");
 
   const isCompany = profile.role === "company";
+  const userIsAdmin = isAdmin(user.email);
 
   const { t } = await getServerT();
 
@@ -112,6 +114,11 @@ export default async function DashboardPage() {
           </Link>
         <div className="flex items-center gap-4">
           <LanguageSwitcher className="text-white" />
+          {userIsAdmin && (
+            <Link href="/admin">
+              <Button variant="ghost" size="sm" className="text-amber-300 hover:bg-blue-900 hover:text-amber-200">Admin</Button>
+            </Link>
+          )}
           <span className="text-sm text-blue-200">{profile.full_name}</span>
           <form action="/api/auth/logout" method="POST">
             <Button variant="ghost" size="sm" type="submit" className="text-white hover:bg-blue-900">{t.common.signOut}</Button>
