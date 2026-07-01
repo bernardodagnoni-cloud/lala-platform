@@ -87,6 +87,12 @@ export default function LoginPage() {
                 {t.auth.login.signUpLink}
               </Link>
             </p>
+            <p className="text-sm text-gray-500 text-center">
+              First time here?{" "}
+              <Link href="/auth/activate" className="text-blue-600 hover:underline">
+                Activate your account / Ativar conta / Activar cuenta
+              </Link>
+            </p>
           </CardFooter>
         </form>
       </Card>
