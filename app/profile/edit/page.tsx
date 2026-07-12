@@ -315,7 +315,7 @@ export default function EditProfilePage() {
                     <div className="space-y-1">
                       <Input
                         id="life_stage_other"
-                        placeholder="Please specify / Por favor especifique / Por favor especifica"
+                        placeholder={t.profileEdit.lifeStageOtherPlaceholder}
                         value={lifeStageOther}
                         onChange={(e) => setLifeStageOther(e.target.value)}
                       />

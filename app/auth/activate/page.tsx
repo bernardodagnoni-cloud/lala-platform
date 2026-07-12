@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 export default function ActivatePage() {
   const router = useRouter();
+  const t = useT();
   const [lalaId, setLalaId] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -20,11 +22,11 @@ export default function ActivatePage() {
   async function handleActivate(e: React.FormEvent) {
     e.preventDefault();
     if (password !== confirm) {
-      setError("Passwords do not match. / As senhas não coincidem. / Las contraseñas no coinciden.");
+      setError(t.auth.activate.errorPasswordMismatch);
       return;
     }
     if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
+      setError(t.auth.signup.errorPassword);
       return;
     }
     setLoading(true);
@@ -51,14 +53,8 @@ export default function ActivatePage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">
-            Activate your account
-          </CardTitle>
-          <CardDescription className="space-y-1">
-            <span className="block">Enter your LALA ID and choose a password to get started.</span>
-            <span className="block text-gray-400">Digite seu ID LALA e escolha uma senha para começar.</span>
-            <span className="block text-gray-400">Ingresa tu ID LALA y elige una contraseña para empezar.</span>
-          </CardDescription>
+          <CardTitle className="text-2xl">{t.auth.activate.title}</CardTitle>
+          <CardDescription>{t.auth.activate.description}</CardDescription>
         </CardHeader>
         <form onSubmit={handleActivate}>
           <CardContent className="space-y-4">
@@ -77,7 +73,7 @@ export default function ActivatePage() {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="password">Password / Senha / Contraseña</Label>
+              <Label htmlFor="password">{t.auth.activate.password}</Label>
               <Input
                 id="password"
                 type="password"
@@ -89,7 +85,7 @@ export default function ActivatePage() {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="confirm">Confirm password / Confirmar senha / Confirmar contraseña</Label>
+              <Label htmlFor="confirm">{t.auth.activate.confirmPassword}</Label>
               <Input
                 id="confirm"
                 type="password"
@@ -102,11 +98,11 @@ export default function ActivatePage() {
           </CardContent>
           <CardFooter className="flex flex-col gap-3">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Activating…" : "Activate account / Ativar conta / Activar cuenta"}
+              {loading ? t.auth.activate.submitting : t.auth.activate.submit}
             </Button>
             <p className="text-sm text-gray-500 text-center">
-              Already have a password?{" "}
-              <Link href="/auth/login" className="text-blue-600 hover:underline">Sign in</Link>
+              {t.auth.activate.alreadyHavePassword}{" "}
+              <Link href="/auth/login" className="text-blue-600 hover:underline">{t.auth.activate.signIn}</Link>
             </p>
           </CardFooter>
         </form>
