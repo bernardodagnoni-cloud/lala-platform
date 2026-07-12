@@ -22,6 +22,7 @@ const STANDARD_LIFE_STAGES = new Set([
   "Ensino médio", "Universidade / Faculdade", "Pós-graduação (Mestrado / Doutorado)", "Profissional em atividade",
   "Secundaria", "Universidad / Carrera", "Posgrado (Maestría / Doctorado)", "Profesional en actividad",
 ]);
+const OTHER_LIFE_STAGE_LABELS = new Set(["Other", "Outro", "Otro"]);
 
 export default function EditProfilePage() {
   const router = useRouter();
@@ -72,8 +73,11 @@ export default function EditProfilePage() {
           if (STANDARD_LIFE_STAGES.has(data.life_stage)) {
             setLifeStage(data.life_stage);
           } else {
-            setLifeStage("__other__");
-            setLifeStageOther(data.life_stage);
+            const otherLabel = t.profileEdit.lifeStageOptions[t.profileEdit.lifeStageOptions.length - 1];
+            setLifeStage(otherLabel);
+            if (!OTHER_LIFE_STAGE_LABELS.has(data.life_stage)) {
+              setLifeStageOther(data.life_stage);
+            }
           }
         }
         if (data.role === "laLider") {
@@ -145,7 +149,7 @@ export default function EditProfilePage() {
         opportunity_type: profile.opportunity_type,
         desired_role: profile.desired_role,
         open_to_relocate: role === "laLider" ? openToRelocate || null : undefined,
-        life_stage: role === "laLider" ? (lifeStage === "__other__" ? lifeStageOther.trim() || null : lifeStage || null) : undefined,
+        life_stage: role === "laLider" ? (OTHER_LIFE_STAGE_LABELS.has(lifeStage) ? lifeStageOther.trim() || null : lifeStage || null) : undefined,
         contact_email: role === "laLider" ? contactEmail.trim() || null : undefined,
         volunteer_experience: role === "laLider" ? profile.volunteer_experience ?? null : undefined,
         skills: profile.skills,
@@ -301,15 +305,13 @@ export default function EditProfilePage() {
                         <SelectValue placeholder={t.profileEdit.lifeStagePlaceholder} />
                       </SelectTrigger>
                       <SelectContent>
-                        {t.profileEdit.lifeStageOptions.map((opt, i) => (
-                          <SelectItem key={opt} value={i === t.profileEdit.lifeStageOptions.length - 1 ? "__other__" : opt}>
-                            {opt}
-                          </SelectItem>
+                        {t.profileEdit.lifeStageOptions.map((opt) => (
+                          <SelectItem key={opt} value={opt}>{opt}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
-                  {lifeStage === "__other__" && (
+                  {OTHER_LIFE_STAGE_LABELS.has(lifeStage) && (
                     <div className="space-y-1">
                       <Input
                         id="life_stage_other"
