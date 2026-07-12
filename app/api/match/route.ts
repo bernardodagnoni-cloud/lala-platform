@@ -86,6 +86,7 @@ Scoring guidance on work modality and relocation:
 - If the position is Remote, relocation openness is irrelevant — do not factor it in.
 - Skills, experience, and role fit remain the primary criteria; relocation is a meaningful modifier.
 - The candidate's stated desired role and area of interest is a soft signal only — treat it as a minor preference, not a hard requirement. A strong skills and experience match should outweigh a mismatch in desired role.
+- The candidate's preferred opportunity type (internship, full-time, etc.) is also a very soft signal. Do not penalize candidates meaningfully for a mismatch — many LaLideres are open to opportunities even if it differs from their stated preference. A skills and experience match matters far more.
 
 Scoring guidance on life stage:
 - Use life stage to assess fit between the candidate's current situation and the position's seniority and expectations.
