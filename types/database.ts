@@ -19,6 +19,7 @@ export type ProfileRow = {
   lala_id: string | null;
   contact_email: string | null;
   volunteer_experience: string | null;
+  cv_url: string | null;
   skills: string | null;
   company_name: string | null;
   company_description: string | null;
@@ -46,6 +47,7 @@ export type ProfileInsert = {
   lala_id?: string | null;
   contact_email?: string | null;
   volunteer_experience?: string | null;
+  cv_url?: string | null;
   skills?: string | null;
   company_name?: string | null;
   company_description?: string | null;

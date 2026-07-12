@@ -116,8 +116,14 @@ export default function EditProfilePage() {
     if (role === "company" && !profile.company_name?.trim()) {
       setError(t.profileEdit.errorCompanyName); return;
     }
+    if (role === "laLider" && !profile.linkedin_url?.trim() && !profile.cv_url?.trim()) {
+      setError(t.profileEdit.errorLinkedinOrCv); return;
+    }
     if (profile.linkedin_url && !profile.linkedin_url.startsWith("https://")) {
       setError(t.profileEdit.errorLinkedinUrl); return;
+    }
+    if (profile.cv_url && !profile.cv_url.startsWith("https://")) {
+      setError(t.profileEdit.errorLinkedinUrl.replace("LinkedIn", "CV")); return;
     }
     setSaving(true);
     setError(null);
@@ -147,6 +153,7 @@ export default function EditProfilePage() {
         company_description: profile.company_description,
         website: profile.website,
         linkedin_url: profile.linkedin_url,
+        cv_url: role === "laLider" ? profile.cv_url ?? null : undefined,
       })
       .eq("user_id", user.id);
 
@@ -427,6 +434,18 @@ export default function EditProfilePage() {
                       onChange={(e) => update("linkedin_url", e.target.value)}
                     />
                   </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="cv_url">{t.profileEdit.cvUrl}</Label>
+                    <Input
+                      id="cv_url"
+                      type="url"
+                      placeholder={t.profileEdit.cvUrlPlaceholder}
+                      value={profile.cv_url ?? ""}
+                      onChange={(e) => update("cv_url", e.target.value)}
+                    />
+                    <p className="text-xs text-gray-400">{t.profileEdit.cvUrlHint}</p>
+                  </div>
+                  <p className="text-xs text-amber-600">{t.profileEdit.errorLinkedinOrCv}</p>
                 </>
               )}
 
