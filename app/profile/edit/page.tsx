@@ -17,6 +17,12 @@ import type { ProfileRow, UserRole } from "@/types/database";
 
 type Profile = ProfileRow;
 
+const STANDARD_LIFE_STAGES = new Set([
+  "High school", "University / College", "MBA", "Graduate studies (Master's / PhD)", "Working professional",
+  "Ensino médio", "Universidade / Faculdade", "Pós-graduação (Mestrado / Doutorado)", "Profissional em atividade",
+  "Secundaria", "Universidad / Carrera", "Posgrado (Maestría / Doctorado)", "Profesional en actividad",
+]);
+
 export default function EditProfilePage() {
   const router = useRouter();
   const t = useT();
@@ -33,6 +39,7 @@ export default function EditProfilePage() {
   const [eduYear, setEduYear] = useState("");
   const [openToRelocate, setOpenToRelocate] = useState("");
   const [lifeStage, setLifeStage] = useState("");
+  const [lifeStageOther, setLifeStageOther] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [openToOpportunities, setOpenToOpportunities] = useState(true);
   const [availabilitySaving, setAvailabilitySaving] = useState(false);
@@ -62,7 +69,12 @@ export default function EditProfilePage() {
           setOpenToRelocate(data.open_to_relocate);
         }
         if (data.role === "laLider" && data.life_stage) {
-          setLifeStage(data.life_stage);
+          if (STANDARD_LIFE_STAGES.has(data.life_stage)) {
+            setLifeStage(data.life_stage);
+          } else {
+            setLifeStage("__other__");
+            setLifeStageOther(data.life_stage);
+          }
         }
         if (data.role === "laLider") {
           setOpenToOpportunities(data.open_to_opportunities ?? true);
@@ -127,8 +139,9 @@ export default function EditProfilePage() {
         opportunity_type: profile.opportunity_type,
         desired_role: profile.desired_role,
         open_to_relocate: role === "laLider" ? openToRelocate || null : undefined,
-        life_stage: role === "laLider" ? lifeStage || null : undefined,
+        life_stage: role === "laLider" ? (lifeStage === "__other__" ? lifeStageOther.trim() || null : lifeStage || null) : undefined,
         contact_email: role === "laLider" ? contactEmail.trim() || null : undefined,
+        volunteer_experience: role === "laLider" ? profile.volunteer_experience ?? null : undefined,
         skills: profile.skills,
         company_name: profile.company_name,
         company_description: profile.company_description,
@@ -281,11 +294,21 @@ export default function EditProfilePage() {
                         <SelectValue placeholder={t.profileEdit.lifeStagePlaceholder} />
                       </SelectTrigger>
                       <SelectContent>
-                        {t.profileEdit.lifeStageOptions.map((opt) => (
-                          <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                        {t.profileEdit.lifeStageOptions.map((opt, i) => (
+                          <SelectItem key={opt} value={i === t.profileEdit.lifeStageOptions.length - 1 ? "__other__" : opt}>
+                            {opt}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
+                    {lifeStage === "__other__" && (
+                      <Input
+                        id="life_stage_other"
+                        placeholder="Please specify / Por favor especifique / Por favor especifica"
+                        value={lifeStageOther}
+                        onChange={(e) => setLifeStageOther(e.target.value)}
+                      />
+                    )}
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="edu_university">{t.profileEdit.university}</Label>
@@ -331,6 +354,16 @@ export default function EditProfilePage() {
                       placeholder={t.profileEdit.skillsPlaceholder}
                       value={profile.skills ?? ""}
                       onChange={(e) => update("skills", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="volunteer_experience">{t.profileEdit.volunteerExperience}</Label>
+                    <Textarea
+                      id="volunteer_experience"
+                      placeholder={t.profileEdit.volunteerExperiencePlaceholder}
+                      value={profile.volunteer_experience ?? ""}
+                      onChange={(e) => update("volunteer_experience", e.target.value)}
+                      rows={4}
                     />
                   </div>
                   <div className="space-y-1">
