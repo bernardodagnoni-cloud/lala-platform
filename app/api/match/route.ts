@@ -36,11 +36,11 @@ export async function POST(request: NextRequest) {
 
   const { data: lalideres } = await supabase
     .from("profiles")
-    .select("id, full_name, location, bio, education, experience, skills, opportunity_type, desired_role, open_to_relocate, life_stage, linkedin_url")
+    .select("id, full_name, location, bio, education, experience, skills, volunteer_experience, opportunity_type, desired_role, open_to_relocate, life_stage, linkedin_url")
     .eq("role", "laLider")
     .neq("open_to_opportunities", false);
 
-  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type" | "desired_role" | "open_to_relocate" | "life_stage" | "linkedin_url">[] | null;
+  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "volunteer_experience" | "opportunity_type" | "desired_role" | "open_to_relocate" | "life_stage" | "linkedin_url">[] | null;
 
   if (!candidates || candidates.length === 0) {
     return NextResponse.json({ matches: [] });
@@ -65,6 +65,7 @@ Life stage: ${l.life_stage ?? "Not specified"}
 Location: ${l.location ?? "Not specified"}
 Education: ${l.education ?? "Not specified"}
 Experience: ${l.experience ?? "Not specified"}
+Volunteer & community experience: ${l.volunteer_experience ?? "Not specified"}
 Skills: ${l.skills ?? "Not specified"}
 Opportunity type sought: ${l.opportunity_type ?? "Not specified"}
 Desired role / area: ${l.desired_role ?? "Not specified"}
@@ -87,6 +88,12 @@ Scoring guidance on work modality and relocation:
 - Skills, experience, and role fit remain the primary criteria; relocation is a meaningful modifier.
 - The candidate's stated desired role and area of interest is a soft signal only — treat it as a minor preference, not a hard requirement. A strong skills and experience match should outweigh a mismatch in desired role.
 - The candidate's preferred opportunity type (internship, full-time, etc.) is also a very soft signal. Do not penalize candidates meaningfully for a mismatch — many LaLideres are open to opportunities even if it differs from their stated preference. A skills and experience match matters far more.
+
+Scoring guidance on volunteer & community experience:
+- Treat volunteer and community service experience as a meaningful signal of character, initiative, and values alignment — especially for roles at mission-driven or social impact organizations.
+- For candidates earlier in their career (high school, university), strong volunteer experience can partially compensate for limited professional experience.
+- If the position description emphasizes social impact, community, or purpose-driven work, weight volunteer experience more heavily.
+- If not specified, do not penalize the candidate.
 
 Scoring guidance on life stage:
 - Use life stage to assess fit between the candidate's current situation and the position's seniority and expectations.
