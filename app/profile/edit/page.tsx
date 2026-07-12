@@ -308,15 +308,17 @@ export default function EditProfilePage() {
                         ))}
                       </SelectContent>
                     </Select>
-                    {lifeStage === "__other__" && (
+                  </div>
+                  {lifeStage === "__other__" && (
+                    <div className="space-y-1">
                       <Input
                         id="life_stage_other"
                         placeholder="Please specify / Por favor especifique / Por favor especifica"
                         value={lifeStageOther}
                         onChange={(e) => setLifeStageOther(e.target.value)}
                       />
-                    )}
-                  </div>
+                    </div>
+                  )}
                   <div className="space-y-1">
                     <Label htmlFor="edu_university">{t.profileEdit.university}</Label>
                     <Input
