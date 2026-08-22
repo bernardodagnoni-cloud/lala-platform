@@ -5,19 +5,31 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatWorkExperience, formatSkills, formatList } from "@/lib/format-candidate";
+import type { WorkExperienceEntry } from "@/types/database";
+
+type Diversity = {
+  gender: string | null;
+  gender_identity: string | null;
+  sexual_orientation: string | null;
+  race_color: string | null;
+};
 
 type Profile = {
   id: string;
   full_name: string;
   role: string;
+  phone: string | null;
   location: string | null;
   bio: string | null;
   education: string | null;
-  experience: string | null;
-  skills: string | null;
-  opportunity_type: string | null;
+  work_experience: WorkExperienceEntry[] | null;
+  skills: string[] | null;
+  skills_other: string | null;
+  opportunity_type: string[] | null;
   desired_role: string | null;
   open_to_relocate: string | null;
+  work_arrangements: string[] | null;
   life_stage: string | null;
   open_to_opportunities: boolean | null;
   linkedin_url: string | null;
@@ -26,6 +38,7 @@ type Profile = {
   website: string | null;
   approved: boolean | null;
   created_at: string;
+  diversity: Diversity | null;
 };
 
 type Position = {
@@ -33,6 +46,7 @@ type Position = {
   title: string;
   opportunity_type: string;
   location: string | null;
+  affirmative_action: boolean;
   is_active: boolean;
   created_at: string;
   profiles: { company_name: string | null } | null;
@@ -265,9 +279,12 @@ export default function AdminDashboard({
                         <td className="px-4 py-3 text-gray-500">{pos.profiles?.company_name ?? "—"}</td>
                         <td className="px-4 py-3 text-gray-500">{pos.opportunity_type}</td>
                         <td className="px-4 py-3">
-                          <Badge variant={pos.is_active ? "default" : "secondary"}>
-                            {pos.is_active ? "Active" : "Closed"}
-                          </Badge>
+                          <div className="flex items-center gap-1.5">
+                            <Badge variant={pos.is_active ? "default" : "secondary"}>
+                              {pos.is_active ? "Active" : "Closed"}
+                            </Badge>
+                            {pos.affirmative_action && <Badge variant="outline">Affirmative action</Badge>}
+                          </div>
                         </td>
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-2">
@@ -376,16 +393,35 @@ export default function AdminDashboard({
 
               {selectedProfile.role === "laLider" && (
                 <>
+                  {selectedProfile.phone && <Row label="Mobile number" value={selectedProfile.phone} />}
                   {selectedProfile.life_stage && <Row label="Life stage" value={selectedProfile.life_stage} />}
                   {selectedProfile.location && <Row label="Location" value={selectedProfile.location} />}
                   {selectedProfile.education && <Row label="Education" value={selectedProfile.education} />}
-                  {selectedProfile.experience && <Row label="Experience" value={selectedProfile.experience} />}
-                  {selectedProfile.skills && <Row label="Skills" value={selectedProfile.skills} />}
-                  {selectedProfile.opportunity_type && <Row label="Opportunity type" value={selectedProfile.opportunity_type} />}
+                  {selectedProfile.bio && <Row label="About" value={selectedProfile.bio} />}
+                  {selectedProfile.work_experience && selectedProfile.work_experience.length > 0 && (
+                    <Row label="Experience" value={formatWorkExperience(selectedProfile.work_experience)} />
+                  )}
+                  {(selectedProfile.skills?.length || selectedProfile.skills_other) && (
+                    <Row label="Skills" value={formatSkills(selectedProfile.skills, selectedProfile.skills_other)} />
+                  )}
+                  {selectedProfile.opportunity_type && selectedProfile.opportunity_type.length > 0 && (
+                    <Row label="Opportunity type" value={formatList(selectedProfile.opportunity_type)} />
+                  )}
                   {selectedProfile.desired_role && <Row label="Desired role" value={selectedProfile.desired_role} />}
                   {selectedProfile.open_to_relocate && <Row label="Open to relocate" value={selectedProfile.open_to_relocate} />}
-                  {selectedProfile.bio && <Row label="About" value={selectedProfile.bio} />}
+                  {selectedProfile.work_arrangements && selectedProfile.work_arrangements.length > 0 && (
+                    <Row label="Work arrangements" value={formatList(selectedProfile.work_arrangements)} />
+                  )}
                   {selectedProfile.linkedin_url && <Row label="LinkedIn" value={selectedProfile.linkedin_url} link />}
+                  {selectedProfile.diversity && (
+                    <div className="rounded-lg ring-1 ring-blue-100 bg-blue-50/50 p-3 space-y-2">
+                      <p className="text-xs font-semibold text-blue-900 uppercase tracking-wide">Diversity census</p>
+                      {selectedProfile.diversity.gender && <Row label="Gender" value={selectedProfile.diversity.gender} />}
+                      {selectedProfile.diversity.gender_identity && <Row label="Gender identity" value={selectedProfile.diversity.gender_identity} />}
+                      {selectedProfile.diversity.sexual_orientation && <Row label="Sexual orientation" value={selectedProfile.diversity.sexual_orientation} />}
+                      {selectedProfile.diversity.race_color && <Row label="Color / race" value={selectedProfile.diversity.race_color} />}
+                    </div>
+                  )}
                 </>
               )}
 

@@ -3,6 +3,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isAdmin } from "@/lib/admin";
+import { formatWorkExperience, formatSkills, formatList } from "@/lib/format-candidate";
 import type { ProfileRow, PositionRow } from "@/types/database";
 
 const anthropic = new Anthropic();
@@ -31,10 +32,10 @@ export async function POST(request: NextRequest) {
 
   const { data: lalideres } = await admin
     .from("profiles")
-    .select("id, full_name, location, bio, education, experience, skills, opportunity_type, desired_role, open_to_relocate, linkedin_url")
+    .select("id, full_name, location, bio, education, work_experience, skills, skills_other, volunteer_experience, opportunity_type, desired_role, open_to_relocate, work_arrangements, life_stage, linkedin_url")
     .eq("role", "laLider");
 
-  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "experience" | "skills" | "opportunity_type" | "desired_role" | "open_to_relocate" | "linkedin_url">[] | null;
+  const candidates = lalideres as Pick<ProfileRow, "id" | "full_name" | "location" | "bio" | "education" | "work_experience" | "skills" | "skills_other" | "volunteer_experience" | "opportunity_type" | "desired_role" | "open_to_relocate" | "work_arrangements" | "life_stage" | "linkedin_url">[] | null;
 
   if (!candidates || candidates.length === 0) {
     return NextResponse.json({ matches: [] });
@@ -55,13 +56,16 @@ Requirements: ${pos.requirements}
     .map((l, i) => `
 Candidate ${i + 1} (ID: ${l.id})
 Name: ${l.full_name}
+Life stage: ${l.life_stage ?? "Not specified"}
 Location: ${l.location ?? "Not specified"}
 Education: ${l.education ?? "Not specified"}
-Experience: ${l.experience ?? "Not specified"}
-Skills: ${l.skills ?? "Not specified"}
-Opportunity type sought: ${l.opportunity_type ?? "Not specified"}
-Desired role / area: ${l.desired_role ?? "Not specified"}
+Work experience: ${formatWorkExperience(l.work_experience)}
+Volunteer & community experience: ${l.volunteer_experience ?? "Not specified"}
+Skills: ${formatSkills(l.skills, l.skills_other)}
+Opportunity type sought: ${formatList(l.opportunity_type)}
+Desired role / area of interest: ${l.desired_role ?? "Not specified"}
 Open to relocate: ${l.open_to_relocate ?? "Not specified"}
+Work arrangements available for: ${formatList(l.work_arrangements)}
 About: ${l.bio ?? "Not specified"}
 `.trim())
     .join("\n\n---\n\n");

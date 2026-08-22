@@ -44,6 +44,7 @@ function SignupForm() {
     if (!lalaId.trim()) { setError("Please enter your LALA ID."); return; }
     if (fullName.trim().length < 2) { setError(t.auth.signup.errorFullName); return; }
     if (password.length < 8) { setError(t.auth.signup.errorPassword); return; }
+    if (!contactEmail.trim()) { setError(t.auth.signup.errorEmail); return; }
     setLoading(true);
     setError(null);
 
@@ -152,7 +153,7 @@ function SignupForm() {
               </div>
               <div className="space-y-1">
                 <Label htmlFor="contactEmail">{t.auth.signup.contactEmail}</Label>
-                <Input id="contactEmail" type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder={t.auth.signup.contactEmailPlaceholder} autoComplete="email" />
+                <Input id="contactEmail" type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder={t.auth.signup.contactEmailPlaceholder} autoComplete="email" required />
                 <p className="text-xs text-gray-400">{t.auth.signup.contactEmailHint}</p>
               </div>
             </CardContent>

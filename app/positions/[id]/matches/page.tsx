@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { GoldStar, BlueSparkle } from "@/components/brand-icons";
+import type { ProfileDiversityRow } from "@/types/database";
 
 type Match = {
   candidateId: string;
@@ -25,6 +26,7 @@ type Position = {
   opportunity_type: string;
   work_modality: string | null;
   location: string | null;
+  affirmative_action: boolean;
 };
 
 function ScoreBadge({ score }: { score: number }) {
@@ -46,9 +48,19 @@ export default function MatchesPage() {
 
   const [position, setPosition] = useState<Position | null>(null);
   const [matches, setMatches] = useState<Match[]>([]);
+  const [diversityByCandidate, setDiversityByCandidate] = useState<Record<string, ProfileDiversityRow>>({});
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  async function loadDiversity(candidateIds: string[], affirmativeAction: boolean) {
+    if (!affirmativeAction || candidateIds.length === 0) { setDiversityByCandidate({}); return; }
+    const supabase = createClient();
+    const { data } = await supabase.from("profile_diversity").select("*").in("profile_id", candidateIds);
+    const map: Record<string, ProfileDiversityRow> = {};
+    (data as ProfileDiversityRow[] | null)?.forEach((d) => { map[d.profile_id] = d; });
+    setDiversityByCandidate(map);
+  }
 
   useEffect(() => {
     async function loadPageData() {
@@ -58,11 +70,12 @@ export default function MatchesPage() {
 
       const { data: posData } = await supabase
         .from("positions")
-        .select("id, title, opportunity_type, work_modality, location")
+        .select("id, title, opportunity_type, work_modality, location, affirmative_action")
         .eq("id", id)
         .single();
 
-      if (posData) setPosition(posData as Position);
+      const pos = posData as Position | null;
+      if (pos) setPosition(pos);
 
       // Load existing matches from the database
       const { data: existingMatches } = await supabase
@@ -92,6 +105,7 @@ export default function MatchesPage() {
         }));
         setMatches(mapped);
         setFetched(true);
+        await loadDiversity(mapped.map((m) => m.candidateId), pos?.affirmative_action ?? false);
       }
     }
     loadPageData();
@@ -109,8 +123,10 @@ export default function MatchesPage() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Matching failed");
-      setMatches(json.matches ?? []);
+      const newMatches: Match[] = json.matches ?? [];
+      setMatches(newMatches);
       setFetched(true);
+      await loadDiversity(newMatches.map((m) => m.candidateId), position?.affirmative_action ?? false);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");
     } finally {
@@ -216,6 +232,21 @@ export default function MatchesPage() {
                         </svg>
                         {t.positionsMatches.viewLinkedin}
                       </a>
+                    </>
+                  )}
+                  {position?.affirmative_action && diversityByCandidate[match.candidateId] && (
+                    <>
+                      <Separator />
+                      <div>
+                        <p className="text-sm font-medium text-gray-700 mb-1">{t.positionsMatches.diversitySectionTitle}</p>
+                        <p className="text-xs text-gray-400 mb-2">{t.positionsMatches.diversityHint}</p>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-600">
+                          <div><span className="text-gray-400">{t.diversity.genderLabel}:</span> {diversityByCandidate[match.candidateId].gender ?? "—"}</div>
+                          <div><span className="text-gray-400">{t.diversity.genderIdentityLabel}:</span> {diversityByCandidate[match.candidateId].gender_identity ?? "—"}</div>
+                          <div><span className="text-gray-400">{t.diversity.sexualOrientationLabel}:</span> {diversityByCandidate[match.candidateId].sexual_orientation ?? "—"}</div>
+                          <div><span className="text-gray-400">{t.diversity.raceLabel}:</span> {diversityByCandidate[match.candidateId].race_color ?? "—"}</div>
+                        </div>
+                      </div>
                     </>
                   )}
                 </CardContent>

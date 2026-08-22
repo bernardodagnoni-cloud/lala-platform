@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { GoldStar, BlueSparkle } from "@/components/brand-icons";
 import { isAdmin } from "@/lib/admin";
+import { formatWorkExperience, formatSkills, formatList } from "@/lib/format-candidate";
 
 type LaliderMatch = {
   score: number;
@@ -260,9 +261,9 @@ export default async function DashboardPage() {
                   {profile.life_stage && <div><span className="font-medium">{t.dashboard.laliderProfile.lifeStage}:</span> {profile.life_stage}</div>}
                   {profile.location && <div><span className="font-medium">{t.dashboard.laliderProfile.location}:</span> {profile.location}</div>}
                   {profile.education && <div><span className="font-medium">{t.dashboard.laliderProfile.education}:</span> {profile.education}</div>}
-                  {profile.experience && <div><span className="font-medium">{t.dashboard.laliderProfile.experience}:</span> {profile.experience}</div>}
-                  {profile.skills && <div><span className="font-medium">{t.dashboard.laliderProfile.skills}:</span> {profile.skills}</div>}
-                  {profile.opportunity_type && <div><span className="font-medium">{t.dashboard.laliderProfile.lookingFor}:</span> {profile.opportunity_type}</div>}
+                  {profile.work_experience && profile.work_experience.length > 0 && <div><span className="font-medium">{t.dashboard.laliderProfile.experience}:</span> {formatWorkExperience(profile.work_experience)}</div>}
+                  {(profile.skills?.length || profile.skills_other) && <div><span className="font-medium">{t.dashboard.laliderProfile.skills}:</span> {formatSkills(profile.skills, profile.skills_other)}</div>}
+                  {profile.opportunity_type && profile.opportunity_type.length > 0 && <div><span className="font-medium">{t.dashboard.laliderProfile.lookingFor}:</span> {formatList(profile.opportunity_type)}</div>}
                   {profile.desired_role && <div><span className="font-medium">{t.dashboard.laliderProfile.desiredRole}:</span> {profile.desired_role}</div>}
                   {profile.open_to_relocate && <div><span className="font-medium">{t.dashboard.laliderProfile.openToRelocate}:</span> {profile.open_to_relocate}</div>}
                   {profile.bio && <div><span className="font-medium">{t.dashboard.laliderProfile.about}:</span> {profile.bio}</div>}
@@ -272,7 +273,7 @@ export default async function DashboardPage() {
                       <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{profile.linkedin_url}</a>
                     </div>
                   )}
-                  {!profile.education && !profile.experience && !profile.skills && (
+                  {!profile.education && !(profile.work_experience && profile.work_experience.length > 0) && !profile.skills?.length && (
                     <p className="text-gray-400 py-4 text-center">
                       {t.dashboard.laliderProfile.incompletePrefix}{" "}
                       <Link href="/profile/edit" className="text-blue-600 hover:underline">{t.dashboard.laliderProfile.fillIn}</Link>{" "}

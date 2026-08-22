@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GoldStar, BlueSparkle } from "@/components/brand-icons";
@@ -23,6 +24,7 @@ export default function NewPositionPage() {
   const [location, setLocation] = useState("");
   const [opportunityType, setOpportunityType] = useState("");
   const [workModality, setWorkModality] = useState("");
+  const [affirmativeAction, setAffirmativeAction] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -52,6 +54,7 @@ export default function NewPositionPage() {
       location: location || null,
       opportunity_type: opportunityType,
       work_modality: workModality || null,
+      affirmative_action: affirmativeAction,
       is_active: true,
     });
 
@@ -114,6 +117,16 @@ export default function NewPositionPage() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+              <div className="space-y-1">
+                <label className="flex items-center gap-2 text-sm text-gray-700">
+                  <Checkbox
+                    checked={affirmativeAction}
+                    onCheckedChange={(checked: boolean) => setAffirmativeAction(checked)}
+                  />
+                  {t.positionsNew.affirmativeAction}
+                </label>
+                <p className="text-xs text-gray-400">{t.positionsNew.affirmativeActionHint}</p>
               </div>
               <div className="space-y-1">
                 <Label htmlFor="description">{t.positionsNew.description}</Label>

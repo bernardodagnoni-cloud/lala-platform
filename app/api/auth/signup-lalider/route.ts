@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
   if (!lala_id?.trim()) return NextResponse.json({ error: "LALA ID is required." }, { status: 400 });
   if (!full_name?.trim()) return NextResponse.json({ error: "Full name is required." }, { status: 400 });
   if (!password || password.length < 8) return NextResponse.json({ error: "Password must be at least 8 characters." }, { status: 400 });
+  if (!contact_email?.trim()) return NextResponse.json({ error: "Email is required." }, { status: 400 });
 
   const admin = createAdminClient();
   const email = syntheticEmail(lala_id.trim());

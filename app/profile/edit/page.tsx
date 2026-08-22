@@ -10,19 +10,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GoldStar, BlueSparkle } from "@/components/brand-icons";
-import type { ProfileRow, UserRole } from "@/types/database";
+import type { ProfileRow, ProfileDiversityRow, UserRole, WorkExperienceEntry } from "@/types/database";
 
 type Profile = ProfileRow;
 
 const STANDARD_LIFE_STAGES = new Set([
-  "High school", "University / College", "MBA", "Graduate studies (Master's / PhD)", "Working professional",
-  "Ensino médio", "Universidade / Faculdade", "Pós-graduação (Mestrado / Doutorado)", "Profissional em atividade",
+  "High school", "University / College", "MBA", "Graduate studies (Master's / PhD)", "Working professional", "Gap Year",
+  "Ensino médio", "Universidade / Faculdade", "Pós-graduação (Mestrado / Doutorado)", "Profissional em atividade", "Ano sabático (Gap Year)",
   "Secundaria", "Universidad / Carrera", "Posgrado (Maestría / Doctorado)", "Profesional en actividad",
 ]);
 const OTHER_LIFE_STAGE_LABELS = new Set(["Other", "Outro", "Otro"]);
+
+function emptyWorkExperience(): WorkExperienceEntry {
+  return { title: "", company: "", startDate: "", endDate: null, current: false, description: "" };
+}
+
+function toggleValue(list: string[], value: string): string[] {
+  return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
+}
 
 export default function EditProfilePage() {
   const router = useRouter();
@@ -39,11 +48,21 @@ export default function EditProfilePage() {
   const [eduDegree, setEduDegree] = useState("");
   const [eduYear, setEduYear] = useState("");
   const [openToRelocate, setOpenToRelocate] = useState("");
+  const [workArrangements, setWorkArrangements] = useState<string[]>([]);
   const [lifeStage, setLifeStage] = useState("");
   const [lifeStageOther, setLifeStageOther] = useState("");
   const [contactEmail, setContactEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [openToOpportunities, setOpenToOpportunities] = useState(true);
   const [availabilitySaving, setAvailabilitySaving] = useState(false);
+  const [workExperience, setWorkExperience] = useState<WorkExperienceEntry[]>([emptyWorkExperience()]);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [skillsOther, setSkillsOther] = useState("");
+  const [opportunityTypes, setOpportunityTypes] = useState<string[]>([]);
+  const [diversityGender, setDiversityGender] = useState("");
+  const [diversityGenderIdentity, setDiversityGenderIdentity] = useState("");
+  const [diversitySexualOrientation, setDiversitySexualOrientation] = useState("");
+  const [diversityRace, setDiversityRace] = useState("");
 
   useEffect(() => {
     async function loadProfile() {
@@ -83,6 +102,14 @@ export default function EditProfilePage() {
         if (data.role === "laLider") {
           setOpenToOpportunities(data.open_to_opportunities ?? true);
           setContactEmail(data.contact_email ?? "");
+          setPhone(data.phone ?? "");
+          setWorkArrangements(data.work_arrangements ?? []);
+          setSelectedSkills(data.skills ?? []);
+          setSkillsOther(data.skills_other ?? "");
+          setOpportunityTypes(data.opportunity_type ?? []);
+          if (data.work_experience && data.work_experience.length > 0) {
+            setWorkExperience(data.work_experience);
+          }
         }
         if (data.role === "laLider" && data.location) {
           const parts = data.location.split(", ").map((s: string) => s.trim());
@@ -97,6 +124,20 @@ export default function EditProfilePage() {
             setLocationCity(parts[0] ?? "");
           }
         }
+        if (data.role === "laLider") {
+          const { data: diversity } = await supabase
+            .from("profile_diversity")
+            .select("*")
+            .eq("profile_id", data.id)
+            .maybeSingle();
+          const div = diversity as ProfileDiversityRow | null;
+          if (div) {
+            setDiversityGender(div.gender ?? "");
+            setDiversityGenderIdentity(div.gender_identity ?? "");
+            setDiversitySexualOrientation(div.sexual_orientation ?? "");
+            setDiversityRace(div.race_color ?? "");
+          }
+        }
       }
       setLoading(false);
     }
@@ -107,15 +148,32 @@ export default function EditProfilePage() {
     setProfile((prev) => ({ ...prev, [field]: value }));
   }
 
+  function updateWorkExperience(index: number, patch: Partial<WorkExperienceEntry>) {
+    setWorkExperience((prev) => prev.map((entry, i) => i === index ? { ...entry, ...patch } : entry));
+  }
+
+  function addWorkExperience() {
+    setWorkExperience((prev) => [...prev, emptyWorkExperience()]);
+  }
+
+  function removeWorkExperience(index: number) {
+    setWorkExperience((prev) => prev.filter((_, i) => i !== index));
+  }
+
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     if (!profile.full_name?.trim()) { setError(t.profileEdit.errorFullName); return; }
     const combinedEducation = [eduUniversity, eduDegree, eduYear].filter(Boolean).join(" | ") || null;
+    const cleanedWorkExperience = workExperience.filter((entry) => entry.title.trim() || entry.company.trim());
     if (role === "laLider") {
-      if (!combinedEducation && !profile.experience?.trim()) {
+      if (!contactEmail.trim()) { setError(t.profileEdit.errorEmail); return; }
+      if (!combinedEducation && cleanedWorkExperience.length === 0) {
         setError(t.profileEdit.errorEducationOrExperience); return;
       }
-      if (!profile.opportunity_type) { setError(t.profileEdit.errorOpportunityType); return; }
+      if (opportunityTypes.length === 0) { setError(t.profileEdit.errorOpportunityType); return; }
+      if (!diversityGender || !diversityGenderIdentity || !diversitySexualOrientation || !diversityRace) {
+        setError(t.diversity.errorIncomplete); return;
+      }
     }
     if (role === "company" && !profile.company_name?.trim()) {
       setError(t.profileEdit.errorCompanyName); return;
@@ -136,35 +194,51 @@ export default function EditProfilePage() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    const { error } = await supabase
+    const { data: savedProfile, error } = await supabase
       .from("profiles")
       .update({
         full_name: profile.full_name,
+        phone: role === "laLider" ? phone.trim() || null : undefined,
         location: role === "laLider"
           ? [locationCity, locationRegion, locationCountry].filter(Boolean).join(", ") || null
           : profile.location,
         bio: profile.bio,
         education: role === "laLider" ? combinedEducation : profile.education,
         experience: profile.experience,
-        opportunity_type: profile.opportunity_type,
+        work_experience: role === "laLider" ? cleanedWorkExperience : undefined,
+        opportunity_type: role === "laLider" ? opportunityTypes : profile.opportunity_type,
         desired_role: profile.desired_role,
         open_to_relocate: role === "laLider" ? openToRelocate || null : undefined,
+        work_arrangements: role === "laLider" ? (workArrangements.length ? workArrangements : null) : undefined,
         life_stage: role === "laLider" ? (OTHER_LIFE_STAGE_LABELS.has(lifeStage) ? lifeStageOther.trim() || null : lifeStage || null) : undefined,
         contact_email: role === "laLider" ? contactEmail.trim() || null : undefined,
         volunteer_experience: role === "laLider" ? profile.volunteer_experience ?? null : undefined,
-        skills: profile.skills,
+        skills: role === "laLider" ? (selectedSkills.length ? selectedSkills : null) : undefined,
+        skills_other: role === "laLider" ? skillsOther.trim() || null : undefined,
         company_name: profile.company_name,
         company_description: profile.company_description,
         website: profile.website,
         linkedin_url: profile.linkedin_url,
         cv_url: role === "laLider" ? profile.cv_url ?? null : undefined,
       })
-      .eq("user_id", user.id);
+      .eq("user_id", user.id)
+      .select("id")
+      .single();
 
     if (error) {
       setError(error.message);
       setSaving(false);
       return;
+    }
+
+    if (role === "laLider" && savedProfile) {
+      await supabase.from("profile_diversity").upsert({
+        profile_id: savedProfile.id,
+        gender: diversityGender || null,
+        gender_identity: diversityGenderIdentity || null,
+        sexual_orientation: diversitySexualOrientation || null,
+        race_color: diversityRace || null,
+      }, { onConflict: "profile_id" });
     }
 
     if (role === "company") {
@@ -251,6 +325,30 @@ export default function EditProfilePage() {
               {role === "laLider" && (
                 <>
                   <div className="space-y-1">
+                    <Label htmlFor="contact_email">{t.auth.signup.contactEmail}</Label>
+                    <Input
+                      id="contact_email"
+                      type="email"
+                      placeholder={t.auth.signup.contactEmailPlaceholder}
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      autoComplete="email"
+                      required
+                    />
+                    <p className="text-xs text-gray-400">{t.auth.signup.contactEmailHint}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="phone">{t.profileEdit.mobileNumber}</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder={t.profileEdit.mobileNumberPlaceholder}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      autoComplete="tel"
+                    />
+                  </div>
+                  <div className="space-y-1">
                     <Label htmlFor="location_country">{t.profileEdit.country}</Label>
                     <Input
                       id="location_country"
@@ -283,18 +381,53 @@ export default function EditProfilePage() {
                       <div className="rounded-lg border border-input bg-muted px-3 py-2 text-sm text-muted-foreground font-mono">{profile.lala_id}</div>
                     </div>
                   )}
-                  <div className="space-y-1">
-                    <Label htmlFor="contact_email">{t.auth.signup.contactEmail}</Label>
-                    <Input
-                      id="contact_email"
-                      type="email"
-                      placeholder={t.auth.signup.contactEmailPlaceholder}
-                      value={contactEmail}
-                      onChange={(e) => setContactEmail(e.target.value)}
-                      autoComplete="email"
-                    />
-                    <p className="text-xs text-gray-400">{t.auth.signup.contactEmailHint}</p>
+
+                  <div className="rounded-xl ring-1 ring-blue-100 bg-blue-50/50 p-4 space-y-4">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-blue-900">{t.diversity.sectionTitle}</h3>
+                        <span className="text-[10px] uppercase tracking-wide font-semibold text-blue-700 bg-blue-100 rounded-full px-2 py-0.5">{t.diversity.requiredBadge}</span>
+                      </div>
+                      <p className="text-xs text-gray-600 leading-relaxed">{t.diversity.intro}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <Label>{t.diversity.genderLabel}</Label>
+                      <Select value={diversityGender} onValueChange={(v: string | null) => setDiversityGender(v ?? "")}>
+                        <SelectTrigger><SelectValue placeholder={t.diversity.selectPlaceholder} /></SelectTrigger>
+                        <SelectContent>
+                          {t.diversity.genderOptions.map((opt) => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label>{t.diversity.genderIdentityLabel}</Label>
+                      <Select value={diversityGenderIdentity} onValueChange={(v: string | null) => setDiversityGenderIdentity(v ?? "")}>
+                        <SelectTrigger><SelectValue placeholder={t.diversity.selectPlaceholder} /></SelectTrigger>
+                        <SelectContent>
+                          {t.diversity.genderIdentityOptions.map((opt) => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label>{t.diversity.sexualOrientationLabel}</Label>
+                      <Select value={diversitySexualOrientation} onValueChange={(v: string | null) => setDiversitySexualOrientation(v ?? "")}>
+                        <SelectTrigger><SelectValue placeholder={t.diversity.selectPlaceholder} /></SelectTrigger>
+                        <SelectContent>
+                          {t.diversity.sexualOrientationOptions.map((opt) => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label>{t.diversity.raceLabel}</Label>
+                      <Select value={diversityRace} onValueChange={(v: string | null) => setDiversityRace(v ?? "")}>
+                        <SelectTrigger><SelectValue placeholder={t.diversity.selectPlaceholder} /></SelectTrigger>
+                        <SelectContent>
+                          {t.diversity.raceOptions.map((opt) => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
+
                   <div className="space-y-1">
                     <Label>{t.profileEdit.lifeStageLabel}</Label>
                     <Select
@@ -349,24 +482,99 @@ export default function EditProfilePage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="experience">{t.profileEdit.experience}</Label>
+                    <Label htmlFor="bio">{t.profileEdit.bio}</Label>
                     <Textarea
-                      id="experience"
-                      placeholder={t.profileEdit.experiencePlaceholder}
-                      value={profile.experience ?? ""}
-                      onChange={(e) => update("experience", e.target.value)}
+                      id="bio"
+                      placeholder={t.profileEdit.bioPlaceholder}
+                      value={profile.bio ?? ""}
+                      onChange={(e) => update("bio", e.target.value)}
                       rows={4}
                     />
                   </div>
-                  <div className="space-y-1">
-                    <Label htmlFor="skills">{t.profileEdit.skills}</Label>
-                    <Input
-                      id="skills"
-                      placeholder={t.profileEdit.skillsPlaceholder}
-                      value={profile.skills ?? ""}
-                      onChange={(e) => update("skills", e.target.value)}
-                    />
+
+                  <div className="space-y-3">
+                    <div className="space-y-1">
+                      <Label>{t.profileEdit.experienceSectionTitle}</Label>
+                      <p className="text-xs text-gray-400">{t.profileEdit.experienceNote}</p>
+                    </div>
+                    {workExperience.map((entry, index) => (
+                      <div key={index} className="rounded-lg border border-input p-3 space-y-3">
+                        <div className="space-y-1">
+                          <Label htmlFor={`we_title_${index}`}>{t.profileEdit.workExperienceJobTitle}</Label>
+                          <Input
+                            id={`we_title_${index}`}
+                            placeholder={t.profileEdit.workExperienceJobTitlePlaceholder}
+                            value={entry.title}
+                            onChange={(e) => updateWorkExperience(index, { title: e.target.value })}
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <Label htmlFor={`we_company_${index}`}>{t.profileEdit.workExperienceCompany}</Label>
+                          <Input
+                            id={`we_company_${index}`}
+                            placeholder={t.profileEdit.workExperienceCompanyPlaceholder}
+                            value={entry.company}
+                            onChange={(e) => updateWorkExperience(index, { company: e.target.value })}
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="space-y-1">
+                            <Label htmlFor={`we_start_${index}`}>{t.profileEdit.workExperienceStartDate}</Label>
+                            <Input
+                              id={`we_start_${index}`}
+                              type="month"
+                              value={entry.startDate}
+                              onChange={(e) => updateWorkExperience(index, { startDate: e.target.value })}
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label htmlFor={`we_end_${index}`}>{t.profileEdit.workExperienceEndDate}</Label>
+                            <Input
+                              id={`we_end_${index}`}
+                              type="month"
+                              disabled={entry.current}
+                              value={entry.endDate ?? ""}
+                              onChange={(e) => updateWorkExperience(index, { endDate: e.target.value })}
+                            />
+                          </div>
+                        </div>
+                        <label className="flex items-center gap-2 text-sm text-gray-600">
+                          <Checkbox
+                            checked={entry.current}
+                            onCheckedChange={(checked: boolean) => updateWorkExperience(index, { current: checked, endDate: checked ? null : entry.endDate })}
+                          />
+                          {t.profileEdit.workExperienceCurrent}
+                        </label>
+                        <div className="space-y-1">
+                          <Label htmlFor={`we_desc_${index}`}>{t.profileEdit.workExperienceDescription}</Label>
+                          <Textarea
+                            id={`we_desc_${index}`}
+                            placeholder={t.profileEdit.workExperienceDescriptionPlaceholder}
+                            value={entry.description}
+                            onChange={(e) => updateWorkExperience(index, { description: e.target.value })}
+                            rows={3}
+                          />
+                        </div>
+                        {workExperience.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeWorkExperience(index)}
+                            className="text-xs text-red-600 hover:underline"
+                          >
+                            {t.profileEdit.removeJob}
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={addWorkExperience}
+                      className="text-sm text-blue-600 hover:underline font-medium"
+                    >
+                      {t.profileEdit.addAnotherJob}
+                    </button>
                   </div>
+
                   <div className="space-y-1">
                     <Label htmlFor="volunteer_experience">{t.profileEdit.volunteerExperience}</Label>
                     <Textarea
@@ -377,22 +585,52 @@ export default function EditProfilePage() {
                       rows={4}
                     />
                   </div>
-                  <div className="space-y-1">
-                    <Label>{t.profileEdit.opportunityTypeLabel}</Label>
-                    <Select
-                      value={profile.opportunity_type ?? ""}
-                      onValueChange={(v: string | null) => update("opportunity_type", v ?? "")}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder={t.profileEdit.opportunityTypePlaceholder} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {t.profileEdit.opportunityTypes.map((type) => (
-                          <SelectItem key={type} value={type}>{type}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+
+                  <div className="space-y-2">
+                    <div className="space-y-1">
+                      <Label>{t.profileEdit.skills}</Label>
+                      <p className="text-xs text-gray-400">{t.profileEdit.skillsHint}</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {t.profileEdit.skillsOptions.map((skill) => (
+                        <label key={skill} className="flex items-center gap-2 text-sm text-gray-700">
+                          <Checkbox
+                            checked={selectedSkills.includes(skill)}
+                            onCheckedChange={() => setSelectedSkills((prev) => toggleValue(prev, skill))}
+                          />
+                          {skill}
+                        </label>
+                      ))}
+                    </div>
+                    <div className="space-y-1 pt-1">
+                      <Label htmlFor="skills_other">{t.profileEdit.skillsOther}</Label>
+                      <Input
+                        id="skills_other"
+                        placeholder={t.profileEdit.skillsOtherPlaceholder}
+                        value={skillsOther}
+                        onChange={(e) => setSkillsOther(e.target.value)}
+                      />
+                    </div>
                   </div>
+
+                  <div className="space-y-2">
+                    <div className="space-y-1">
+                      <Label>{t.profileEdit.opportunityTypeLabel}</Label>
+                      <p className="text-xs text-gray-400">{t.profileEdit.opportunityTypeHint}</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {t.profileEdit.opportunityTypes.map((type) => (
+                        <label key={type} className="flex items-center gap-2 text-sm text-gray-700">
+                          <Checkbox
+                            checked={opportunityTypes.includes(type)}
+                            onCheckedChange={() => setOpportunityTypes((prev) => toggleValue(prev, type))}
+                          />
+                          {type}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
                   <div className="space-y-1">
                     <Label htmlFor="desired_role">{t.profileEdit.desiredRole}</Label>
                     <Input
@@ -401,6 +639,7 @@ export default function EditProfilePage() {
                       value={profile.desired_role ?? ""}
                       onChange={(e) => update("desired_role", e.target.value)}
                     />
+                    <p className="text-xs text-gray-400">{t.profileEdit.desiredRoleNote}</p>
                   </div>
                   <div className="space-y-1">
                     <Label>{t.profileEdit.openToRelocate}</Label>
@@ -418,15 +657,22 @@ export default function EditProfilePage() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-1">
-                    <Label htmlFor="bio">{t.profileEdit.bio}</Label>
-                    <Textarea
-                      id="bio"
-                      placeholder={t.profileEdit.bioPlaceholder}
-                      value={profile.bio ?? ""}
-                      onChange={(e) => update("bio", e.target.value)}
-                      rows={4}
-                    />
+                  <div className="space-y-2">
+                    <div className="space-y-1">
+                      <Label>{t.profileEdit.workArrangementsLabel}</Label>
+                      <p className="text-xs text-gray-400">{t.profileEdit.workArrangementsHint}</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {t.profileEdit.workArrangementsOptions.map((opt) => (
+                        <label key={opt} className="flex items-center gap-2 text-sm text-gray-700">
+                          <Checkbox
+                            checked={workArrangements.includes(opt)}
+                            onCheckedChange={() => setWorkArrangements((prev) => toggleValue(prev, opt))}
+                          />
+                          {opt}
+                        </label>
+                      ))}
+                    </div>
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="linkedin_url">{t.profileEdit.linkedinProfile}</Label>
