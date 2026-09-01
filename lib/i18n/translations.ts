@@ -312,7 +312,6 @@ const en = {
   },
   diversity: {
     sectionTitle: "Diversity census",
-    requiredBadge: "Required",
     intro:
       "At LALA, we believe that diversity of identities, experiences, skills, perspectives, and worldviews strengthens our communities and broadens the impact of our network. We recognize the history of inequality and discrimination in Latin America, and we want to contribute to fairer, more inclusive hiring processes. The questions below make up our diversity census and will not be used to eliminate or disadvantage candidates in selection processes. This information will be handled responsibly and may only be used to monitor diversity on the platform and, where applicable, to determine eligibility for affirmative-action openings offered by partner organizations.",
     genderLabel: "Please tell us your gender",
@@ -324,7 +323,6 @@ const en = {
     raceLabel: "How do you self-identify in terms of color or race?",
     raceOptions: ["White", "Black", "Pardo/Mixed", "Asian", "Indigenous", "Prefer not to answer"],
     selectPlaceholder: "Select an option",
-    errorIncomplete: "Please answer all diversity census questions.",
   },
   positionsNew: {
     title: "Post a new position",
@@ -549,7 +547,7 @@ const pt = {
       skills: "Habilidades",
       lookingFor: "Buscando",
       desiredRole: "Cargo desejado",
-      openToRelocate: "Disponibilidade para relocação",
+      openToRelocate: "Disponibilidade para realocação",
       about: "Sobre",
       linkedin: "LinkedIn",
       incompletePrefix: "Seu perfil está incompleto.",
@@ -692,7 +690,6 @@ const pt = {
   },
   diversity: {
     sectionTitle: "Censo de diversidade",
-    requiredBadge: "Obrigatório",
     intro:
       "Na LALA, acreditamos que a diversidade de identidades, experiências, habilidades, perspectivas e visões de mundo fortalece nossas comunidades e amplia o impacto da nossa rede. Reconhecemos a história de desigualdade e discriminação na América Latina e queremos contribuir para processos seletivos mais justos e inclusivos. As perguntas abaixo compõem nosso censo de diversidade e não serão usadas para eliminar ou desfavorecer candidatos(as) em processos seletivos. Essas informações serão tratadas com responsabilidade e poderão ser usadas apenas para monitorar a diversidade na plataforma e, quando aplicável, para determinar a elegibilidade a vagas de ação afirmativa oferecidas por organizações parceiras.",
     genderLabel: "Por favor, nos conte seu gênero",
@@ -704,7 +701,6 @@ const pt = {
     raceLabel: "Como você se autodeclara em relação à cor ou raça?",
     raceOptions: ["Branco(a)", "Preto(a)", "Pardo(a)", "Amarelo(a)", "Indígena", "Prefiro não responder"],
     selectPlaceholder: "Selecione uma opção",
-    errorIncomplete: "Por favor, responda todas as perguntas do censo de diversidade.",
   },
   positionsNew: {
     title: "Publicar uma nova vaga",
@@ -1072,7 +1068,6 @@ const es = {
   },
   diversity: {
     sectionTitle: "Censo de diversidad",
-    requiredBadge: "Obligatorio",
     intro:
       "En LALA, creemos que la diversidad de identidades, experiencias, habilidades, perspectivas y visiones del mundo fortalece nuestras comunidades y amplía el impacto de nuestra red. Reconocemos la historia de desigualdad y discriminación en América Latina y queremos contribuir a procesos de selección más justos e inclusivos. Las preguntas a continuación conforman nuestro censo de diversidad y no se utilizarán para eliminar o perjudicar a los candidatos en los procesos de selección. Esta información se manejará de forma responsable y solo podrá utilizarse para monitorear la diversidad en la plataforma y, cuando corresponda, para determinar la elegibilidad a vacantes de acción afirmativa ofrecidas por organizaciones asociadas.",
     genderLabel: "Cuéntanos tu género",
@@ -1084,7 +1079,6 @@ const es = {
     raceLabel: "¿Cómo te autoidentificas en cuanto a color o raza?",
     raceOptions: ["Blanco/a", "Negro/a", "Pardo", "Asiático/a", "Indígena", "Prefiero no responder"],
     selectPlaceholder: "Selecciona una opción",
-    errorIncomplete: "Por favor, responde todas las preguntas del censo de diversidad.",
   },
   positionsNew: {
     title: "Publicar un nuevo puesto",

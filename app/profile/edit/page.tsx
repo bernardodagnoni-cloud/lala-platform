@@ -171,9 +171,6 @@ export default function EditProfilePage() {
         setError(t.profileEdit.errorEducationOrExperience); return;
       }
       if (opportunityTypes.length === 0) { setError(t.profileEdit.errorOpportunityType); return; }
-      if (!diversityGender || !diversityGenderIdentity || !diversitySexualOrientation || !diversityRace) {
-        setError(t.diversity.errorIncomplete); return;
-      }
     }
     if (role === "company" && !profile.company_name?.trim()) {
       setError(t.profileEdit.errorCompanyName); return;
@@ -386,7 +383,6 @@ export default function EditProfilePage() {
                     <div className="space-y-1.5">
                       <div className="flex items-center gap-2">
                         <h3 className="font-semibold text-blue-900">{t.diversity.sectionTitle}</h3>
-                        <span className="text-[10px] uppercase tracking-wide font-semibold text-blue-700 bg-blue-100 rounded-full px-2 py-0.5">{t.diversity.requiredBadge}</span>
                       </div>
                       <p className="text-xs text-gray-600 leading-relaxed">{t.diversity.intro}</p>
                     </div>
