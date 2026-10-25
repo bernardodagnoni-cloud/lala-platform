@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -11,12 +11,6 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { UserRole } from "@/types/database";
-import type { Translations } from "@/lib/i18n/translations";
-
-function resolveErrorMessage(t: Translations, code: string | undefined) {
-  const errors = t.auth.errors as Record<string, string>;
-  return (code && errors[code]) || errors.server_error;
-}
 
 export default function SignupPage() {
   return (
@@ -30,59 +24,30 @@ function SignupForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useT();
+  // LaLíder sign-in is handled entirely by /auth/activate now (it looks the
+  // LALA ID up and transparently creates a new record if one doesn't exist
+  // yet, instead of asking the user to pick between two screens). Anything
+  // that still links here with ?role=laLider gets bounced there.
   const initialRole = (searchParams.get("role") as UserRole) || "";
-  const [role, setRole] = useState<UserRole | "">(initialRole);
+  const [role, setRole] = useState<UserRole | "">(initialRole === "company" ? "company" : "");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // LALider fields
-  const [lalaId, setLalaId] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [password, setPassword] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
+  useEffect(() => {
+    if (initialRole === "laLider") router.replace("/auth/activate");
+  }, [initialRole, router]);
 
   // Company fields
   const [companyEmail, setCompanyEmail] = useState("");
   const [companyFullName, setCompanyFullName] = useState("");
   const [companyPassword, setCompanyPassword] = useState("");
-
-  async function handleLaliderSignup(e: React.FormEvent) {
-    e.preventDefault();
-    if (!lalaId.trim()) { setError(t.auth.errors.missing_lala_id); return; }
-    if (fullName.trim().length < 2) { setError(t.auth.signup.errorFullName); return; }
-    if (!contactEmail.trim()) { setError(t.auth.signup.errorEmail); return; }
-    if (password.length < 8) { setError(t.auth.signup.errorPassword); return; }
-    setLoading(true);
-    setError(null);
-
-    let res: Response;
-    try {
-      res = await fetch("/api/auth/signup-lalider", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lala_id: lalaId.trim(), full_name: fullName.trim(), password, contact_email: contactEmail.trim() || null }),
-      });
-    } catch {
-      setError(t.auth.errors.server_error);
-      setLoading(false);
-      return;
-    }
-
-    const json = await res.json();
-    if (!res.ok) { setError(resolveErrorMessage(t, json.error_code)); setLoading(false); return; }
-
-    const supabase = createClient();
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email: json.email, password });
-    if (signInError) { setError(t.auth.errors.server_error); setLoading(false); return; }
-
-    router.push("/profile/edit");
-    router.refresh();
-  }
+  const [companyConfirmPassword, setCompanyConfirmPassword] = useState("");
 
   async function handleCompanySignup(e: React.FormEvent) {
     e.preventDefault();
     if (companyFullName.trim().length < 2) { setError(t.auth.signup.errorFullName); return; }
     if (companyPassword.length < 8) { setError(t.auth.signup.errorPassword); return; }
+    if (companyPassword !== companyConfirmPassword) { setError(t.auth.activate.errorPasswordMismatch); return; }
     setLoading(true);
     setError(null);
 
@@ -103,6 +68,8 @@ function SignupForm() {
     router.refresh();
   }
 
+  if (initialRole === "laLider") return null;
+
   if (!role) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
@@ -113,7 +80,7 @@ function SignupForm() {
           </CardHeader>
           <CardContent className="space-y-3">
             <button
-              onClick={() => setRole("laLider")}
+              onClick={() => router.push("/auth/activate")}
               className="w-full rounded-xl border-2 border-blue-900 bg-blue-900 text-white px-4 py-4 text-left hover:bg-blue-800 transition-colors"
             >
               <p className="font-semibold">{t.auth.signup.roleLalider}</p>
@@ -144,73 +111,39 @@ function SignupForm() {
         <CardHeader>
           <button onClick={() => { setRole(""); setError(null); }} className="text-sm text-blue-600 hover:underline text-left mb-1">← Back</button>
           <CardTitle className="text-2xl">{t.auth.signup.title}</CardTitle>
-          <CardDescription>
-            {role === "laLider" ? t.auth.signup.roleLalider : t.auth.signup.roleCompany}
-          </CardDescription>
+          <CardDescription>{t.auth.signup.roleCompany}</CardDescription>
         </CardHeader>
 
-        {role === "laLider" && (
-          <form onSubmit={handleLaliderSignup}>
-            <CardContent className="space-y-4">
-              {error && <div className="bg-red-50 text-red-700 text-sm rounded-md px-3 py-2">{error}</div>}
-              <div className="space-y-1">
-                <Label htmlFor="lalaId">{t.auth.signup.lalaId}</Label>
-                <Input id="lalaId" value={lalaId} onChange={(e) => setLalaId(e.target.value)} placeholder={t.auth.signup.lalaIdPlaceholder} required autoComplete="username" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="fullName">{t.auth.signup.fullName}</Label>
-                <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="contactEmail">{t.auth.signup.contactEmail}</Label>
-                <Input id="contactEmail" type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder={t.auth.signup.contactEmailPlaceholder} autoComplete="email" required />
-                <p className="text-xs text-gray-400">{t.auth.signup.contactEmailHint}</p>
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="password">{t.auth.signup.password}</Label>
-                <PasswordInput id="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} autoComplete="new-password" />
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col gap-3">
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? t.auth.signup.submitting : t.auth.signup.submit}
-              </Button>
-              <p className="text-sm text-gray-500 text-center">
-                {t.auth.signup.haveAccount}{" "}
-                <Link href="/auth/login" className="text-blue-600 hover:underline">{t.auth.signup.signInLink}</Link>
-              </p>
-            </CardFooter>
-          </form>
-        )}
-
-        {role === "company" && (
-          <form onSubmit={handleCompanySignup}>
-            <CardContent className="space-y-4">
-              {error && <div className="bg-red-50 text-red-700 text-sm rounded-md px-3 py-2">{error}</div>}
-              <div className="space-y-1">
-                <Label htmlFor="companyFullName">{t.auth.signup.fullName}</Label>
-                <Input id="companyFullName" value={companyFullName} onChange={(e) => setCompanyFullName(e.target.value)} required />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="companyEmail">{t.auth.signup.email}</Label>
-                <Input id="companyEmail" type="email" value={companyEmail} onChange={(e) => setCompanyEmail(e.target.value)} required autoComplete="email" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="companyPassword">{t.auth.signup.password}</Label>
-                <PasswordInput id="companyPassword" value={companyPassword} onChange={(e) => setCompanyPassword(e.target.value)} required minLength={8} autoComplete="new-password" />
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col gap-3">
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? t.auth.signup.submitting : t.auth.signup.submit}
-              </Button>
-              <p className="text-sm text-gray-500 text-center">
-                {t.auth.signup.haveAccount}{" "}
-                <Link href="/auth/login" className="text-blue-600 hover:underline">{t.auth.signup.signInLink}</Link>
-              </p>
-            </CardFooter>
-          </form>
-        )}
+        <form onSubmit={handleCompanySignup}>
+          <CardContent className="space-y-4">
+            {error && <div className="bg-red-50 text-red-700 text-sm rounded-md px-3 py-2">{error}</div>}
+            <div className="space-y-1">
+              <Label htmlFor="companyFullName">{t.auth.signup.fullName}</Label>
+              <Input id="companyFullName" value={companyFullName} onChange={(e) => setCompanyFullName(e.target.value)} required />
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="companyEmail">{t.auth.signup.email}</Label>
+              <Input id="companyEmail" type="email" value={companyEmail} onChange={(e) => setCompanyEmail(e.target.value)} required autoComplete="email" />
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="companyPassword">{t.auth.signup.password}</Label>
+              <PasswordInput id="companyPassword" value={companyPassword} onChange={(e) => setCompanyPassword(e.target.value)} required minLength={8} autoComplete="new-password" />
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="companyConfirmPassword">{t.auth.activate.confirmPassword}</Label>
+              <PasswordInput id="companyConfirmPassword" value={companyConfirmPassword} onChange={(e) => setCompanyConfirmPassword(e.target.value)} required autoComplete="new-password" />
+            </div>
+          </CardContent>
+          <CardFooter className="flex flex-col gap-3">
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? t.auth.signup.submitting : t.auth.signup.submit}
+            </Button>
+            <p className="text-sm text-gray-500 text-center">
+              {t.auth.signup.haveAccount}{" "}
+              <Link href="/auth/login" className="text-blue-600 hover:underline">{t.auth.signup.signInLink}</Link>
+            </p>
+          </CardFooter>
+        </form>
       </Card>
     </div>
   );

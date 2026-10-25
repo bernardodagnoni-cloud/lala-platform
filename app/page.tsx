@@ -77,7 +77,7 @@ export default async function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
-              href="/auth/signup?role=laLider"
+              href="/auth/activate"
               className="inline-flex items-center justify-center gap-2 bg-white text-blue-900 font-semibold px-6 py-3 rounded-full hover:bg-blue-50 transition-colors text-sm"
             >
               {t.common.iAmLalider}
@@ -147,7 +147,7 @@ export default async function LandingPage() {
               ))}
             </ul>
             <Link
-              href="/auth/signup?role=laLider"
+              href="/auth/activate"
               className="inline-flex items-center gap-2 bg-white text-blue-900 font-semibold px-5 py-2.5 rounded-full hover:bg-blue-50 transition-colors text-sm"
             >
               {t.landing.forLalideres.cta}
@@ -195,7 +195,7 @@ export default async function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/auth/signup?role=laLider"
+              href="/auth/activate"
               className="inline-flex items-center justify-center bg-blue-950 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-900 transition-colors text-sm"
             >
               {t.common.iAmLalider}
