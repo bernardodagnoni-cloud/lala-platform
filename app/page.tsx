@@ -126,11 +126,11 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* For LaLideres / For Companies */}
+      {/* For LALideres / For Companies */}
       <section className="py-24 px-6 bg-white">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
 
-          {/* LaLideres */}
+          {/* LALideres */}
           <div className="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-3xl p-10 text-white relative overflow-hidden">
             <GoldStar className="absolute -top-6 -right-6 w-36 h-36 opacity-[0.15] rotate-[20deg] pointer-events-none select-none" />
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-300 mb-4">{t.landing.forLalideres.eyebrow}</p>

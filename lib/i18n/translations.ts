@@ -6,9 +6,11 @@ const en = {
     editProfile: "Edit profile",
     lalaMatch: "LaLa Match",
     lalaPlatform: "LaLa Match",
-    iAmLalider: "I'm a LaLider",
+    iAmLalider: "I'm a LALider",
     iRepresentCompany: "I represent a company",
     aboutUs: "About us",
+    showPassword: "Show password",
+    hidePassword: "Hide password",
   },
   landing: {
     nav: {
@@ -21,10 +23,10 @@ const en = {
       titleHighlight: "matched",
       titleEnd: "with the right companies.",
       description:
-        "LaLa Match connects LaLideres, the region's most promising young leaders, with companies looking to build exceptional teams. Powered by AI, designed for impact.",
+        "LaLa Match connects LALideres, the region's most promising young leaders, with companies looking to build exceptional teams. Powered by AI, designed for impact.",
     },
     stats: [
-      { value: "3,000+", label: "LaLideres across Latin America" },
+      { value: "3,000+", label: "LALideres across Latin America" },
       { value: "17", label: "Countries represented" },
       { value: "AI-powered", label: "Matching technology" },
     ],
@@ -35,7 +37,7 @@ const en = {
         {
           step: "01",
           title: "Build your profile",
-          body: "LaLideres detail their education, experience, and ambitions. Companies describe their open positions and ideal candidates.",
+          body: "LALideres detail their education, experience, and ambitions. Companies describe their open positions and ideal candidates.",
         },
         {
           step: "02",
@@ -45,12 +47,12 @@ const en = {
         {
           step: "03",
           title: "Connect and grow",
-          body: "Companies reach out to their top matches. LaLideres see which opportunities they've been selected for.",
+          body: "Companies reach out to their top matches. LALideres see which opportunities they've been selected for.",
         },
       ],
     },
     forLalideres: {
-      eyebrow: "For LaLideres",
+      eyebrow: "For LALideres",
       title: "Your talent deserves to be seen.",
       description:
         "Create a rich profile showcasing your education, experience, and goals. Get notified when companies match you for positions that fit your ambitions.",
@@ -66,7 +68,7 @@ const en = {
       eyebrow: "For Companies",
       title: "Find exceptional talent.",
       description:
-        "Post your open positions and let AI surface the most relevant LaLideres, ranked by fit with clear explanations, not just keyword matches.",
+        "Post your open positions and let AI surface the most relevant LALideres, ranked by fit with clear explanations, not just keyword matches.",
       features: [
         "Post unlimited positions",
         "AI ranks candidates with explanations",
@@ -77,7 +79,7 @@ const en = {
     },
     cta: {
       title: "Ready to make the connection?",
-      description: "Join LaLideres and companies already using LaLa Match to build the future.",
+      description: "Join LALideres and companies already using LaLa Match to build the future.",
     },
     footer: {
       tagline: "Built for LALA, empowering Latin American leaders since 2017.",
@@ -96,6 +98,7 @@ const en = {
       signUpLink: "Sign up",
       firstTime: "First time here?",
       activateLink: "Activate your account",
+      errorInvalidCredentials: "Invalid LALA ID (or email) or password.",
     },
     activate: {
       title: "Activate your account",
@@ -115,7 +118,7 @@ const en = {
       email: "Email",
       password: "Password",
       roleLabel: "I am a…",
-      roleLalider: "LaLider",
+      roleLalider: "LALider",
       roleCompany: "Company",
       submit: "Create account",
       submitting: "Creating account…",
@@ -130,6 +133,7 @@ const en = {
       contactEmail: "Email",
       contactEmailPlaceholder: "your@email.com",
       contactEmailHint: "Used for notifications only, not for login.",
+      errorGeneric: "We couldn't create your account. Please check your details and try again.",
     },
     checkEmail: {
       title: "Check your email",
@@ -137,9 +141,18 @@ const en = {
       alreadyConfirmed: "Already confirmed?",
       signIn: "Sign in",
     },
+    errors: {
+      missing_lala_id: "Please enter your LALA ID.",
+      invalid_password: "Password must be at least 8 characters.",
+      missing_full_name: "Please enter your full name.",
+      missing_email: "Email is required.",
+      account_not_found: "We couldn't find an account for this LALA ID. Double-check it and try again, or contact your LALA coordinator.",
+      lala_id_taken: "This LALA ID is already registered.",
+      server_error: "Something went wrong on our end. Please try again in a moment.",
+    },
   },
   dashboard: {
-    welcomeSubtitleCompany: "Manage your positions and find the best LaLideres for your team.",
+    welcomeSubtitleCompany: "Manage your positions and find the best LALideres for your team.",
     welcomeSubtitleLalider: "See which companies have matched you and keep your profile up to date.",
     companyProfile: {
       sectionTitle: "Your company profile",
@@ -194,7 +207,7 @@ const en = {
     titleCompany: "Create your company profile",
     titleLalider: "Complete your profile",
     descriptionCompany:
-      "LaLideres will see this profile when they're matched with your positions.",
+      "LALideres will see this profile when they're matched with your positions.",
     descriptionLalider: "Tell us about yourself so companies can find you.",
     fullName: "Full name",
     mobileNumber: "Mobile number",
@@ -352,14 +365,14 @@ const en = {
   },
   positionsMatches: {
     analyzeDescription:
-      "Click below to let Claude analyze all LaLider profiles and find the best matches for this position.",
+      "Click below to let Claude analyze all LALider profiles and find the best matches for this position.",
     findMatches: "Find AI matches",
     analyzing: "Analyzing candidates…",
     noStrongMatches: "No strong matches found",
     reRun: "Re-run matching",
     reRunning: "Re-running…",
     noLalideres:
-      "No LaLideres with a strong fit were found. Try broadening the position requirements.",
+      "No LALideres with a strong fit were found. Try broadening the position requirements.",
     matchScore: "Match score",
     whyTheyFit: "Why they fit",
     potentialGaps: "Potential gaps",
@@ -379,9 +392,11 @@ const pt = {
     editProfile: "Editar perfil",
     lalaMatch: "LaLa Match",
     lalaPlatform: "LaLa Match",
-    iAmLalider: "Sou um LaLíder",
+    iAmLalider: "Sou um LALíder",
     iRepresentCompany: "Represento uma empresa",
     aboutUs: "Sobre nós",
+    showPassword: "Mostrar senha",
+    hidePassword: "Ocultar senha",
   },
   landing: {
     nav: {
@@ -394,10 +409,10 @@ const pt = {
       titleHighlight: "conectada",
       titleEnd: "com as empresas certas.",
       description:
-        "LaLa Match conecta LaLíderes, os jovens líderes mais promissores da região, com empresas que buscam construir equipes excepcionais. Movido por IA, projetado para gerar impacto.",
+        "LaLa Match conecta LALíderes, os jovens líderes mais promissores da região, com empresas que buscam construir equipes excepcionais. Movido por IA, projetado para gerar impacto.",
     },
     stats: [
-      { value: "3.000+", label: "LaLíderes em toda a América Latina" },
+      { value: "3.000+", label: "LALíderes em toda a América Latina" },
       { value: "17", label: "Países representados" },
       { value: "Movido a IA", label: "Tecnologia de Matchmaking" },
     ],
@@ -408,7 +423,7 @@ const pt = {
         {
           step: "01",
           title: "Crie seu perfil",
-          body: "LaLíderes detalham sua educação, experiência e ambições. Empresas descrevem suas vagas abertas e candidatos ideais.",
+          body: "LALíderes detalham sua educação, experiência e ambições. Empresas descrevem suas vagas abertas e candidatos ideais.",
         },
         {
           step: "02",
@@ -418,12 +433,12 @@ const pt = {
         {
           step: "03",
           title: "Conecte-se e cresça",
-          body: "Empresas entram em contato com os candidatos ideais. LaLíderes veem para quais oportunidades foram selecionados.",
+          body: "Empresas entram em contato com os candidatos ideais. LALíderes veem para quais oportunidades foram selecionados.",
         },
       ],
     },
     forLalideres: {
-      eyebrow: "Para LaLíderes",
+      eyebrow: "Para LALíderes",
       title: "Seu talento merece ser visto.",
       description:
         "Crie um perfil completo mostrando sua educação, experiência e objetivos. Seja notificado quando empresas se interessarem pelo seu perfil para vagas que se encaixam com as suas ambições.",
@@ -439,7 +454,7 @@ const pt = {
       eyebrow: "Para empresas",
       title: "Encontre talentos excepcionais.",
       description:
-        "Publique suas vagas abertas e deixe a IA encontrar os LaLíderes mais relevantes, classificados por compatibilidade com explicações claras, não apenas por palavras-chave.",
+        "Publique suas vagas abertas e deixe a IA encontrar os LALíderes mais relevantes, classificados por compatibilidade com explicações claras, não apenas por palavras-chave.",
       features: [
         "Publique vagas ilimitadas",
         "A IA classifica candidatos com explicações",
@@ -451,7 +466,7 @@ const pt = {
     cta: {
       title: "Pronto para fazer a conexão?",
       description:
-        "Junte-se aos LaLíderes e empresas que já usam o LaLa Match para construir o futuro.",
+        "Junte-se aos LALíderes e empresas que já usam o LaLa Match para construir o futuro.",
     },
     footer: {
       tagline: "Criado para a LALA, empoderando líderes latino-americanos desde 2017.",
@@ -461,7 +476,7 @@ const pt = {
     login: {
       title: "Entrar na LALA",
       description: "Digite suas credenciais para acessar sua conta",
-      identifier: "ID LALA ou e-mail",
+      identifier: "LALA ID ou e-mail",
       email: "E-mail",
       password: "Senha",
       submit: "Entrar",
@@ -470,10 +485,11 @@ const pt = {
       signUpLink: "Cadastrar-se",
       firstTime: "Primeira vez aqui?",
       activateLink: "Ativar sua conta",
+      errorInvalidCredentials: "LALA ID (ou e-mail) ou senha inválidos.",
     },
     activate: {
       title: "Ative sua conta",
-      description: "Digite seu ID LALA e escolha uma senha para começar.",
+      description: "Digite seu LALA ID e escolha uma senha para começar.",
       password: "Senha",
       confirmPassword: "Confirmar senha",
       errorPasswordMismatch: "As senhas não coincidem.",
@@ -489,7 +505,7 @@ const pt = {
       email: "E-mail",
       password: "Senha",
       roleLabel: "Eu sou…",
-      roleLalider: "LaLíder (estudante)",
+      roleLalider: "LALíder",
       roleCompany: "Empresa",
       submit: "Criar conta",
       submitting: "Criando conta…",
@@ -499,11 +515,12 @@ const pt = {
       errorFullName: "Por favor, insira seu nome completo.",
       errorPassword: "A senha deve ter pelo menos 8 caracteres.",
       errorEmail: "O e-mail é obrigatório.",
-      lalaId: "ID LALA",
-      lalaIdPlaceholder: "Seu ID LALA",
+      lalaId: "LALA ID",
+      lalaIdPlaceholder: "Seu LALA ID",
       contactEmail: "E-mail",
       contactEmailPlaceholder: "seu@email.com",
       contactEmailHint: "Usado apenas para notificações, não para login.",
+      errorGeneric: "Não foi possível criar sua conta. Verifique seus dados e tente novamente.",
     },
     checkEmail: {
       title: "Verifique seu e-mail",
@@ -511,9 +528,18 @@ const pt = {
       alreadyConfirmed: "Já confirmou?",
       signIn: "Entrar",
     },
+    errors: {
+      missing_lala_id: "Por favor, insira seu LALA ID.",
+      invalid_password: "A senha deve ter pelo menos 8 caracteres.",
+      missing_full_name: "Por favor, insira seu nome completo.",
+      missing_email: "O e-mail é obrigatório.",
+      account_not_found: "Não encontramos uma conta para este LALA ID. Confira se digitou corretamente e tente novamente, ou contate seu coordenador LALA.",
+      lala_id_taken: "Este LALA ID já está registrado.",
+      server_error: "Algo deu errado do nosso lado. Por favor, tente novamente em alguns instantes.",
+    },
   },
   dashboard: {
-    welcomeSubtitleCompany: "Gerencie suas vagas e encontre os melhores LaLíderes para sua equipe.",
+    welcomeSubtitleCompany: "Gerencie suas vagas e encontre os melhores LALíderes para sua equipe.",
     welcomeSubtitleLalider:
       "Veja quais empresas se interessaram por você e mantenha seu perfil atualizado.",
     companyProfile: {
@@ -570,7 +596,7 @@ const pt = {
     titleCompany: "Crie o perfil da sua empresa",
     titleLalider: "Complete seu perfil",
     descriptionCompany:
-      "LaLíderes verão este perfil quando forem combinados com suas vagas.",
+      "LALíderes verão este perfil quando forem combinados com suas vagas.",
     descriptionLalider: "Conte-nos sobre você para que as empresas possam encontrá-lo.",
     fullName: "Nome completo",
     mobileNumber: "Número de celular",
@@ -730,14 +756,14 @@ const pt = {
   },
   positionsMatches: {
     analyzeDescription:
-      "Clique abaixo para que Claude analise todos os perfis de LaLíderes e identifique os candidatos mais compatíveis com esta vaga.",
+      "Clique abaixo para que Claude analise todos os perfis de LALíderes e identifique os candidatos mais compatíveis com esta vaga.",
     findMatches: "Encontrar matches com IA",
     analyzing: "Analisando candidatos…",
     noStrongMatches: "Nenhum match forte encontrado",
     reRun: "Buscar novamente",
     reRunning: "Buscando novamente…",
     noLalideres:
-      "Nenhum LaLíder com alta compatibilidade foi encontrado. Tente ampliar os requisitos da vaga.",
+      "Nenhum LALíder com alta compatibilidade foi encontrado. Tente ampliar os requisitos da vaga.",
     matchScore: "Pontuação de compatibilidade",
     whyTheyFit: "Por que é compatível",
     potentialGaps: "Lacunas potenciais",
@@ -757,9 +783,11 @@ const es = {
     editProfile: "Editar perfil",
     lalaMatch: "LaLa Match",
     lalaPlatform: "LaLa Match",
-    iAmLalider: "Soy un LaLíder",
+    iAmLalider: "Soy un LALíder",
     iRepresentCompany: "Represento a una empresa",
     aboutUs: "Sobre nosotros",
+    showPassword: "Mostrar contraseña",
+    hidePassword: "Ocultar contraseña",
   },
   landing: {
     nav: {
@@ -772,10 +800,10 @@ const es = {
       titleHighlight: "conectada",
       titleEnd: "con las empresas correctas.",
       description:
-        "LaLa Match conecta a los LaLíderes, los jóvenes líderes más prometedores de la región, con empresas que buscan construir equipos excepcionales. Impulsado por IA, diseñado para generar impacto.",
+        "LaLa Match conecta a los LALíderes, los jóvenes líderes más prometedores de la región, con empresas que buscan construir equipos excepcionales. Impulsado por IA, diseñado para generar impacto.",
     },
     stats: [
-      { value: "3,000+", label: "LaLíderes en toda América Latina" },
+      { value: "3,000+", label: "LALíderes en toda América Latina" },
       { value: "17", label: "Países representados" },
       { value: "Con IA", label: "Tecnología de Matchmaking" },
     ],
@@ -786,7 +814,7 @@ const es = {
         {
           step: "01",
           title: "Crea tu perfil",
-          body: "Los LaLíderes detallan su educación, experiencia y ambiciones. Las empresas describen sus puestos disponibles y el candidato ideal.",
+          body: "Los LALíderes detallan su educación, experiencia y ambiciones. Las empresas describen sus puestos disponibles y el candidato ideal.",
         },
         {
           step: "02",
@@ -796,12 +824,12 @@ const es = {
         {
           step: "03",
           title: "Conéctate y crece",
-          body: "Las empresas contactan a los candidatos ideales. Los LaLíderes ven los puestos para los que han sido seleccionados.",
+          body: "Las empresas contactan a los candidatos ideales. Los LALíderes ven los puestos para los que han sido seleccionados.",
         },
       ],
     },
     forLalideres: {
-      eyebrow: "Para LaLíderes",
+      eyebrow: "Para LALíderes",
       title: "Tu talento merece ser visto.",
       description:
         "Crea un perfil completo que muestre tu educación, experiencia y objetivos. Recibe notificaciones cuando las empresas se interesen en tu perfil para puestos que se ajusten a tus ambiciones.",
@@ -817,7 +845,7 @@ const es = {
       eyebrow: "Para Empresas",
       title: "Encuentra talento excepcional.",
       description:
-        "Publica tus puestos disponibles y deja que la IA encuentre los LaLíderes más relevantes, clasificados por compatibilidad con explicaciones claras, no solo coincidencias de palabras clave.",
+        "Publica tus puestos disponibles y deja que la IA encuentre los LALíderes más relevantes, clasificados por compatibilidad con explicaciones claras, no solo coincidencias de palabras clave.",
       features: [
         "Publica puestos ilimitados",
         "La IA clasifica candidatos con explicaciones",
@@ -829,7 +857,7 @@ const es = {
     cta: {
       title: "¿Listo para hacer la conexión?",
       description:
-        "Únete a los LaLíderes y empresas que ya usan LaLa Match para construir el futuro.",
+        "Únete a los LALíderes y empresas que ya usan LaLa Match para construir el futuro.",
     },
     footer: {
       tagline: "Creado para LALA, empoderando a líderes latinoamericanos desde 2017.",
@@ -839,7 +867,7 @@ const es = {
     login: {
       title: "Iniciar sesión en LALA",
       description: "Ingresa tus credenciales para acceder a tu cuenta",
-      identifier: "ID LALA o correo electrónico",
+      identifier: "LALA ID o correo electrónico",
       email: "Correo electrónico",
       password: "Contraseña",
       submit: "Iniciar sesión",
@@ -848,10 +876,11 @@ const es = {
       signUpLink: "Registrarse",
       firstTime: "¿Primera vez aquí?",
       activateLink: "Activa tu cuenta",
+      errorInvalidCredentials: "LALA ID (o correo) o contraseña inválidos.",
     },
     activate: {
       title: "Activa tu cuenta",
-      description: "Ingresa tu ID LALA y elige una contraseña para empezar.",
+      description: "Ingresa tu LALA ID y elige una contraseña para empezar.",
       password: "Contraseña",
       confirmPassword: "Confirmar contraseña",
       errorPasswordMismatch: "Las contraseñas no coinciden.",
@@ -867,7 +896,7 @@ const es = {
       email: "Correo electrónico",
       password: "Contraseña",
       roleLabel: "Soy…",
-      roleLalider: "LaLíder (estudiante)",
+      roleLalider: "LALíder",
       roleCompany: "Empresa",
       submit: "Crear cuenta",
       submitting: "Creando cuenta…",
@@ -877,11 +906,12 @@ const es = {
       errorFullName: "Por favor, ingresa tu nombre completo.",
       errorPassword: "La contraseña debe tener al menos 8 caracteres.",
       errorEmail: "El correo electrónico es obligatorio.",
-      lalaId: "ID LALA",
-      lalaIdPlaceholder: "Tu ID LALA",
+      lalaId: "LALA ID",
+      lalaIdPlaceholder: "Tu LALA ID",
       contactEmail: "Correo electrónico",
       contactEmailPlaceholder: "tu@correo.com",
       contactEmailHint: "Solo para notificaciones, no para iniciar sesión.",
+      errorGeneric: "No pudimos crear tu cuenta. Verifica tus datos e intenta de nuevo.",
     },
     checkEmail: {
       title: "Revisa tu correo electrónico",
@@ -889,9 +919,18 @@ const es = {
       alreadyConfirmed: "¿Ya confirmaste?",
       signIn: "Iniciar sesión",
     },
+    errors: {
+      missing_lala_id: "Por favor, ingresa tu LALA ID.",
+      invalid_password: "La contraseña debe tener al menos 8 caracteres.",
+      missing_full_name: "Por favor, ingresa tu nombre completo.",
+      missing_email: "El correo electrónico es obligatorio.",
+      account_not_found: "No encontramos una cuenta para este LALA ID. Verifícalo e intenta de nuevo, o contacta a tu coordinador de LALA.",
+      lala_id_taken: "Este LALA ID ya está registrado.",
+      server_error: "Algo salió mal de nuestro lado. Por favor, intenta de nuevo en un momento.",
+    },
   },
   dashboard: {
-    welcomeSubtitleCompany: "Gestiona tus puestos y encuentra a los mejores LaLíderes para tu equipo.",
+    welcomeSubtitleCompany: "Gestiona tus puestos y encuentra a los mejores LALíderes para tu equipo.",
     welcomeSubtitleLalider:
       "Ve qué empresas te han emparejado y mantén tu perfil actualizado.",
     companyProfile: {
@@ -948,7 +987,7 @@ const es = {
     titleCompany: "Crea el perfil de tu empresa",
     titleLalider: "Completa tu perfil",
     descriptionCompany:
-      "Los LaLíderes verán este perfil cuando sean emparejados con tus puestos.",
+      "Los LALíderes verán este perfil cuando sean emparejados con tus puestos.",
     descriptionLalider: "Cuéntanos sobre ti para que las empresas puedan encontrarte.",
     fullName: "Nombre completo",
     mobileNumber: "Número de celular",
@@ -1108,14 +1147,14 @@ const es = {
   },
   positionsMatches: {
     analyzeDescription:
-      "Haz clic abajo para que Claude analice todos los perfiles de LaLíderes y encuentre las mejores coincidencias para este puesto.",
+      "Haz clic abajo para que Claude analice todos los perfiles de LALíderes y encuentre las mejores coincidencias para este puesto.",
     findMatches: "Encontrar coincidencias con IA",
     analyzing: "Analizando candidatos…",
     noStrongMatches: "No se encontraron coincidencias sólidas",
     reRun: "Buscar nuevas coincidencias",
     reRunning: "Ejecutando de nuevo…",
     noLalideres:
-      "No se encontraron LaLíderes con una compatibilidad sólida. Intenta ampliar los requisitos del puesto.",
+      "No se encontraron LALíderes con una compatibilidad sólida. Intenta ampliar los requisitos del puesto.",
     matchScore: "Puntuación de coincidencia",
     whyTheyFit: "Por qué encaja",
     potentialGaps: "Brechas potenciales",

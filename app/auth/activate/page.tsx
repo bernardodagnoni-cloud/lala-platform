@@ -7,8 +7,15 @@ import { createClient } from "@/lib/supabase/client";
 import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Translations } from "@/lib/i18n/translations";
+
+function resolveErrorMessage(t: Translations, code: string | undefined) {
+  const errors = t.auth.errors as Record<string, string>;
+  return (code && errors[code]) || errors.server_error;
+}
 
 export default function ActivatePage() {
   const router = useRouter();
@@ -32,18 +39,25 @@ export default function ActivatePage() {
     setLoading(true);
     setError(null);
 
-    const res = await fetch("/api/auth/activate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lala_id: lalaId.trim(), password }),
-    });
+    let res: Response;
+    try {
+      res = await fetch("/api/auth/activate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lala_id: lalaId.trim(), password }),
+      });
+    } catch {
+      setError(t.auth.errors.server_error);
+      setLoading(false);
+      return;
+    }
 
     const json = await res.json();
-    if (!res.ok) { setError(json.error); setLoading(false); return; }
+    if (!res.ok) { setError(resolveErrorMessage(t, json.error_code)); setLoading(false); return; }
 
     const supabase = createClient();
     const { error: signInError } = await supabase.auth.signInWithPassword({ email: json.email, password });
-    if (signInError) { setError(signInError.message); setLoading(false); return; }
+    if (signInError) { setError(t.auth.errors.server_error); setLoading(false); return; }
 
     router.push("/profile/edit");
     router.refresh();
@@ -74,9 +88,8 @@ export default function ActivatePage() {
             </div>
             <div className="space-y-1">
               <Label htmlFor="password">{t.auth.activate.password}</Label>
-              <Input
+              <PasswordInput
                 id="password"
-                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -86,9 +99,8 @@ export default function ActivatePage() {
             </div>
             <div className="space-y-1">
               <Label htmlFor="confirm">{t.auth.activate.confirmPassword}</Label>
-              <Input
+              <PasswordInput
                 id="confirm"
-                type="password"
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 required

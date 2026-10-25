@@ -144,7 +144,7 @@ export default function AdminDashboard({
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: "LaLideres", value: stats.lalideres },
+            { label: "LALideres", value: stats.lalideres },
             { label: "Companies", value: stats.companies },
             { label: "Positions", value: stats.positions },
             { label: "AI Matches", value: stats.matches },
@@ -202,7 +202,7 @@ export default function AdminDashboard({
                         <td className="px-4 py-3 font-medium">{p.full_name}</td>
                         <td className="px-4 py-3">
                           <Badge variant={p.role === "company" ? "default" : "secondary"}>
-                            {p.role === "laLider" ? "LaLider" : "Company"}
+                            {p.role === "laLider" ? "LALider" : "Company"}
                           </Badge>
                         </td>
                         <td className="px-4 py-3 text-gray-500">{p.location ?? "—"}</td>
@@ -381,7 +381,7 @@ export default function AdminDashboard({
             <div className="p-6 space-y-4 text-sm">
               <div className="flex items-center gap-2">
                 <Badge variant={selectedProfile.role === "company" ? "default" : "secondary"}>
-                  {selectedProfile.role === "laLider" ? "LaLider" : "Company"}
+                  {selectedProfile.role === "laLider" ? "LALider" : "Company"}
                 </Badge>
                 {selectedProfile.role === "laLider" && (
                   <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${selectedProfile.open_to_opportunities !== false ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>

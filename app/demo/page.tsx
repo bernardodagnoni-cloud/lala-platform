@@ -23,7 +23,7 @@ export default function DemoDashboardPage() {
       <main className="max-w-4xl mx-auto p-6 space-y-6">
         <div>
           <h1 className="text-2xl font-bold">Welcome, Grupo Financiero Demo</h1>
-          <p className="text-gray-500 mt-1">Manage your positions and find the best LaLideres for your team.</p>
+          <p className="text-gray-500 mt-1">Manage your positions and find the best LALideres for your team.</p>
         </div>
         <div className="space-y-4">
           <div className="flex items-center justify-between">

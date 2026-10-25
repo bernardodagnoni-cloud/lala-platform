@@ -7,9 +7,16 @@ import { createClient } from "@/lib/supabase/client";
 import { useT } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { UserRole } from "@/types/database";
+import type { Translations } from "@/lib/i18n/translations";
+
+function resolveErrorMessage(t: Translations, code: string | undefined) {
+  const errors = t.auth.errors as Record<string, string>;
+  return (code && errors[code]) || errors.server_error;
+}
 
 export default function SignupPage() {
   return (
@@ -28,7 +35,7 @@ function SignupForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // LaLider fields
+  // LALider fields
   const [lalaId, setLalaId] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
@@ -41,25 +48,32 @@ function SignupForm() {
 
   async function handleLaliderSignup(e: React.FormEvent) {
     e.preventDefault();
-    if (!lalaId.trim()) { setError("Please enter your LALA ID."); return; }
+    if (!lalaId.trim()) { setError(t.auth.errors.missing_lala_id); return; }
     if (fullName.trim().length < 2) { setError(t.auth.signup.errorFullName); return; }
-    if (password.length < 8) { setError(t.auth.signup.errorPassword); return; }
     if (!contactEmail.trim()) { setError(t.auth.signup.errorEmail); return; }
+    if (password.length < 8) { setError(t.auth.signup.errorPassword); return; }
     setLoading(true);
     setError(null);
 
-    const res = await fetch("/api/auth/signup-lalider", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lala_id: lalaId.trim(), full_name: fullName.trim(), password, contact_email: contactEmail.trim() || null }),
-    });
+    let res: Response;
+    try {
+      res = await fetch("/api/auth/signup-lalider", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lala_id: lalaId.trim(), full_name: fullName.trim(), password, contact_email: contactEmail.trim() || null }),
+      });
+    } catch {
+      setError(t.auth.errors.server_error);
+      setLoading(false);
+      return;
+    }
 
     const json = await res.json();
-    if (!res.ok) { setError(json.error); setLoading(false); return; }
+    if (!res.ok) { setError(resolveErrorMessage(t, json.error_code)); setLoading(false); return; }
 
     const supabase = createClient();
     const { error: signInError } = await supabase.auth.signInWithPassword({ email: json.email, password });
-    if (signInError) { setError(signInError.message); setLoading(false); return; }
+    if (signInError) { setError(t.auth.errors.server_error); setLoading(false); return; }
 
     router.push("/profile/edit");
     router.refresh();
@@ -79,7 +93,7 @@ function SignupForm() {
       options: { data: { full_name: companyFullName.trim(), role: "company" } },
     });
 
-    if (signUpError) { setError(signUpError.message); setLoading(false); return; }
+    if (signUpError) { setError(t.auth.signup.errorGeneric); setLoading(false); return; }
 
     if (data.session) {
       router.push("/profile/edit");
@@ -110,7 +124,7 @@ function SignupForm() {
               className="w-full rounded-xl border-2 border-gray-200 px-4 py-4 text-left hover:border-blue-900 hover:bg-blue-50 transition-colors"
             >
               <p className="font-semibold text-gray-800">{t.auth.signup.roleCompany}</p>
-              <p className="text-sm text-gray-400 mt-0.5">We're hiring LaLideres</p>
+              <p className="text-sm text-gray-400 mt-0.5">We&apos;re hiring LALideres</p>
             </button>
           </CardContent>
           <CardFooter>
@@ -148,13 +162,13 @@ function SignupForm() {
                 <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="password">{t.auth.signup.password}</Label>
-                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} autoComplete="new-password" />
-              </div>
-              <div className="space-y-1">
                 <Label htmlFor="contactEmail">{t.auth.signup.contactEmail}</Label>
                 <Input id="contactEmail" type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder={t.auth.signup.contactEmailPlaceholder} autoComplete="email" required />
                 <p className="text-xs text-gray-400">{t.auth.signup.contactEmailHint}</p>
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="password">{t.auth.signup.password}</Label>
+                <PasswordInput id="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} autoComplete="new-password" />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-3">
@@ -183,7 +197,7 @@ function SignupForm() {
               </div>
               <div className="space-y-1">
                 <Label htmlFor="companyPassword">{t.auth.signup.password}</Label>
-                <Input id="companyPassword" type="password" value={companyPassword} onChange={(e) => setCompanyPassword(e.target.value)} required minLength={8} autoComplete="new-password" />
+                <PasswordInput id="companyPassword" value={companyPassword} onChange={(e) => setCompanyPassword(e.target.value)} required minLength={8} autoComplete="new-password" />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-3">
