@@ -224,3 +224,23 @@ drop trigger if exists on_profile_diversity_updated on public.profile_diversity;
 create trigger on_profile_diversity_updated
   before update on public.profile_diversity
   for each row execute procedure public.handle_updated_at();
+
+-- on_auth_user_created / handle_new_user (migration_010): auto-creates a
+-- profiles row whenever a new auth.users row is made. full_name and role
+-- both fall back to safe defaults so account creation never fails just
+-- because the caller (e.g. the Supabase dashboard's "Add user" form) didn't
+-- supply metadata. The trigger itself already exists on auth.users and
+-- references this function by name, so only the function needs replacing.
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer
+as $function$begin
+    insert into public.profiles (user_id, full_name, role)
+    values (
+      new.id,
+      coalesce(new.raw_user_meta_data->>'full_name', ''),
+      coalesce(new.raw_user_meta_data->>'role', 'laLider')
+    );
+    return new;
+  end;$function$;
