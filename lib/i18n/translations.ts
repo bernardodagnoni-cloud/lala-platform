@@ -96,8 +96,6 @@ const en = {
       submitting: "Signing in…",
       noAccount: "Don't have an account?",
       signUpLink: "Sign up",
-      firstTime: "First time here?",
-      activateLink: "Activate your account",
       errorInvalidCredentials: "Invalid LALA ID (or email) or password.",
     },
     activate: {
@@ -483,8 +481,6 @@ const pt = {
       submitting: "Entrando…",
       noAccount: "Não tem uma conta?",
       signUpLink: "Cadastrar-se",
-      firstTime: "Primeira vez aqui?",
-      activateLink: "Ativar sua conta",
       errorInvalidCredentials: "LALA ID (ou e-mail) ou senha inválidos.",
     },
     activate: {
@@ -874,8 +870,6 @@ const es = {
       submitting: "Iniciando sesión…",
       noAccount: "¿No tienes una cuenta?",
       signUpLink: "Registrarse",
-      firstTime: "¿Primera vez aquí?",
-      activateLink: "Activa tu cuenta",
       errorInvalidCredentials: "LALA ID (o correo) o contraseña inválidos.",
     },
     activate: {
